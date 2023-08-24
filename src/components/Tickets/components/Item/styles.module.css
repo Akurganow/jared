@@ -1,0 +1,58 @@
+.item {
+	--accent-color: var(--white);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width: 100%;
+	position: relative;
+	padding-left: 0.5rem;
+	display: block;
+	text-decoration: none;
+	color: var(--white);
+}
+
+.item + .item {
+	margin-top: 0.25rem;
+}
+
+.item:after {
+	content: ' ';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 0.25rem;
+	height: 100%;
+	background-color: var(--accent-color);
+}
+
+.item a {
+	color: var(--white);
+	text-decoration: none;
+}
+
+/* TODO: more meaningful use of colors, put in readme.md */
+
+.issue {
+	--accent-color: var(--green-500);
+}
+
+.unknown {
+	--accent-color: var(--red-500);
+}
+
+.filter {
+	--accent-color: var(--orange-500);
+}
+
+.board {
+	--accent-color: var(--purple-500);
+}
+
+.project {
+	--accent-color: var(--yellow-500);
+}
+
+.profile {
+	--accent-color: var(--cyan-500);
+}
+

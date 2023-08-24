@@ -1,0 +1,5 @@
+export { default as settings } from './settings.svg'
+export { default as git } from './git.svg'
+export { default as jira } from './jira.svg'
+export { default as github } from './github.svg'
+export { default as gitlab } from './gitlab.svg'

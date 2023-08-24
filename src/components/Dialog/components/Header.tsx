@@ -1,0 +1,15 @@
+import { DetailedHTMLProps, HTMLAttributes } from 'react'
+import cn from 'classnames'
+import st from './styles.module.css'
+
+interface DialogHeaderProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+
+}
+
+export default function (props: DialogHeaderProps) {
+	return (
+		<div className={cn(st.header)}>
+			{props.children}
+		</div>
+	)
+}
