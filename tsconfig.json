@@ -1,0 +1,58 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"store/*": [
+				"src/store/reducers/*"
+			],
+			"i18n": [
+				"src/i18n/index"
+			],
+			"react-dom": [
+				"@hot-loader/react-dom"
+			],
+			"src/*": [
+				"src/*"
+			],
+			"jest/*": [
+				".jest/*"
+			],
+			"storybook/*": [
+				".storybook/*"
+			],
+			"*": [
+				"*",
+				"src/*"
+			]
+		},
+		"jsx": "react-jsx",
+		"module": "commonjs",
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"preserveConstEnums": true,
+		"removeComments": false,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "es6",
+		"outDir": "build",
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"resolveJsonModule": true,
+		"plugins": [
+			{
+				"name": "typescript-plugin-css-modules"
+			}
+		]
+	},
+	"include": [
+		"./**/*"
+	],
+	"exclude": [
+		"./node_modules",
+		"./dist"
+	]
+}
