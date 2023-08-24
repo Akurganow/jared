@@ -8,7 +8,7 @@ export default function ({ setting }: SettingsFieldProps) {
 
 	return (
 		<div>
-			<Text>{setting}: {value}</Text>
+			<Text>{setting}:</Text> <input value={value}/>
 		</div>
 	)
 }
