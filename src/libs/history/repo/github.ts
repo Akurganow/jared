@@ -20,12 +20,36 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 				vcs: 'github',
 				type: 'settings',
 				name: repoName,
-				title: `Settings: ${item.title || path[1]}`,
+				title: `${item.title || path[1]}`,
 			}
 		},
 		{
 			type: 'settings',
 			name: 'Settings'
+		}
+	],
+	// TYPE: topics
+	[
+		(item: chrome.history.HistoryItem) => {
+			const [, path] = getUrl(item.url || '')
+
+			return path[0] === 'topics'
+		},
+		(item: chrome.history.HistoryItem) => {
+			const [url, path] = getUrl(item.url || '')
+
+			return {
+				...item,
+				url,
+				vcs: 'github',
+				type: 'topics',
+				name: '',
+				title: `${item.title?.replace(' · GitHub Topics', '') || path[0]}`,
+			}
+		},
+		{
+			type: 'topics',
+			name: 'Topics',
 		}
 	],
 	// TYPE: repo
@@ -45,7 +69,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 				vcs: 'github',
 				type: 'repo',
 				name: repoName,
-				title: item.title || repoName,
+				title: item.title?.replace(`${repoName}: `, '') || repoName,
 			}
 		},
 		{

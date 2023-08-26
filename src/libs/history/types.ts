@@ -1,5 +1,5 @@
 type TicketType = 'unknown' | 'issue' | 'filter' | 'project' | 'profile' | 'board'
-type GitType = 'unknown' | 'settings' | 'repo' | 'tree' | 'blob' | 'filter' | 'mergeRequest' | 'pullRequest'
+type GitType = 'unknown' | 'settings' | 'repo' | 'tree' | 'blob' | 'filter' | 'topics' | 'mergeRequest' | 'pullRequest'
 type VCSType = 'unknown' | 'gitlab' | 'github'
 
 interface HistoryItem extends Omit<chrome.history.HistoryItem, 'url'> {
