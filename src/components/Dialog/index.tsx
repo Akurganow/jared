@@ -53,7 +53,7 @@ export default function Dialog({
 	}, [isOpen])
 
 	const element = (
-		<dialog ref={dialog} className={cn(st.dialog, 'drac-text-sm',className)} onMouseDown={handleMouseDownDialog}>
+		<dialog ref={dialog} className={cn(st.dialog, className)} onMouseDown={handleMouseDownDialog}>
 			{children}
 		</dialog>
 	)

@@ -1,5 +1,5 @@
 .item {
-	--accent-color: var(--white);
+	--accent-color: var(--color-primaryForeground);
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -8,7 +8,7 @@
 	padding-left: 0.5rem;
 	display: block;
 	text-decoration: none;
-	color: var(--white);
+	color: var(--color-primaryForeground);
 }
 
 .item + .item {
@@ -26,7 +26,7 @@
 }
 
 .item a {
-	color: var(--white);
+	color: var(--color-primaryForeground);
 	text-decoration: none;
 }
 
@@ -44,46 +44,30 @@
 
 /* TODO: more meaningful use of colors, put in readme.md */
 
-.issue {
-	--accent-color: var(--green-500);
+.issue, .repo {
+	--accent-color: var(--token-item-foreground);
 }
 
 .unknown {
-	--accent-color: var(--red-500);
+	--accent-color: var(--token-unknown-foreground);
 }
 
-.filter {
-	--accent-color: var(--orange-500);
+.filter, .board, .topics {
+	--accent-color: var(--token-filter-foreground);
 }
 
-.board {
-	--accent-color: var(--purple-500);
-}
-
-.pullRequest {
-	--accent-color: var(--yellow-500);
-}
-
-.mergeRequest {
-	--accent-color: var(--yellow-500);
+.pullRequest, .mergeRequest {
+	--accent-color: var(--token-changes-foreground);
 }
 
 .profile {
-	--accent-color: var(--cyan-500);
+	--accent-color: var(--token-person-foreground);
 }
 
 .settings {
-	--accent-color: var(--cyan-500);
+	--accent-color: var(--token-preferences-foreground);
 }
 
-.repo {
-	--accent-color: var(--cyan-500);
-}
-
-.blob {
-	--accent-color: var(--purple-500);
-}
-
-.tree {
-	--accent-color: var(--purple-500);
+.blob, .tree {
+	--accent-color: var(--token-file-foreground);
 }

@@ -1,8 +1,8 @@
-import { TicketHistoryItem } from '../types'
+import { ITSHistoryItem } from '../types'
 import { getConfigTypes, getUrl } from '../helpers'
 import { jiraProcessConfig } from './jira'
 
-function processDefaultTicket(item: chrome.history.HistoryItem): TicketHistoryItem {
+function processDefaultTicket(item: chrome.history.HistoryItem): ITSHistoryItem {
 	const [url] = getUrl(item.url || '')
 
 	return {
@@ -13,7 +13,7 @@ function processDefaultTicket(item: chrome.history.HistoryItem): TicketHistoryIt
 		title: item.title || '',
 	}
 }
-export function processTicket(item: chrome.history.HistoryItem): TicketHistoryItem {
+export function processTicket(item: chrome.history.HistoryItem): ITSHistoryItem {
 	const [url] = getUrl(item.url || '')
 
 	switch (true) {

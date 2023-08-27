@@ -1,5 +1,5 @@
-import { processTicket } from 'libs/history/tickets'
-import { processGit } from 'libs/history/repo'
+import { processTicket } from 'libs/history/its'
+import { processGit } from 'libs/history/vcs'
 
 // TODO: move it to the store/settings
 const MAX_RESULTS = 100

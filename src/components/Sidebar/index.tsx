@@ -17,7 +17,7 @@ export default function ({ className, ...props }: SidebarProps) {
 
 	return (
 		<aside
-			className={cn(st.sidebar, 'drac-text', className)}
+			className={cn(st.sidebar, className)}
 			{...props}
 		>
 			<button className={st.item} onClick={handleDialogSwitch('settings')}>

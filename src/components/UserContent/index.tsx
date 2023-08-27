@@ -1,6 +1,5 @@
 import cn from 'classnames'
 import { useSelector } from 'react-redux'
-import { Text } from 'dracula-ui'
 import { selectedMainItems } from 'store/history'
 import st from './styles.module.css'
 
@@ -15,8 +14,8 @@ export default function () {
 					className={cn(st.item)}
 					title={item.title}
 				>
-					<a href={item.url}>
-						<Text size="md">{item.title}</Text>
+					<a href={item.url} className={st.link}>
+						{item.title}
 					</a>
 				</div>
 			))}

@@ -1,5 +1,4 @@
 import cn from 'classnames'
-import { Text } from 'dracula-ui'
 import st from './styles.module.css'
 import { TicketItemProps } from './types'
 export default function (props: TicketItemProps) {
@@ -12,10 +11,10 @@ export default function (props: TicketItemProps) {
 			href={props.url.href}
 			className={cn(st.item, st[type])}
 		>
-			<div className="drac-line-height-xs">
-				<Text size="xs">{type}</Text>
+			<div>
+				{type}
 			</div>
-			<Text size="sm">{props.title}</Text>
+			{props.title}
 		</a>
 	)
 }

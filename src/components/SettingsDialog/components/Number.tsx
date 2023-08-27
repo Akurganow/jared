@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux'
-import { Text } from 'dracula-ui'
 import { selectedSettingValue } from 'store/settings'
 import { SettingsFieldProps } from './types'
 
@@ -8,7 +7,7 @@ export default function ({ setting }: SettingsFieldProps) {
 
 	return (
 		<div>
-			<Text>{setting}:</Text> <input value={value}/>
+			{setting}: <input value={value}/>
 		</div>
 	)
 }

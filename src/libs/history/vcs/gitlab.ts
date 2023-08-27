@@ -1,8 +1,8 @@
-import { ProcessConfig, GitHistoryItem } from '../types'
+import { ProcessConfig, VCSHistoryItem } from '../types'
 import { getConfigTypes, getUrl } from '../helpers'
 
 // TODO: add pipelines, graphs, analytics, jobs, issues, commits, tree, branches, tags, network, compare, settings, members, integrations, packages, repository
-export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitHistoryItem> = [
+export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
 	// TYPE: mergeRequest
 	[
 		(item: chrome.history.HistoryItem) => {
@@ -17,7 +17,7 @@ export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'gitlab',
+				provider: 'gitlab',
 				type: 'mergeRequest',
 				name: repoName,
 				title: item.title?.split(' · ')[0] || '',
@@ -42,7 +42,7 @@ export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'gitlab',
+				provider: 'gitlab',
 				type: 'filter',
 				name: repoName,
 				title: 'Merge requests',

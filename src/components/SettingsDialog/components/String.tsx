@@ -7,7 +7,7 @@ export default function ({ setting }: SettingsFieldProps) {
 
 	return (
 		<div>
-			<h1>{setting}: {value}</h1>
+			{setting}: <input value={value}/>
 		</div>
 	)
 }

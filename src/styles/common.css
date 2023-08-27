@@ -2,3 +2,11 @@
 #popup {
 	display: contents;
 }
+
+body {
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 13px;
+	line-height: 1.2;
+	background-color: var(--area-page-background);
+	color: var(--area-page-foreground);
+}

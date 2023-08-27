@@ -2,21 +2,21 @@ import { createSelector } from 'reselect'
 import { actionCreatorFactory } from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import storage from 'redux-persist/lib/storage'
-import { GitHistoryItem, TicketHistoryItem } from 'libs/history/types'
+import { VCSHistoryItem, ITSHistoryItem } from 'libs/history/types'
 
 export interface HistoryItem extends chrome.history.HistoryItem {}
 
 export interface HistoryState {
 	main: HistoryItem[];
-	git: GitHistoryItem[];
-	jira: TicketHistoryItem[];
+	vcs: VCSHistoryItem[];
+	its: ITSHistoryItem[];
 }
 
 export const storeKey = 'history'
 export const initialState: HistoryState = {
 	main: [],
-	git: [],
-	jira: [],
+	vcs: [],
+	its: [],
 }
 export const persistConfig = {
 	key: `jared/${storeKey}`,
@@ -28,8 +28,8 @@ const createAction = actionCreatorFactory(storeKey)
 
 export const addItem = createAction<HistoryItem>('addItem')
 export const updateMainHistory = createAction<HistoryItem[]>('updateHistory')
-export const updateGitHistory = createAction<GitHistoryItem[]>('updateGitHistory')
-export const updateTicketsHistory = createAction<TicketHistoryItem[]>('updateJiraHistory')
+export const updateGitHistory = createAction<VCSHistoryItem[]>('updateGitHistory')
+export const updateTicketsHistory = createAction<ITSHistoryItem[]>('updateJiraHistory')
 
 // Reducer
 export const reducer = reducerWithInitialState(initialState)
@@ -39,11 +39,11 @@ export const reducer = reducerWithInitialState(initialState)
 	}))
 	.case(updateGitHistory, (state, items) => ({
 		...state,
-		git: items,
+		vcs: items,
 	}))
 	.case(updateTicketsHistory, (state, items) => ({
 		...state,
-		jira: items,
+		its: items,
 	}))
 
 interface RootState {
@@ -52,32 +52,32 @@ interface RootState {
 
 // Selectors
 const rawSelectedMainItems = (state: RootState) => state[storeKey].main
-const rawSelectedGitItems = (state: RootState) => state[storeKey].git
-const rawSelectedTickets = (state: RootState) => state[storeKey].jira
+const rawSelectedVCSItems = (state: RootState) => state[storeKey].vcs
+const rawSelectedITSItems = (state: RootState) => state[storeKey].its
 
 export const selectedTicketItemById = createSelector(
-	rawSelectedTickets,
+	rawSelectedITSItems,
 	(items) => (id: string) =>
 		items.find(item => item.id === id)
 )
 
 export const selectedGitItemById = createSelector(
-	rawSelectedGitItems,
+	rawSelectedVCSItems,
 	(items) => (id: string) =>
 		items.find(item => item.id === id)
 )
 
 export const selectedGitItems = createSelector(
-	rawSelectedGitItems,
+	rawSelectedVCSItems,
 	(items) => items
 		? items.filter((item, index, array) =>
-			!!item.type && item.type !== 'unknown' && item.vcs !== 'unknown'
+			!!item.type && item.type !== 'unknown' && item.provider !== 'unknown'
 			&& array.findIndex(i => i.title === item.title) === index
 		)
 		: [],
 )
 export const selectedTickets = createSelector(
-	rawSelectedTickets,
+	rawSelectedITSItems,
 	(items) => items
 		? items.filter((item, index, array) =>
 			!!item.type && item.type !== 'unknown'

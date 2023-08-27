@@ -3,15 +3,18 @@ import { actionCreatorFactory } from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { createSelector } from 'reselect'
 import memoize from 'lodash/memoize'
+import { getThemeNames } from 'libs/themes'
 
-export type SettingsTypes = 'number' | 'string' | 'boolean'
+export type SettingsTypes = 'number' | 'string' | 'boolean' | 'option'
 
 export type SettingItem<T> = {
 	value: T
+	options?: T[]
 	type: SettingsTypes
 }
 export interface SettingsState {
-    maxResults: SettingItem<number>
+	maxResults: SettingItem<number>
+	theme: SettingItem<string>
 }
 
 export const storeKey = 'settings'
@@ -21,6 +24,11 @@ export const initialState: SettingsState = {
 		value: 100,
 		type: 'number'
 	},
+	theme: {
+		value: 'default',
+		options: getThemeNames(),
+		type: 'option'
+	}
 }
 
 export const persistConfig = {
@@ -57,16 +65,26 @@ export const selectedSettings = createSelector(
 	rawSelectedSettings,
 	selectedSettingsKeys,
 	(settings, keys) => {
-		const selected: Partial<SettingsState> = {}
+		const selected: SettingsState = settings
 
-		for (const key of keys) {
-			selected[key as keyof typeof selected] = settings[key as keyof typeof settings]
+		for (const key of Object.keys(keys)) {
+			if (!keys.includes(key)) {
+				delete selected[key as keyof typeof selected]
+			}
 		}
 
 		return selected
 	}
 )
 
+export const createSettingSelector = createSelector(
+	[
+		selectedSettings,
+		(_state, key) => key,
+	],
+	(settings, key) =>
+		settings[key as keyof typeof settings]
+)
 export const createSettingValueSelector = createSelector(
 	[
 		selectedSettings,
@@ -84,6 +102,9 @@ export const createSettingTypeSelector = createSelector(
 		settings[key as keyof typeof settings]?.type
 )
 
+export const selectedSetting = memoize((key: string) =>
+	(state: SettingsState) => createSettingSelector(state, key)
+)
 export const selectedSettingValue = memoize((key: string) =>
 	(state: SettingsState) => createSettingValueSelector(state, key)
 )

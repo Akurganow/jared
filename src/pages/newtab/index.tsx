@@ -1,5 +1,4 @@
 import 'modern-css-reset'
-import 'dracula-ui/styles/dracula-ui.css'
 import 'styles/newtab.css'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'

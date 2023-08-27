@@ -1,5 +1,5 @@
 import { memoize } from 'lodash'
-import { ProcessConfig, TicketHistoryItem } from '../types'
+import { ProcessConfig, ITSHistoryItem } from '../types'
 import { getConfigTypes, getUrl } from '../helpers'
 
 function rawGetSplitTitle(title: string): string[] {
@@ -12,7 +12,7 @@ function rawGetSplitTitle(title: string): string[] {
 
 const getSplitTitle = memoize(rawGetSplitTitle)
 // TODO: filter items from settings
-export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, TicketHistoryItem> = [
+export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHistoryItem> = [
 	// TYPE: issue
 	[
 		(item: chrome.history.HistoryItem) => {

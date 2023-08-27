@@ -1,25 +1,25 @@
-type TicketType = 'unknown' | 'issue' | 'filter' | 'project' | 'profile' | 'board'
-type GitType = 'unknown' | 'settings' | 'repo' | 'tree' | 'blob' | 'filter' | 'topics' | 'mergeRequest' | 'pullRequest'
-type VCSType = 'unknown' | 'gitlab' | 'github'
+type ITSType = 'unknown' | 'issue' | 'filter' | 'project' | 'profile' | 'board'
+type VCSType = 'unknown' | 'settings' | 'repo' | 'tree' | 'blob' | 'filter' | 'topics' | 'mergeRequest' | 'pullRequest'
+type VCSProviderType = 'unknown' | 'gitlab' | 'github'
 
-interface HistoryItem extends Omit<chrome.history.HistoryItem, 'url'> {
+export interface HistoryItem extends Omit<chrome.history.HistoryItem, 'url'> {
 	url: URL
 	name: string
 	title: string
 }
-export interface GitHistoryItem extends HistoryItem {
-	type: GitType
-	vcs: VCSType
+export interface VCSHistoryItem extends HistoryItem {
+	type: VCSType
+	provider: VCSProviderType
 }
-export interface TicketHistoryItem extends HistoryItem {
-	type: TicketType
+export interface ITSHistoryItem extends HistoryItem {
+	type: ITSType
 }
 
-type ProcessConfigItem<T, R> = [
+export type ProcessConfigItem<T, R> = [
 	(item: T) => boolean,
 	(item: T) => R,
 	{
-		type: TicketType | GitType
+		type: ITSType | VCSType
 		name: string
 	}
 ]

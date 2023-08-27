@@ -13,7 +13,7 @@ export default function ({ className, ...props }: TicketsProps) {
 
 	return (
 		<div
-			className={cn(st.tickets, 'drac-text', className)}
+			className={cn(st.tickets, className)}
 			{...props}
 		>
 			{tickets.map((item) => <Item

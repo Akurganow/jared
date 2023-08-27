@@ -14,7 +14,7 @@ export default function ({ className, ...props }: RepoProps) {
 
 	return (
 		<div
-			className={cn(st.repo, 'drac-text', className)}
+			className={cn(st.repo, className)}
 			{...props}
 		>
 			{history.map((item) => (
@@ -25,7 +25,7 @@ export default function ({ className, ...props }: RepoProps) {
 					url={item.url}
 					title={item.title}
 					repoName={item.name}
-					gitType={item.vcs}
+					gitType={item.provider}
 				/>
 			))}
 		</div>

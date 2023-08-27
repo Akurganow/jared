@@ -1,22 +1,22 @@
-import { GitHistoryItem } from '../types'
+import { VCSHistoryItem } from '../types'
 import { getConfigTypes, getUrl } from '../helpers'
 import { gitlabProcessConfig } from './gitlab'
 import { githubProcessConfig } from './github'
 
 
-function processDefaultGit(item: chrome.history.HistoryItem): GitHistoryItem {
+function processDefaultGit(item: chrome.history.HistoryItem): VCSHistoryItem {
 	const [url] = getUrl(item.url || '')
 
 	return {
 		...item,
 		url,
 		type: 'unknown',
-		vcs: 'unknown',
+		provider: 'unknown',
 		name: item.title || '',
 		title: item.title || '',
 	}
 }
-export function processGit(item: chrome.history.HistoryItem): GitHistoryItem {
+export function processGit(item: chrome.history.HistoryItem): VCSHistoryItem {
 	const [url] = getUrl(item.url || '')
 
 	switch (true) {

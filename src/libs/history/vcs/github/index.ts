@@ -1,33 +1,10 @@
-import { ProcessConfig, GitHistoryItem } from '../types'
-import { getConfigTypes, getUrl } from '../helpers'
+import { ProcessConfig, VCSHistoryItem } from 'libs/history/types'
+import { getConfigTypes, getUrl } from 'libs/history/helpers'
+import processor from 'libs/history/vcs/github/settings'
 
 // TODO: add commits, releases, settings, notifications, orgs, pkgs
-export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitHistoryItem> = [
-	// TYPE: settings
-	[
-		(item: chrome.history.HistoryItem) => {
-			const [, path] = getUrl(item.url || '')
-
-			return path[0] === 'settings'
-		},
-		(item: chrome.history.HistoryItem) => {
-			const [url, path] = getUrl(item.url || '')
-			const repoName = `${path[0]}/${path[1]}`
-
-			return {
-				...item,
-				url,
-				vcs: 'github',
-				type: 'settings',
-				name: repoName,
-				title: `${item.title || path[1]}`,
-			}
-		},
-		{
-			type: 'settings',
-			name: 'Settings'
-		}
-	],
+export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
+	processor,
 	// TYPE: topics
 	[
 		(item: chrome.history.HistoryItem) => {
@@ -41,7 +18,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'github',
+				provider: 'github',
 				type: 'topics',
 				name: '',
 				title: `${item.title?.replace(' · GitHub Topics', '') || path[0]}`,
@@ -66,7 +43,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'github',
+				provider: 'github',
 				type: 'repo',
 				name: repoName,
 				title: item.title?.replace(`${repoName}: `, '') || repoName,
@@ -91,7 +68,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'github',
+				provider: 'github',
 				type: 'pullRequest',
 				name: repoName,
 				title: item.title?.split(' · ')[0] || `Pull request #${path[path.length - 1]}`
@@ -116,7 +93,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'github',
+				provider: 'github',
 				type: 'filter',
 				name: repoName,
 				title: 'Pull requests'
@@ -141,7 +118,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'github',
+				provider: 'github',
 				type: 'filter',
 				name: repoName,
 				title: item.title?.replace(` · ${repoName}`, '') || 'Issues'
@@ -165,7 +142,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'github',
+				provider: 'github',
 				type: 'filter',
 				name: 'Search',
 				title: item.title || 'Search'
@@ -190,7 +167,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'github',
+				provider: 'github',
 				type: 'blob',
 				name: repoName,
 				title: item.title?.replace(` · ${repoName}`, '') || ''
@@ -215,7 +192,7 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, GitH
 			return {
 				...item,
 				url,
-				vcs: 'github',
+				provider: 'github',
 				type: 'tree',
 				name: repoName,
 				title: item.title?.replace(` · ${repoName}`, '') || ''

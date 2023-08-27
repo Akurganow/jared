@@ -1,5 +1,7 @@
 .content {
 	grid-area: content;
+	padding: 0.25rem 0;
+	margin: 0;
 }
 
 .item {
@@ -7,4 +9,14 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	max-width: 100%;
+	color: var(--color-primaryForeground);
+}
+
+.item + .item {
+	margin-top: 0.25rem;
+}
+
+.link {
+	color: var(--color-primaryForeground);
+	text-decoration: none;
 }
