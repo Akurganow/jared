@@ -16,7 +16,7 @@ function processDefaultGit(item: chrome.history.HistoryItem): VCSHistoryItem {
 		title: item.title || '',
 	}
 }
-export function processGit(item: chrome.history.HistoryItem): VCSHistoryItem {
+export function processVCS(item: chrome.history.HistoryItem): VCSHistoryItem {
 	const [url] = getUrl(item.url || '')
 
 	switch (true) {

@@ -1,15 +1,11 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react'
-import { UIHistoryItem } from 'libs/history'
 import { VCSHistoryItem } from 'libs/history/types'
 
-export interface UIItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-	id: UIHistoryItem['id']
+export interface VSCItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 	title: string
-	url: UIHistoryItem['url']
-}
-
-export interface GitItemProps extends UIItemProps {
+	id: VCSHistoryItem['id']
+	url: VCSHistoryItem['url']
 	type: VCSHistoryItem['type']
 	repoName: VCSHistoryItem['name']
-	gitType: VCSHistoryItem['provider']
+	provider: VCSHistoryItem['provider']
 }

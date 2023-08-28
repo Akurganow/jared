@@ -1,10 +1,10 @@
-import { Store } from 'redux'
-import { configureStore } from '@reduxjs/toolkit'
+import { AnyAction, Store } from 'redux'
+import { configureStore, ThunkDispatch } from '@reduxjs/toolkit'
 import { devToolsEnhancer } from '@redux-devtools/remote'
-import thunk from 'redux-thunk'
+import thunkMiddleware, { ThunkMiddleware } from 'redux-thunk'
 import { persistStore } from 'redux-persist'
-import { updateGitHistory, updateTicketsHistory, updateMainHistory } from 'store/history'
-import { getGit, getHistoryItems, getTickets } from 'libs/history'
+import { getHistory } from 'store/history'
+import { RootState } from 'store/types'
 import { rootReducer, initialState } from './reducers'
 // import db from 'libs/idb'
 // import initializeBackup from 'libs/backup'
@@ -12,6 +12,7 @@ import { rootReducer, initialState } from './reducers'
 //
 // import { setFaviconCache } from 'store/favicons'
 // import { setFavicon, TaskId } from 'store/tasks'
+const thunk: ThunkMiddleware<RootState, AnyAction> = thunkMiddleware
 const store = configureStore({
 	reducer: rootReducer,
 	preloadedState: initialState,
@@ -25,25 +26,11 @@ const store = configureStore({
 		}),
 	],
 })
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const persistor = persistStore(store as unknown as Store)
 
 async function updateStore(store: Store) {
-	await (async () => {
-		const gitItems = await getGit()
-		store.dispatch(updateGitHistory(gitItems))
-	})()
-
-	await (async () => {
-		const tickets = await getTickets()
-		store.dispatch(updateTicketsHistory(tickets))
-	})()
-
-	await (async () => {
-		const mainItems = await getHistoryItems('rwc, rcv')
-		store.dispatch(updateMainHistory(mainItems))
-	})()
+	const dispatch: ThunkDispatch<RootState, never, AnyAction> = store.dispatch
+	await dispatch(getHistory())
 }
 
 updateStore(store)

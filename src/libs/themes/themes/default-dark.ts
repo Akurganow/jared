@@ -25,6 +25,12 @@ const theme: Theme = {
 			background: 'primaryBackground',
 			foreground: 'primaryForeground'
 		},
+		modal: {
+			background: 'secondaryBackground',
+			foreground: 'secondaryForeground',
+			secondaryBackground: 'tertiaryBackground',
+			secondaryForeground: 'tertiaryForeground',
+		},
 		sidebar: {
 			background: 'tertiaryBackground',
 			foreground: 'tertiaryForeground',
@@ -41,7 +47,7 @@ const theme: Theme = {
 		{
 			name: 'filter',
 			settings: {
-				foreground: 'green'
+				foreground: 'purple'
 			}
 		},
 		{
@@ -59,7 +65,7 @@ const theme: Theme = {
 		{
 			name: 'file',
 			settings: {
-				foreground: 'purple'
+				foreground: 'green'
 			}
 		},
 		{

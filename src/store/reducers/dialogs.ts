@@ -1,6 +1,7 @@
 import { actionCreatorFactory } from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { createSelector } from 'reselect'
+import { RootState } from 'store/types'
 
 export interface DialogsState {
 	[key: string]: boolean;
@@ -54,10 +55,6 @@ export const reducer = reducerWithInitialState(initialState)
 
 		return newState
 	})
-
-interface RootState {
-	[storeKey]: ReturnType<typeof reducer>
-}
 
 // Selectors
 const rawSelectedDialogs = (state: RootState) => state[storeKey]

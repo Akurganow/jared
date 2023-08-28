@@ -3,18 +3,43 @@ import { actionCreatorFactory } from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { createSelector } from 'reselect'
 import memoize from 'lodash/memoize'
-import { getThemeNames } from 'libs/themes'
+import merge from 'lodash/merge'
+import set from 'lodash/set'
+import { RootState } from 'store/types'
+import { getThemesNames } from 'libs/themes'
 
 export type SettingsTypes = 'number' | 'string' | 'boolean' | 'option'
-
-export type SettingItem<T> = {
-	value: T
-	options?: T[]
-	type: SettingsTypes
+export type SettingTypeString = {
+	type: 'string'
+	name: string
+	value: string
+	pattern?: RegExp
 }
+export type SettingTypeNumber = {
+	type: 'number'
+	name: string
+	value: number
+	max?: number
+	min?: number
+}
+export type SettingTypeBoolean = {
+	type: 'boolean'
+	name: string
+	value: boolean
+}
+export type SettingTypeOption = {
+	type: 'option'
+	name: string
+	value: string
+	options: string[]
+}
+
 export interface SettingsState {
-	maxResults: SettingItem<number>
-	theme: SettingItem<string>
+	maxResults: SettingTypeNumber
+	userQuery: SettingTypeString
+	vcsQuery: SettingTypeString
+	itsQuery: SettingTypeString
+	theme: SettingTypeOption
 }
 
 export const storeKey = 'settings'
@@ -22,12 +47,29 @@ export const storeKey = 'settings'
 export const initialState: SettingsState = {
 	maxResults: {
 		value: 100,
-		type: 'number'
+		type: 'number',
+		name: 'Max results',
+	},
+	vcsQuery: {
+		value: 'gitlab, github',
+		type: 'string',
+		name: 'VCS query',
+	},
+	itsQuery: {
+		value: 'jira',
+		type: 'string',
+		name: 'ITS query',
+	},
+	userQuery: {
+		value: 'rwc, rcv',
+		type: 'string',
+		name: 'Resents query',
 	},
 	theme: {
 		value: 'default',
-		options: getThemeNames(),
-		type: 'option'
+		options: getThemesNames(),
+		type: 'option',
+		name: 'Theme',
 	}
 }
 
@@ -39,18 +81,23 @@ export const persistConfig = {
 // Actions
 const createAction = actionCreatorFactory(storeKey)
 
-export const setSetting = createAction<{key: keyof SettingsState, setting: SettingsState[keyof SettingsState]}>('setSettings')
+export const setSetting =
+	createAction<{key: keyof SettingsState, value: SettingsState[keyof SettingsState]['value']}>('setSetting')
 
+export const setSettings =
+	createAction<Partial<SettingsState>>('setSettings')
 // Reducer
 export const reducer = reducerWithInitialState(initialState)
-	.case(setSetting, (state, { key, setting }) => ({
+	.case(setSetting, (state, { key, value }) => ({
 		...state,
-		[key]: setting,
+		[key]: {
+			...state[key],
+			value,
+		},
 	}))
-
-interface RootState {
-	[storeKey]: ReturnType<typeof reducer>
-}
+	.case(setSettings, (state, settings) =>
+		merge({}, state, settings)
+	)
 
 // Selectors
 const rawSelectedSettings = (state: RootState) => state[storeKey]
@@ -58,22 +105,25 @@ const rawSelectedSettings = (state: RootState) => state[storeKey]
 export const selectedSettingsKeys = createSelector(
 	rawSelectedSettings,
 	(settings) =>
-		Object.keys(settings).filter(key => !key.startsWith('_'))
+		Object.keys(settings).filter(key =>
+			!key.startsWith('_')
+		) as (keyof SettingsState)[]
 )
 
 export const selectedSettings = createSelector(
 	rawSelectedSettings,
 	selectedSettingsKeys,
 	(settings, keys) => {
-		const selected: SettingsState = settings
+		const filteredSettings = {} as Partial<SettingsState>
 
-		for (const key of Object.keys(keys)) {
-			if (!keys.includes(key)) {
-				delete selected[key as keyof typeof selected]
+		keys.forEach(key => {
+			if (keys.includes(key)) {
+				const setting = settings[key]
+				set(filteredSettings, key, setting)
 			}
-		}
+		})
 
-		return selected
+		return filteredSettings as SettingsState
 	}
 )
 

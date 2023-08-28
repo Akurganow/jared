@@ -1,13 +1,9 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react'
-import { UIHistoryItem } from 'libs/history'
 import { ITSHistoryItem } from 'libs/history/types'
 
-export interface UIItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-	id: UIHistoryItem['id']
+export interface TicketItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 	title: string
-	url: UIHistoryItem['url']
-}
-
-export interface TicketItemProps extends UIItemProps {
+	id: ITSHistoryItem['id']
+	url: ITSHistoryItem['url']
 	type: ITSHistoryItem['type']
 }

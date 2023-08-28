@@ -1,17 +1,27 @@
 import { useSelector } from 'react-redux'
-import { selectedSetting, SettingItem } from 'store/settings'
+import { selectedSetting, SettingTypeOption } from 'store/settings'
+import st from '../styles.module.css'
 import { SettingsFieldProps } from './types'
 
 export default function ({ setting }: SettingsFieldProps) {
-	const { value, options } = useSelector(selectedSetting(setting)) as unknown as SettingItem<string>
-	console.log(setting, value, options)
+	const {
+		value,
+		name,
+		options
+	} = useSelector(selectedSetting(setting)) as SettingTypeOption
+
 	return (
-		<div>
-			{setting}: <select value={value}>
-				{options?.map(option =>
-					<option key={option} value={option} selected={option === value}>{option}</option>)
-				}
-			</select>
-		</div>
+		<>
+			<div className={st.name}>{name}:</div>
+			<div className={st.value}>
+				<select name={setting} defaultValue={value}>
+					{options.map(option =>
+						<option key={option} value={option}>
+							{option}
+						</option>)
+					}
+				</select>
+			</div>
+		</>
 	)
 }

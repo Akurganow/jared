@@ -8,13 +8,14 @@ const defaultThemes = {
 	light: defaultThemeDark,
 }
 const themes: { [key: string]: Theme } = {}
+
 export function getTheme(name: string = 'default'): Theme {
 	const theme = themes[name] || {}
 
 	return merge(defaultThemes[theme.type || 'dark'], theme)
 }
 
-export function getThemeNames(): string[] {
+export function getThemesNames(): string[] {
 	return [...Object.keys(themes), 'default']
 }
 
@@ -28,7 +29,7 @@ function getColorOrVarGetter(colors: Theme['colors']) {
 	})
 }
 
-export function getThemeStylesheet(name: string): string {
+function rawGetThemeStylesheet(name: string): string {
 	let theme = getTheme()
 
 	if (name !== 'default') {
@@ -62,3 +63,5 @@ export function getThemeStylesheet(name: string): string {
 		}
 	`
 }
+
+export const getThemeStylesheet = memoize(rawGetThemeStylesheet)

@@ -25,7 +25,7 @@ export default function ({ className, ...props }: RepoProps) {
 					url={item.url}
 					title={item.title}
 					repoName={item.name}
-					gitType={item.provider}
+					provider={item.provider}
 				/>
 			))}
 		</div>

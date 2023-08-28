@@ -1,25 +1,21 @@
 .header {
     padding-block: 0.25rem;
     padding-inline: 1rem;
-    background-color: var(--blackSecondary);
-    color: var(--whiteSecondary);
     text-align: center;
 }
 
 .header ~ .body {
-    border-top: 1px solid var(--blackTernary);
+    border-top: 1px solid var(--area-modal-secondaryBackground);
 }
 
 .body {
     padding-block: 0.25rem;
     padding-inline: 1rem;
-    background-color: var(--blackSecondary);
-    color: var(--whiteSecondary);
 }
 
 .footer {
     padding-block: 0.25rem;
     padding-inline: 1rem;
-    background-color: var(--greySecondary);
-    color: var(--whiteSecondary);
+    background-color: var(--area-modal-secondaryBackground);
+    color: var(--area-modal-secondaryForeground);
 }

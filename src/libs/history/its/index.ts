@@ -13,7 +13,7 @@ function processDefaultTicket(item: chrome.history.HistoryItem): ITSHistoryItem 
 		title: item.title || '',
 	}
 }
-export function processTicket(item: chrome.history.HistoryItem): ITSHistoryItem {
+export function processITS(item: chrome.history.HistoryItem): ITSHistoryItem {
 	const [url] = getUrl(item.url || '')
 
 	switch (true) {

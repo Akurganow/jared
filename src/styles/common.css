@@ -6,7 +6,7 @@
 body {
 	font-family: 'JetBrains Mono', monospace;
 	font-size: 13px;
-	line-height: 1.2;
+	line-height: 1.4;
 	background-color: var(--area-page-background);
 	color: var(--area-page-foreground);
 }

@@ -1,0 +1,26 @@
+.container {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-auto-rows: max-content;
+    grid-row-gap: 0.25rem;
+    margin: 0.25rem 0;
+}
+
+.name {
+    display: flex;
+    align-items: flex-start;
+}
+
+.value {
+    display: flex;
+    align-items: flex-start;
+}
+
+.name input,
+.name select,
+.name textarea,
+.value input,
+.value select,
+.value textarea {
+    width: 100%;
+}

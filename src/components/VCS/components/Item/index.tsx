@@ -1,12 +1,8 @@
 import cn from 'classnames'
 import SVGIcon from 'components/SVGIcon'
 import st from './styles.module.css'
-import { GitItemProps } from './types'
-export default function ({ id, type, url, title, repoName, gitType }: GitItemProps) {
-	const gitTypeIcon = gitType === 'github' || gitType === 'gitlab'
-		? gitType
-		:  'git'
-
+import { VSCItemProps } from './types'
+export default function ({ id, type, url, title, repoName, provider }: VSCItemProps) {
 	return (
 		<a
 			key={id}
@@ -18,7 +14,11 @@ export default function ({ id, type, url, title, repoName, gitType }: GitItemPro
 				{type} {repoName}
 			</div>
 			{title}
-			<SVGIcon name={gitTypeIcon} className={st.icon}/>
+			{
+				provider === 'github' || provider === 'gitlab'
+					? <SVGIcon name={`${provider}Logo`} className={st.icon}/>
+					: null
+			}
 		</a>
 	)
 }

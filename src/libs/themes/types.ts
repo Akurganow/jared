@@ -1,10 +1,12 @@
-type ThemeAreas = 'page' | 'sidebar'
-type ThemeSettings = {
-	background?: string
-	foreground?: string
-	border?: string
-	fontStyle?: string
-}
+type ThemeAreas = 'page' | 'sidebar' | 'modal'
+type ThemeSettings = Partial<{
+	background: string
+	foreground: string
+	secondaryBackground: string
+	secondaryForeground: string
+	border: string
+	fontStyle: string
+}>
 interface ThemeData {
 	name: string
 	settings: ThemeSettings
