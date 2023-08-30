@@ -51,7 +51,7 @@ export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHis
 			const title = getSplitTitle(item.title || '')
 
 			const filterName = title
-				? title[0].replace(/^\[(.+)\].+/ig, '$1')
+				? title[0].replace(/^[(.+)].+/ig, '$1')
 				: ''
 
 			return {

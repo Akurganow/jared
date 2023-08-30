@@ -8,9 +8,9 @@ import { selectedSettings, selectedSettingsKeys, selectedSettingType, setSetting
 import { getHistory } from 'store/history'
 import { RootState } from 'store/types'
 import { closeDialog } from 'store/dialogs'
+import Button from 'components/Button'
 import settingsTypes from './components'
 import st from './styles.module.css'
-import Button from 'components/Button'
 
 const settingsField = (key: keyof SettingsState) => {
 	const type = useSelector(selectedSettingType(key))
