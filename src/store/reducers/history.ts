@@ -36,11 +36,11 @@ const createAsync = asyncFactory<RootState>(createAction)
 const getHistoryItems = createAsync<string, chrome.history.HistoryItem[]>(
 	'getHistoryItems',
 	async (text, dispatch, getState) => {
-		const { maxResults } = selectedSettings(getState())
+		const { maxResults, numDays } = selectedSettings(getState())
 		const items: chrome.history.HistoryItem[] = []
 		const keys = text.split(',').map((key) => key.trim())
 		const currentTime = new Date().getTime()
-		const oneWeekAgo = currentTime - 1000 * 60 * 60 * 24 * 7
+		const oneWeekAgo = currentTime - 1000 * 60 * 60 * 24 * numDays.value
 
 		for (const key of keys) {
 			const query: chrome.history.HistoryQuery = {

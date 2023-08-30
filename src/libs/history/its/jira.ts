@@ -12,6 +12,7 @@ function rawGetSplitTitle(title: string): string[] {
 
 const getSplitTitle = memoize(rawGetSplitTitle)
 // TODO: filter items from settings
+// TODO: move processors to separate files
 export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHistoryItem> = [
 	// TYPE: issue
 	[
@@ -28,6 +29,7 @@ export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHis
 				...item,
 				url,
 				type: 'issue',
+				provider: 'jira',
 				name: path[1],
 				title: title?.join(' - ') || path[1],
 			}
@@ -56,6 +58,7 @@ export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHis
 				...item,
 				url,
 				type: 'filter',
+				provider: 'jira',
 				name: filterName,
 				title: filterName,
 			}
@@ -80,6 +83,7 @@ export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHis
 				...item,
 				url,
 				type: 'project',
+				provider: 'jira',
 				name: projectName,
 				title: projectName,
 			}
@@ -105,6 +109,7 @@ export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHis
 				...item,
 				url,
 				type: 'profile',
+				provider: 'jira',
 				name: profileName,
 				title: profileName,
 			}
@@ -130,6 +135,7 @@ export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHis
 				...item,
 				url,
 				type: 'board',
+				provider: 'jira',
 				name: boardId,
 				title: title.join(' ')
 			}
@@ -155,6 +161,7 @@ export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHis
 				...item,
 				url,
 				type: 'board',
+				provider: 'jira',
 				name,
 				title: name,
 			}

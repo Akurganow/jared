@@ -22,6 +22,7 @@ export default function ({ className, ...props }: TicketsProps) {
 				type={item.type}
 				url={item.url}
 				title={item.title}
+				provider={item.provider}
 			/>)}
 		</div>
 	)

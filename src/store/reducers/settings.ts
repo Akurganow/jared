@@ -21,6 +21,7 @@ export type SettingTypeNumber = {
 	value: number
 	max?: number
 	min?: number
+	step?: number
 }
 export type SettingTypeBoolean = {
 	type: 'boolean'
@@ -36,6 +37,7 @@ export type SettingTypeOption = {
 
 export interface SettingsState {
 	maxResults: SettingTypeNumber
+	numDays: SettingTypeNumber
 	userQuery: SettingTypeString
 	vcsQuery: SettingTypeString
 	itsQuery: SettingTypeString
@@ -49,6 +51,12 @@ export const initialState: SettingsState = {
 		value: 100,
 		type: 'number',
 		name: 'Max results',
+	},
+	numDays: {
+		value: 7,
+		step: 1,
+		type: 'number',
+		name: 'Number of days',
 	},
 	vcsQuery: {
 		value: 'gitlab, github',

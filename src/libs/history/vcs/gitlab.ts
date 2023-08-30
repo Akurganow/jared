@@ -2,6 +2,7 @@ import { ProcessConfig, VCSHistoryItem } from '../types'
 import { getConfigTypes, getUrl } from '../helpers'
 
 // TODO: add pipelines, graphs, analytics, jobs, issues, commits, tree, branches, tags, network, compare, settings, members, integrations, packages, repository
+// TODO: move processors to separate files
 export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
 	// TYPE: mergeRequest
 	[

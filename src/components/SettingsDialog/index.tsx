@@ -2,13 +2,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { AnyAction } from 'redux'
 import isEqual from 'lodash/isEqual'
-import { useCallback, useMemo, useState } from 'react'
+import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react'
 import Dialog, { DialogHeader, DialogBody, DialogFooter } from 'components/Dialog'
 import { selectedSettings, selectedSettingsKeys, selectedSettingType, setSettings, SettingsState } from 'store/settings'
 import { getHistory } from 'store/history'
 import { RootState } from 'store/types'
+import { closeDialog } from 'store/dialogs'
 import settingsTypes from './components'
 import st from './styles.module.css'
+import Button from 'components/Button'
 
 const settingsField = (key: keyof SettingsState) => {
 	const type = useSelector(selectedSettingType(key))
@@ -38,7 +40,7 @@ export default function () {
 		}
 	}, [updatedSettings])
 
-	const handleSettingChange = useCallback((event: React.ChangeEvent<HTMLFormElement>) => {
+	const handleSettingChange = useCallback((event: ChangeEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		const value = event.target.value as SettingsState[keyof SettingsState]['value']
 		const name = event.target.name as keyof SettingsState
@@ -50,12 +52,16 @@ export default function () {
 		}
 	}, [settingKeys, currentSettings, createUpdatedSettings])
 
-	const handleSettingsSubmit = useCallback((event: React.FormEvent<HTMLFormElement>) => {
+	const handleSettingsSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 
 		dispatch(setSettings(updatedSettings))
 		dispatch(getHistory())
 	}, [dispatch, updatedSettings])
+
+	const handleClose = useCallback(() => {
+		dispatch(closeDialog('settings'))
+	}, [dispatch])
 
 	return <Dialog name="settings">
 		<DialogHeader>Settings</DialogHeader>
@@ -70,13 +76,16 @@ export default function () {
 			</form>
 		</DialogBody>
 		<DialogFooter>
-			<button
+			<Button
 				type="submit"
 				form="settings-form"
 				disabled={isEqual(currentSettings, updatedSettings)}
 			>
 				Save
-			</button>
+			</Button>
+			<Button onClick={handleClose}>
+				Close
+			</Button>
 		</DialogFooter>
 	</Dialog>
 }

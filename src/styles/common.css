@@ -1,5 +1,6 @@
 #root,
 #popup {
+	--basic-fontSize: 13px;
 	display: contents;
 }
 

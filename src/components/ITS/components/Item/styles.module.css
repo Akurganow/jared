@@ -30,6 +30,18 @@
 	text-decoration: none;
 }
 
+.icon	{
+	position: absolute;
+	top: -25%;
+	right: 0;
+	z-index: -1;
+	filter: grayscale(0.5);
+	width: 5rem;
+	height: 150%;
+	opacity: 0.1;
+	transform: rotate(25deg);
+}
+
 /* TODO: more meaningful use of colors, put in readme.md */
 
 .issue {

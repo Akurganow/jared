@@ -15,7 +15,7 @@ export default function ({ id, type, url, title, repoName, provider }: VSCItemPr
 			</div>
 			{title}
 			{
-				provider === 'github' || provider === 'gitlab'
+				provider !== 'unknown'
 					? <SVGIcon name={`${provider}Logo`} className={st.icon}/>
 					: null
 			}

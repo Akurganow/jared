@@ -6,4 +6,5 @@ export interface TicketItemProps extends DetailedHTMLProps<HTMLAttributes<HTMLDi
 	id: ITSHistoryItem['id']
 	url: ITSHistoryItem['url']
 	type: ITSHistoryItem['type']
+	provider: ITSHistoryItem['provider']
 }

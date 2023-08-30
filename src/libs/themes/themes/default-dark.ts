@@ -6,6 +6,9 @@ const theme: Theme = {
 	colors: {
 		primaryBackground: '#242424',
 		primaryForeground: '#cccccc',
+		primaryBorder: '#ffffff1a',
+		primaryHoverBackground: '#303030',
+		primaryHoverForeground: '#cccccc',
 		secondaryBackground: '#323232',
 		secondaryForeground: '#ffffff',
 		tertiaryBackground: '#ffffff1a',
@@ -34,8 +37,22 @@ const theme: Theme = {
 		sidebar: {
 			background: 'tertiaryBackground',
 			foreground: 'tertiaryForeground',
-			border: '#ffffff1a'
+			border: 'primaryBorder'
 		},
+		form: {
+			background: 'primaryBackground',
+			foreground: 'primaryForeground',
+			border: 'secondaryBackground',
+		},
+		button: {
+			default: {
+				background: 'primaryBackground',
+				foreground: 'primaryForeground',
+				hoverBackground: 'primaryHoverBackground',
+				hoverForeground: 'primaryHoverForeground',
+				border: 'secondaryBackground',
+			}
+		}
 	},
 	tokens: [
 		{

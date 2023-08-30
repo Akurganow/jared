@@ -1,4 +1,4 @@
-type ThemeAreas = 'page' | 'sidebar' | 'modal'
+type ThemeAreas = 'page' | 'sidebar' | 'modal' | 'form'
 type ThemeSettings = Partial<{
 	background: string
 	foreground: string
@@ -7,6 +7,10 @@ type ThemeSettings = Partial<{
 	border: string
 	fontStyle: string
 }>
+type ThemeButtonSettings = Partial<{
+	hoverBackground: string
+	hoverForeground: string
+}> & ThemeSettings
 interface ThemeData {
 	name: string
 	settings: ThemeSettings
@@ -19,6 +23,14 @@ export interface Theme {
 	}
 	tokens: ThemeData[];
 	areas: {
+		button?: {
+			default?: ThemeButtonSettings
+			action?: ThemeButtonSettings
+			danger?: ThemeButtonSettings
+			warning?: ThemeButtonSettings
+			disabled?: ThemeButtonSettings
+		};
+	} & {
 		[key in ThemeAreas]?: ThemeSettings;
 	}
 }

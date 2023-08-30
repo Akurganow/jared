@@ -11,6 +11,7 @@ function processDefaultTicket(item: chrome.history.HistoryItem): ITSHistoryItem 
 		type: 'unknown',
 		name: item.title || '',
 		title: item.title || '',
+		provider: 'unknown',
 	}
 }
 export function processITS(item: chrome.history.HistoryItem): ITSHistoryItem {

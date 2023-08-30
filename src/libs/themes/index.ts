@@ -33,27 +33,37 @@ function rawGetThemeStylesheet(name: string): string {
 	let theme = getTheme()
 
 	if (name !== 'default') {
-		theme = getTheme()
+		theme = getTheme(name)
 	}
+
 	const { colors, tokens, areas } = theme
 	const getColorOrVar = getColorOrVarGetter(colors)
 
-	const colorVars = Object.entries(colors).map(([key, value]) => {
-		return `--color-${key}: ${value};`
-	}).join('')
+	const colorVars = Object.entries(colors).reduce((acc, [key, value]) => {
+		return `${acc}--color-${key}: ${value};\n`
+	}, '')
 
-	const tokenVars = tokens.map(token => {
+	const tokenVars = tokens.flatMap(token => {
 		const { name, settings } = token
 		return Object.entries(settings).map(([key, value]) => {
 			return `--token-${name}-${key}: ${getColorOrVar(value)};`
-		}).join('')
-	}).join('')
+		})
+	}).join('\n')
 
-	const areaVars = Object.entries(areas).map(([key, value]) => {
-		return Object.entries(value).map(([vKey, vValue]) => {
-			return `--area-${key}-${vKey}: ${getColorOrVar(vValue)};`
-		}).join('')
-	}).join('')
+	const areaVars = Object.entries(areas).flatMap(([key, value]) => {
+		return Object.entries(value).flatMap(([vKey, vValue]) => {
+			if (key === 'button') {
+				return Object.entries(vValue).map(([vvKey, vvValue]) => {
+					if (typeof vvValue !== 'string') {
+						throw new Error(`Expected theme ${key}.${vKey}.${vvKey} to be a string, but got ${typeof vvValue}`)
+					}
+					return `--area-${key}-${vKey}-${vvKey}: ${getColorOrVar(vvValue)};`
+				})
+			} else {
+				return `--area-${key}-${vKey}: ${getColorOrVar(vValue)};`
+			}
+		})
+	}).join('\n')
 
 	return `
 		:root {

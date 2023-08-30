@@ -1,20 +1,24 @@
 import cn from 'classnames'
+import SVGIcon from 'components/SVGIcon'
 import st from './styles.module.css'
 import { TicketItemProps } from './types'
-export default function (props: TicketItemProps) {
-	const type = props.type ? props.type : 'unknown'
-
+export default function ({ id, title, url, type, provider }: TicketItemProps) {
 	return (
 		<a
-			key={props.id}
-			title={props.title}
-			href={props.url.href}
+			key={id}
+			title={title}
+			href={url.href}
 			className={cn(st.item, st[type])}
 		>
 			<div>
 				{type}
 			</div>
-			{props.title}
+			{title}
+			{
+				provider !== 'unknown'
+					? <SVGIcon name={`${provider}Logo`} className={st.icon}/>
+					: null
+			}
 		</a>
 	)
 }

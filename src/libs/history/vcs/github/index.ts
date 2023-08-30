@@ -1,10 +1,11 @@
 import { ProcessConfig, VCSHistoryItem } from 'libs/history/types'
 import { getConfigTypes, getUrl } from 'libs/history/helpers'
-import processor from 'libs/history/vcs/github/settings'
+import settings from 'libs/history/vcs/github/settings'
 
 // TODO: add commits, releases, settings, notifications, orgs, pkgs
+// TODO: move processors to separate files
 export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
-	processor,
+	settings,
 	// TYPE: topics
 	[
 		(item: chrome.history.HistoryItem) => {
