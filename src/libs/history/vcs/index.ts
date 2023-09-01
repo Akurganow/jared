@@ -12,7 +12,7 @@ function processDefaultGit(item: chrome.history.HistoryItem): VCSHistoryItem {
 		url,
 		type: 'unknown',
 		provider: 'unknown',
-		name: item.title || '',
+		name: '',
 		title: item.title || '',
 	}
 }

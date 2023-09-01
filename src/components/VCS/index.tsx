@@ -1,7 +1,7 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react'
 import { useSelector } from 'react-redux'
 import cn from 'classnames'
-import { selectedGitItems } from 'store/history'
+import { selectedVCS } from 'store/history'
 import st from './styles.module.css'
 import Item from './components/Item'
 
@@ -10,22 +10,17 @@ interface RepoProps
 }
 
 export default function ({ className, ...props }: RepoProps) {
-	const history = useSelector(selectedGitItems)
+	const vcsHistory = useSelector(selectedVCS)
 
 	return (
 		<div
 			className={cn(st.repo, className)}
 			{...props}
 		>
-			{history.map((item) => (
+			{vcsHistory.map((item) => (
 				<Item
-					key={item.id}
-					id={item.id}
-					type={item.type}
-					url={item.url}
-					title={item.title}
-					repoName={item.name}
-					provider={item.provider}
+					key={`${item.pinned ? 'pinned' : ''}${item.id}`}
+					{...item}
 				/>
 			))}
 		</div>

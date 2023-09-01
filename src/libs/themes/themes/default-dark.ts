@@ -7,8 +7,6 @@ const theme: Theme = {
 		primaryBackground: '#242424',
 		primaryForeground: '#cccccc',
 		primaryBorder: '#ffffff1a',
-		primaryHoverBackground: '#303030',
-		primaryHoverForeground: '#cccccc',
 		secondaryBackground: '#323232',
 		secondaryForeground: '#ffffff',
 		tertiaryBackground: '#ffffff1a',
@@ -46,10 +44,8 @@ const theme: Theme = {
 		},
 		button: {
 			default: {
-				background: 'primaryBackground',
-				foreground: 'primaryForeground',
-				hoverBackground: 'primaryHoverBackground',
-				hoverForeground: 'primaryHoverForeground',
+				background: 'tertiaryBackground',
+				foreground: 'tertiaryForeground',
 				border: 'secondaryBackground',
 			}
 		}

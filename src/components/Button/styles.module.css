@@ -1,17 +1,20 @@
 .button {
-    background-color: var(--area-button-default-background);
-    color: var(--area-button-default-foreground);
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: var(--basic-fontSize);
-    margin: 4px 2px;
-    cursor: pointer;
+	background-color: var(--area-button-default-background);
+	color: var(--area-button-default-foreground);
+	border: none;
+	padding: 0.25rem 0.5rem;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: var(--basic-fontSize);
+	cursor: pointer;
+	transition: filter 0.2s ease-in-out;
 }
 
 .button:hover {
-		background-color: var(--area-button-default-hoverBackground);
-		color: var(--area-button-default-hoverForeground);
+	filter: brightness(1.25);
+}
+
+.button + .button {
+	margin-inline-start: 0.5rem;
 }

@@ -4,18 +4,22 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { asyncFactory } from 'typescript-fsa-redux-thunk'
 import storage from 'redux-persist/lib/storage'
 import { RootState } from 'store/types'
-import { VCSHistoryItem, ITSHistoryItem } from 'libs/history/types'
 import { selectedSettings } from 'store/settings'
 import { processVCS } from 'libs/history/vcs'
 import { processITS } from 'libs/history/its'
-import { sortByLastVisitTime, sortByVisitCount } from 'libs/history'
+import { sortByLastVisitTime, sortByVisitCount } from 'libs/history/helpers'
 
 export interface HistoryItem extends chrome.history.HistoryItem {}
 
 export interface HistoryState {
 	main: HistoryItem[];
-	vcs: VCSHistoryItem[];
-	its: ITSHistoryItem[];
+	vcs: HistoryItem[];
+	its: HistoryItem[];
+	pinned: {
+		main: HistoryItem[];
+		vcs: HistoryItem[];
+		its: HistoryItem[];
+	}
 }
 
 export const storeKey = 'history'
@@ -23,10 +27,33 @@ export const initialState: HistoryState = {
 	main: [],
 	vcs: [],
 	its: [],
+	pinned: {
+		main: [],
+		vcs: [],
+		its: [],
+	},
 }
 export const persistConfig = {
 	key: `jared/${storeKey}`,
 	storage,
+}
+
+// Helpers
+function filterItems(pinned: HistoryItem[]) {
+	return (item: HistoryItem, index: number, array: HistoryItem[]) =>
+		array.findIndex(i => i.title === item.title) === index
+		&& !pinned.find(pinnedItem => pinnedItem.title === item.title)
+}
+
+function movePinnedItemBetweenArrays(arrFrom: HistoryItem[], arrTo: HistoryItem[], id: HistoryItem['id'], pinned: boolean) {
+	const item = arrFrom.find(item => item.id === id)
+
+	return item
+		? [
+			arrFrom.filter(item => item.id !== id),
+			[...arrTo, { ...item, pinned }],
+		]
+		: [arrFrom, arrTo]
 }
 
 // Actions
@@ -35,7 +62,7 @@ const createAsync = asyncFactory<RootState>(createAction)
 
 const getHistoryItems = createAsync<string, chrome.history.HistoryItem[]>(
 	'getHistoryItems',
-	async (text, dispatch, getState) => {
+	async (text, _dispatch, getState) => {
 		const { maxResults, numDays } = selectedSettings(getState())
 		const items: chrome.history.HistoryItem[] = []
 		const keys = text.split(',').map((key) => key.trim())
@@ -59,48 +86,45 @@ const getHistoryItems = createAsync<string, chrome.history.HistoryItem[]>(
 	}
 )
 
-export const getVCS = createAsync<void, void>(
+export const updateVCS = createAsync<void, void>(
 	'getVCS',
 	async (_, dispatch, getState) => {
 		const { vcsQuery } = selectedSettings(getState())
-		const vcsHistory = await dispatch(getHistoryItems(vcsQuery.value))
-		const vcs = vcsHistory
-			.sort(sortByLastVisitTime)
-			.map(processVCS)
+		const vcs = await dispatch(getHistoryItems(vcsQuery.value))
 
 		dispatch(updateVCSHistory(vcs))
 	})
-export const getITS = createAsync<void, void>(
+export const updateITS = createAsync<void, void>(
 	'getITS',
 	async (_, dispatch, getState) => {
 		const { itsQuery } = selectedSettings(getState())
-		const itsHistory = await dispatch(getHistoryItems(itsQuery.value))
-		const its = itsHistory
-			.sort(sortByVisitCount)
-			.map(processITS)
+		const its = await dispatch(getHistoryItems(itsQuery.value))
 
 		dispatch(updateITSHistory(its))
 	})
-export const getUserContent = createAsync<void, void>(
+export const updateUserContent = createAsync<void, void>(
 	'getUserContent',
 	async (_, dispatch, getState) => {
-		const { userQuery } = selectedSettings(getState())
+		const state = getState()
+		const { userQuery } = selectedSettings(state)
 		const userContent = await dispatch(getHistoryItems(userQuery.value))
 
 		dispatch(updateUserHistory(userContent))
 	})
-export const getHistory = createAsync<void, void>(
+export const updateHistory = createAsync<void, void>(
 	'getHistory',
 	async (_, dispatch) => {
-		await dispatch(getVCS())
-		await dispatch(getITS())
-		await dispatch(getUserContent())
+		await dispatch(updateVCS())
+		await dispatch(updateITS())
+		await dispatch(updateUserContent())
 	}
 )
 
+export const pinItem = createAction<HistoryItem['id']>('pinItem')
+export const unpinItem = createAction<HistoryItem['id']>('unpinItem')
 export const updateUserHistory = createAction<HistoryItem[]>('updateHistory')
-export const updateVCSHistory = createAction<VCSHistoryItem[]>('updateGitHistory')
-export const updateITSHistory = createAction<ITSHistoryItem[]>('updateJiraHistory')
+export const updateVCSHistory = createAction<HistoryItem[]>('updateGitHistory')
+export const updateITSHistory = createAction<HistoryItem[]>('updateJiraHistory')
 
 // Reducer
 export const reducer = reducerWithInitialState(initialState)
@@ -116,53 +140,101 @@ export const reducer = reducerWithInitialState(initialState)
 		...state,
 		its: items,
 	}))
+	.case(pinItem, (state, id) => {
+		const [main, mainPinned] = movePinnedItemBetweenArrays(state.main, state.pinned.main, id, true)
+		const [vcs, vcsPinned] = movePinnedItemBetweenArrays(state.vcs, state.pinned.vcs, id, true)
+		const [its, itsPinned] = movePinnedItemBetweenArrays(state.its, state.pinned.its, id, true)
+
+		return {
+			...state,
+			pinned: {
+				main: mainPinned,
+				vcs: vcsPinned,
+				its: itsPinned,
+			},
+			main,
+			vcs,
+			its,
+		}
+	})
+	.case(unpinItem, (state, id) => {
+		const [mainPinned, main] = movePinnedItemBetweenArrays(state.pinned.main, state.main, id, false)
+		const [vcsPinned, vcs] = movePinnedItemBetweenArrays(state.pinned.vcs, state.vcs, id, false)
+		const [itsPinned, its] = movePinnedItemBetweenArrays(state.pinned.its, state.its, id, false)
+
+		return {
+			...state,
+			pinned: {
+				main: mainPinned,
+				vcs: vcsPinned,
+				its: itsPinned,
+			},
+			main,
+			vcs,
+			its,
+		}
+	})
 
 // Selectors
 const rawSelectedMainItems = (state: RootState) => state[storeKey].main
 const rawSelectedVCSItems = (state: RootState) => state[storeKey].vcs
 const rawSelectedITSItems = (state: RootState) => state[storeKey].its
+const rawSelectedPinnedItems = (state: RootState) => state[storeKey].pinned
 
-export const selectedTicketItemById = createSelector(
+export const selectedPinnedVCSItems = createSelector(
+	rawSelectedPinnedItems,
+	(items) => items.vcs
+)
+export const selectedPinnedITSItems = createSelector(
+	rawSelectedPinnedItems,
+	(items) => items.its
+)
+export const selectedPinnedUserContentItems = createSelector(
+	rawSelectedPinnedItems,
+	(items) => items.main
+)
+
+export const selectedITSItemById = createSelector(
 	rawSelectedITSItems,
 	(items) => (id: string) =>
 		items.find(item => item.id === id)
 )
 
-export const selectedGitItemById = createSelector(
+export const selectedVCSItemById = createSelector(
 	rawSelectedVCSItems,
 	(items) => (id: string) =>
 		items.find(item => item.id === id)
 )
 
-export const selectedGitItems = createSelector(
+export const selectedVCS = createSelector(
 	rawSelectedVCSItems,
-	(items) => items
-		? items.filter((item, index, array) =>
-			!!item.type && item.type !== 'unknown' && item.provider !== 'unknown'
-			&& array.findIndex(i => i.title === item.title) === index
-		)
-		: [],
+	selectedPinnedVCSItems,
+	(items, pinned) => {
+		const filtered = items.filter(filterItems(pinned)).sort(sortByLastVisitTime)
+
+		return [...pinned, ...filtered].map(processVCS)
+	},
 )
-export const selectedTickets = createSelector(
+export const selectedITS = createSelector(
 	rawSelectedITSItems,
-	(items) => items
-		? items.filter((item, index, array) =>
-			!!item.type && item.type !== 'unknown'
-			&& array.findIndex(i => i.title === item.title) === index
-		)
-		: [],
+	selectedPinnedITSItems,
+	(items, pinned) => {
+		const filtered = items.filter(filterItems(pinned)).sort(sortByVisitCount)
+
+		return [...pinned, ...filtered].map(processITS)
+	},
 )
 
-export const selectedMainItems = createSelector(
+export const selectedUserContentItems = createSelector(
 	rawSelectedMainItems,
-	selectedGitItemById,
-	selectedTicketItemById,
-	(main, getGit, getTicket) => main
+	selectedVCSItemById,
+	selectedITSItemById,
+	(main, getVCS, getITS) => main
 		.filter((item, index, array) => {
-			const foundInGit = getGit(item.id)
-			const foundInTickets = getTicket(item.id)
+			const foundInVCS = getVCS(item.id)
+			const foundInITS = getITS(item.id)
 
-			return !foundInGit && !foundInTickets
+			return !foundInVCS && !foundInITS
 				&& array.findIndex(i => i.title === item.title) === index
 		}),
 )

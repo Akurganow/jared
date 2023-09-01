@@ -9,7 +9,7 @@ function processDefaultTicket(item: chrome.history.HistoryItem): ITSHistoryItem 
 		...item,
 		url,
 		type: 'unknown',
-		name: item.title || '',
+		name: '',
 		title: item.title || '',
 		provider: 'unknown',
 	}

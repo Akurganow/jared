@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual'
 import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react'
 import Dialog, { DialogHeader, DialogBody, DialogFooter } from 'components/Dialog'
 import { selectedSettings, selectedSettingsKeys, selectedSettingType, setSettings, SettingsState } from 'store/settings'
-import { getHistory } from 'store/history'
+import { updateHistory } from 'store/history'
 import { RootState } from 'store/types'
 import { closeDialog } from 'store/dialogs'
 import Button from 'components/Button'
@@ -56,7 +56,8 @@ export default function () {
 		event.preventDefault()
 
 		dispatch(setSettings(updatedSettings))
-		dispatch(getHistory())
+		dispatch(updateHistory())
+		dispatch(closeDialog('settings'))
 	}, [dispatch, updatedSettings])
 
 	const handleClose = useCallback(() => {

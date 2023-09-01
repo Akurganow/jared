@@ -1,10 +1,10 @@
 import cn from 'classnames'
 import { useSelector } from 'react-redux'
-import { selectedMainItems } from 'store/history'
+import { selectedUserContentItems } from 'store/history'
 import st from './styles.module.css'
 
 export default function () {
-	const history = useSelector(selectedMainItems)
+	const history = useSelector(selectedUserContentItems)
 
 	return (
 		<div className={cn(st.content)}>

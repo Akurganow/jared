@@ -3,7 +3,7 @@ import { configureStore, ThunkDispatch } from '@reduxjs/toolkit'
 import { devToolsEnhancer } from '@redux-devtools/remote'
 import thunkMiddleware, { ThunkMiddleware } from 'redux-thunk'
 import { persistStore } from 'redux-persist'
-import { getHistory } from 'store/history'
+import { updateHistory } from 'store/history'
 import { RootState } from 'store/types'
 import { rootReducer, initialState } from './reducers'
 // import db from 'libs/idb'
@@ -30,7 +30,7 @@ const persistor = persistStore(store as unknown as Store)
 
 async function updateStore(store: Store) {
 	const dispatch: ThunkDispatch<RootState, never, AnyAction> = store.dispatch
-	await dispatch(getHistory())
+	await dispatch(updateHistory())
 }
 
 updateStore(store)

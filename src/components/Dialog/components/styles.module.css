@@ -1,21 +1,23 @@
 .header {
-    padding-block: 0.25rem;
-    padding-inline: 1rem;
-    text-align: center;
+	padding-block: 0.25rem;
+	padding-inline: 1rem;
+	text-align: center;
 }
 
 .header ~ .body {
-    border-top: 1px solid var(--area-modal-secondaryBackground);
+	border-top: 1px solid var(--area-modal-secondaryBackground);
 }
 
 .body {
-    padding-block: 0.25rem;
-    padding-inline: 1rem;
+	padding-block: 0.25rem;
+	padding-inline: 1rem;
 }
 
 .footer {
-    padding-block: 0.25rem;
-    padding-inline: 1rem;
-    background-color: var(--area-modal-secondaryBackground);
-    color: var(--area-modal-secondaryForeground);
+	display: flex;
+	justify-content: flex-end;
+	padding-block: 0.25rem;
+	padding-inline: 1rem;
+	background-color: var(--area-modal-secondaryBackground);
+	color: var(--area-modal-secondaryForeground);
 }

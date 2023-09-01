@@ -7,6 +7,7 @@ export interface HistoryItem extends Omit<chrome.history.HistoryItem, 'url'> {
 	url: URL
 	name: string
 	title: string
+	pinned?: boolean
 }
 export interface VCSHistoryItem extends HistoryItem {
 	type: VCSType
