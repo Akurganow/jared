@@ -2,7 +2,7 @@ import { DetailedHTMLProps, HTMLAttributes } from 'react'
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
 import Icon from 'components/SVGIcon'
-import { openDialog } from 'store/dialogs'
+import { openDialog } from 'store/actions/dialogs'
 import st from './styles.module.css'
 
 interface SidebarProps

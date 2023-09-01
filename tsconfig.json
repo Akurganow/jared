@@ -2,28 +2,13 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"store/*": [
-				"src/store/reducers/*"
-			],
-			"i18n": [
-				"src/i18n/index"
-			],
-			"react-dom": [
-				"@hot-loader/react-dom"
-			],
-			"src/*": [
-				"src/*"
-			],
-			"jest/*": [
-				".jest/*"
-			],
-			"storybook/*": [
-				".storybook/*"
-			],
-			"*": [
-				"*",
-				"src/*"
-			]
+			"src/*": ["src/*"],
+			"store/*": ["src/store/*"],
+			"i18n": ["src/i18n"],
+			"react-dom": ["@hot-loader/react-dom"],
+			"jest/*": [".jest/*"],
+			"storybook/*": [".storybook/*"],
+			"*": ["*"]
 		},
 		"jsx": "react-jsx",
 		"module": "commonjs",
@@ -53,6 +38,7 @@
 	],
 	"exclude": [
 		"./node_modules",
-		"./dist"
+		"./dist",
+		"./.idea"
 	]
 }

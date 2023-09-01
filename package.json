@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
 	"scripts": {
+		"start:dev": "npm run dev & npm run redux-devtools",
 		"dev": "webextension-toolbox dev chrome",
 		"build": "webextension-toolbox build chrome",
 		"redux-devtools": "redux-devtools --hostname=localhost --port=1024",

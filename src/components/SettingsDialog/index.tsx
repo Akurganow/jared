@@ -4,13 +4,16 @@ import { AnyAction } from 'redux'
 import isEqual from 'lodash/isEqual'
 import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react'
 import Dialog, { DialogHeader, DialogBody, DialogFooter } from 'components/Dialog'
-import { selectedSettings, selectedSettingsKeys, selectedSettingType, setSettings, SettingsState } from 'store/settings'
-import { updateHistory } from 'store/history'
-import { RootState } from 'store/types'
-import { closeDialog } from 'store/dialogs'
 import Button from 'components/Button'
+import { closeDialog } from 'store/actions/dialogs'
+import { RootState } from 'store/types'
+import { updateHistory } from 'store/actions/history'
+import { SettingsState } from 'store/types/settings'
+import { setSettings } from 'store/actions/settings'
+import { selectedSettings, selectedSettingsKeys, selectedSettingType } from 'store/selectors/settings'
 import settingsTypes from './components'
 import st from './styles.module.css'
+
 
 const settingsField = (key: keyof SettingsState) => {
 	const type = useSelector(selectedSettingType(key))

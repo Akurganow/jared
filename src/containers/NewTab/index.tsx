@@ -5,8 +5,8 @@ import VCS from 'components/VCS'
 import ITS from 'components/ITS'
 import UserContent from 'components/UserContent'
 import SettingsDialog from 'components/SettingsDialog'
-import { selectedSettingValue } from 'store/settings'
 import { getThemeStylesheet } from 'libs/themes'
+import { selectedSettingValue } from 'store/selectors/settings'
 
 export default function () {
 	const theme = useSelector(selectedSettingValue('theme')) as unknown as string

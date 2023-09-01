@@ -1,6 +1,6 @@
 import cn from 'classnames'
 import { useSelector } from 'react-redux'
-import { selectedUserContentItems } from 'store/history'
+import { selectedUserContentItems } from 'store/selectors/history'
 import st from './styles.module.css'
 
 export default function () {

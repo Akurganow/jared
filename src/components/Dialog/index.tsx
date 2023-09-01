@@ -2,7 +2,8 @@ import { MouseEvent as ReactMouseEvent, DetailedHTMLProps, HTMLAttributes, useEf
 import cn from 'classnames'
 import { createPortal } from 'react-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { closeDialog, selectedDialog } from 'store/dialogs'
+import { selectedDialog } from 'store/selectors/dialogs'
+import { closeDialog } from 'store/actions/dialogs'
 import st from './styles.module.css'
 
 import DialogHeader from './components/Header'
