@@ -1,9 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { closeDialog, openDialog, switchDialog } from 'store/actions/dialogs'
-import { DialogsState } from 'store/types/dialogs'
-
-export const storeKey = 'dialogs'
-export const initialState: DialogsState = {}
+import { initialState } from 'store/constants/dialogs'
 
 export const reducer = reducerWithInitialState(initialState)
 	.case(openDialog, (state, key) => {

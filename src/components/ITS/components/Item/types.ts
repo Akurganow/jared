@@ -1,4 +1,4 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react'
-import { ITSHistoryItem } from 'libs/history/types'
+import { ITSHistoryItem } from 'utils/history/types'
 
 export type ITSItemProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & ITSHistoryItem

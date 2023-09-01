@@ -70,14 +70,15 @@ module.exports = (config, { dev }) => merge(config, {
 	resolve: merge((get(config, 'config.resolve', {})), {
 		extensions: uniq(get(config, 'resolve.extensions', []).concat(['.tsx', '.ts', '.js', '.jsx', '.json'])),
 		alias: merge(get(config, 'resolve.alias', {}), {
-			src: path.resolve(__dirname, './src'),
 			components: path.resolve(__dirname, './src/components'),
 			containers: path.resolve(__dirname, './src/containers'),
 			hooks: path.resolve(__dirname, './src/hooks'),
-			libs: path.resolve(__dirname, './src/libs'),
+			utils: path.resolve(__dirname, './src/utils'),
 			pages: path.resolve(__dirname, './src/pages'),
 			assets: path.resolve(__dirname, './src/assets'),
 			store: path.resolve(__dirname, './src/store'),
+			styles: path.resolve(__dirname, './src/styles'),
+			src: path.resolve(__dirname, './src'),
 			// i18n: path.resolve(__dirname, './src/i18n'),
 			// jest: path.resolve(__dirname, './.jest'),
 			// storybook: path.resolve(__dirname, './.storybook'),

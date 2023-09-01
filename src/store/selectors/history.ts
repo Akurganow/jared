@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect'
+import { sortByLastVisitTime, sortByVisitCount } from 'utils/history/helpers'
+import { processITS } from 'utils/history/its'
+import { processVCS } from 'utils/history/vcs'
 import { RootState } from 'store/types'
 import { filterItems } from 'store/helpers/history'
-import { sortByLastVisitTime, sortByVisitCount } from 'libs/history/helpers'
-import { processITS } from 'libs/history/its'
-import { processVCS } from 'libs/history/vcs'
-import { storeKey } from 'store/reducers/history'
 import { selectedSettings } from 'store/selectors/settings'
+import { storeKey } from 'store/constants/history'
 
 const rawSelectedMainItems = (state: RootState) => state[storeKey].main
 const rawSelectedVCSItems = (state: RootState) => state[storeKey].vcs

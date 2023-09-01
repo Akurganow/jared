@@ -2,20 +2,27 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"src/*": ["src/*"],
 			"store/*": ["src/store/*"],
+			"components/*": ["src/components/*"],
+			"containers/*": ["src/containers/*"],
+			"pages/*": ["src/pages/*"],
+			"utils/*": ["src/utils/*"],
+			"styles/*": ["src/styles/*"],
 			"i18n": ["src/i18n"],
 			"react-dom": ["@hot-loader/react-dom"],
 			"jest/*": [".jest/*"],
 			"storybook/*": [".storybook/*"],
+			"src/*": ["src/*"],
 			"*": ["*"]
 		},
 		"jsx": "react-jsx",
 		"module": "commonjs",
+		"isolatedModules": true,
 		"esModuleInterop": true,
 		"moduleResolution": "node",
+		"resolveJsonModule": true,
 		"preserveConstEnums": true,
-		"removeComments": false,
+		"removeComments": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
@@ -26,7 +33,6 @@
 		"noImplicitThis": true,
 		"noImplicitAny": true,
 		"strictNullChecks": true,
-		"resolveJsonModule": true,
 		"plugins": [
 			{
 				"name": "typescript-plugin-css-modules"

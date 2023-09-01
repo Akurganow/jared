@@ -1,24 +1,7 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import storage from 'redux-persist/lib/storage'
-import { HistoryState } from 'store/types/history'
 import { movePinnedItemBetweenArrays } from 'store/helpers/history'
 import { pinItem, unpinItem, updateITSHistory, updateUserHistory, updateVCSHistory } from 'store/actions/history'
-
-export const storeKey = 'history'
-export const initialState: HistoryState = {
-	main: [],
-	vcs: [],
-	its: [],
-	pinned: {
-		main: [],
-		vcs: [],
-		its: [],
-	},
-}
-export const persistConfig = {
-	key: `jared/${storeKey}`,
-	storage,
-}
+import { initialState } from 'store/constants/history'
 
 export const reducer = reducerWithInitialState(initialState)
 	.case(updateUserHistory, (state, items) => ({

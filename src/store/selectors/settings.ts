@@ -3,7 +3,8 @@ import { createSelector } from 'reselect'
 import set from 'lodash/set'
 import { SettingsState } from 'store/types/settings'
 import { RootState } from 'store/types'
-import { storeKey } from 'store/reducers/settings'
+
+import { storeKey } from 'store/constants/settings'
 
 const rawSelectedSettings = (state: RootState) => state[storeKey]
 export const selectedSettingsKeys = createSelector(

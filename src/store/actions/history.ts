@@ -1,9 +1,9 @@
-import { asyncFactory } from 'typescript-fsa-redux-thunk'
 import { actionCreatorFactory } from 'typescript-fsa'
-import { HistoryItem } from 'store/types/history'
+import { asyncFactory } from 'typescript-fsa-redux-thunk'
 import { RootState } from 'store/types'
-import { storeKey } from 'store/reducers/history'
+import { HistoryItem } from 'store/types/history'
 import { selectedSettings } from 'store/selectors/settings'
+import { storeKey } from 'store/constants/history'
 
 const createAction = actionCreatorFactory(storeKey)
 const createAsync = asyncFactory<RootState>(createAction)

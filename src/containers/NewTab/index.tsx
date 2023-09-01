@@ -5,7 +5,7 @@ import VCS from 'components/VCS'
 import ITS from 'components/ITS'
 import UserContent from 'components/UserContent'
 import SettingsDialog from 'components/SettingsDialog'
-import { getThemeStylesheet } from 'libs/themes'
+import { getThemeStylesheet } from 'utils/themes'
 import { selectedSettingValue } from 'store/selectors/settings'
 
 export default function () {
