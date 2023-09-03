@@ -1,4 +1,3 @@
-import storage from 'redux-persist/lib/storage'
 import { SettingsState } from 'store/types/settings'
 import { getThemesNames } from 'utils/themes'
 
@@ -36,8 +35,4 @@ export const initialState: SettingsState = {
 		type: 'option',
 		name: 'Theme',
 	}
-}
-export const persistConfig = {
-	key: `jared/${storeKey}`,
-	storage,
 }

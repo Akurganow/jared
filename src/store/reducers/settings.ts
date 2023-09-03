@@ -3,7 +3,7 @@ import merge from 'lodash/merge'
 import { setSetting, setSettings } from 'store/actions/settings'
 import { initialState } from 'store/constants/settings'
 
-export const reducer = reducerWithInitialState(initialState)
+const reducer = reducerWithInitialState(initialState)
 	.case(setSetting, (state, { key, value }) => ({
 		...state,
 		[key]: {
@@ -15,3 +15,4 @@ export const reducer = reducerWithInitialState(initialState)
 		merge({}, state, settings)
 	)
 
+export default reducer

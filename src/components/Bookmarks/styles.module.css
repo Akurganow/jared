@@ -1,0 +1,40 @@
+.container {
+	grid-area: bookmarks;
+	height: max-content;
+	overflow: visible;
+}
+
+.bookmarks {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.actions {
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-end;
+	min-width: 100%;
+}
+
+.action {
+	color: var(--color-icon);
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0.5rem;
+	margin: -0.5rem;
+}
+
+.action + .action {
+	margin-left: 0.5rem;
+}
+
+.action:hover, .action:focus {
+	color: var(--color-iconHover);
+}
+
+.icon {
+	color: currentColor;
+}

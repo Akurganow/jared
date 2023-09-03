@@ -5,6 +5,8 @@ import VCS from 'components/VCS'
 import ITS from 'components/ITS'
 import UserContent from 'components/UserContent'
 import SettingsDialog from 'components/SettingsDialog'
+import BookmarkDialog from 'components/BookmarkDialog'
+import Bookmarks from 'components/Bookmarks'
 import { getThemeStylesheet } from 'utils/themes'
 import { selectedSettingValue } from 'store/selectors/settings'
 
@@ -19,10 +21,12 @@ export default function () {
 				<Sidebar />
 				<ITS />
 				<UserContent />
+				<Bookmarks />
 				<VCS />
 			</Main>
 
 			<SettingsDialog />
+			<BookmarkDialog />
 		</>
 	)
 }

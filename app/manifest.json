@@ -18,6 +18,7 @@
     "history",
     "storage",
     "theme",
-    "topSites"
+    "topSites",
+		"favicon"
   ]
 }

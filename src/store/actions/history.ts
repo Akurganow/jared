@@ -1,6 +1,6 @@
 import { actionCreatorFactory } from 'typescript-fsa'
 import { asyncFactory } from 'typescript-fsa-redux-thunk'
-import { RootState } from 'store/types'
+import { RootState } from 'store/types' // eslint-disable-line import/no-cycle
 import { HistoryItem } from 'store/types/history'
 import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'

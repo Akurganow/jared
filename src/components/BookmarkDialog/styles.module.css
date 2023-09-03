@@ -1,0 +1,31 @@
+.container {
+	display: grid;
+	grid-template-columns: max-content max-content;
+	grid-auto-rows: max-content;
+	grid-row-gap: 0.25rem;
+	margin: 0.25rem 0;
+}
+
+.name {
+    display: flex;
+    align-items: flex-start;
+}
+
+.value {
+    display: flex;
+    align-items: flex-start;
+}
+
+.name input,
+.name select,
+.name textarea,
+.value input,
+.value select,
+.value textarea {
+    width: 100%;
+    border: 1px solid var(--area-form-border); /* border color from Darcula Solid */
+    background-color: var(--area-form-background); /* background color from Darcula Solid */
+    padding: 5px;
+    font-size: var(--basic-fontSize);
+    color: var(--area-form-foreground);
+}

@@ -2,7 +2,7 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { closeDialog, openDialog, switchDialog } from 'store/actions/dialogs'
 import { initialState } from 'store/constants/dialogs'
 
-export const reducer = reducerWithInitialState(initialState)
+const reducer = reducerWithInitialState(initialState)
 	.case(openDialog, (state, key) => {
 		const keys = Object.keys(state)
 		const newState = { ...state }
@@ -38,3 +38,4 @@ export const reducer = reducerWithInitialState(initialState)
 		return newState
 	})
 
+export default reducer

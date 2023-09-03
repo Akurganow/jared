@@ -11,10 +11,8 @@ import { closeDialog } from 'store/actions/dialogs'
 import { updateHistory } from 'store/actions/history'
 import { setSettings } from 'store/actions/settings'
 import { selectedSettings, selectedSettingsKeys, selectedSettingType } from 'store/selectors/settings'
-
 import settingsTypes from './components'
 import st from './styles.module.css'
-
 
 const settingsField = (key: keyof SettingsState) => {
 	const type = useSelector(selectedSettingType(key))

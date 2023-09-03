@@ -1,38 +1,59 @@
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-import { PersistPartial } from 'store/types'
-import * as history from 'store/reducers/history'
-import * as settings from 'store/reducers/settings'
-import * as dialogs from 'store/reducers/dialogs'
-import { initialState as initialState1, persistConfig, storeKey } from 'store/constants/history'
+import dialogsReducer from 'store/reducers/dialogs'
+import historyReducer from 'store/reducers/history' // eslint-disable-line import/no-cycle
+import settingsReducer from 'store/reducers/settings'
+import bookmarksReducer from 'store/reducers/bookmarks'
+
 import {
-	initialState as initialState2,
-	persistConfig as persistConfig1,
-	storeKey as storeKey1
+	initialState as dialogsInitialState,
+	storeKey as dialogsStoreKey
+} from 'store/constants/dialogs'
+import {
+	initialState as historyInitialState,
+	storeKey as historyStoreKey
+} from 'store/constants/history'
+import {
+	initialState as settingsInitialState,
+	storeKey as settingsStoreKey
 } from 'store/constants/settings'
-import { initialState as initialState3, storeKey as storeKey2 } from 'store/constants/dialogs'
+import {
+	initialState as bookmarksInitialState,
+	storeKey as bookmarksStoreKey
+} from 'store/constants/bookmarks'
 
-export const initialState = {
-	[storeKey]: initialState1 as typeof initialState1 & PersistPartial,
-	[storeKey1]: initialState2 as typeof initialState2 & PersistPartial,
-	[storeKey2]: initialState3 as typeof initialState3,
+function createPersistConfig(key: string) {
+	return {
+		key: `jared/${key}`,
+		storage,
+	}
 }
 
-export const persistConfigs = {
-	[storeKey]: persistConfig,
-	[storeKey1]: persistConfig1,
+export interface PersistPartial {
+	_persist: { version: number; rehydrated: boolean };
+}
+
+export const initialState = {
+	[dialogsStoreKey]: dialogsInitialState,
+	[historyStoreKey]: historyInitialState as typeof historyInitialState & PersistPartial,
+	[settingsStoreKey]: settingsInitialState as typeof settingsInitialState & PersistPartial,
+	[bookmarksStoreKey]: bookmarksInitialState as typeof bookmarksInitialState & PersistPartial,
 }
 
 export const rootReducer = combineReducers({
-	[storeKey]: persistReducer(
-		persistConfigs[storeKey],
-		history.reducer,
+	[dialogsStoreKey]: dialogsReducer,
+	[historyStoreKey]: persistReducer(
+		createPersistConfig(historyStoreKey),
+		historyReducer,
 	),
-	[storeKey1]: persistReducer(
-		persistConfigs[storeKey1],
-		settings.reducer,
+	[settingsStoreKey]: persistReducer(
+		createPersistConfig(settingsStoreKey),
+		settingsReducer,
 	),
-	[storeKey2]: dialogs.reducer,
+	[bookmarksStoreKey]: persistReducer(
+		createPersistConfig(bookmarksStoreKey),
+		bookmarksReducer,
+	),
 })
-
