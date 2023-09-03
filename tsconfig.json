@@ -27,7 +27,7 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "es6",
-		"outDir": "build",
+		"outDir": "dist",
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitReturns": true,
 		"noImplicitThis": true,

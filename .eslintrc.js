@@ -15,6 +15,7 @@ module.exports = {
 		'plugin:react/recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:import/recommended',
+		'plugin:import/typescript',
 	],
 	root: true,
 	env: {
@@ -36,6 +37,7 @@ module.exports = {
 		'react/display-name': [0, 0],
 		'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
 		'react/react-in-jsx-scope':[0],
+		'import/no-cycle': ['error', { 'maxDepth': 10, 'ignoreExternal': true }],
 		'import/no-unresolved': [2, { commonjs: true, amd: true }],
 		'import/extensions': [2, 'never', { ignorePackages: true, pattern: { 'json': 'always' } }],
 		'import/no-extraneous-dependencies': [
