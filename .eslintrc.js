@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const createWebpackConfig = require('./create-webpack-config')
 const webpackConfig = createWebpackConfig({}, { dev: false })
 
