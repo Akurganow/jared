@@ -70,6 +70,7 @@ export const selectedUserContentItems = createSelector(
 			const foundInITS = getITS(item.id)
 
 			return !foundInVCS && !foundInITS
+				&& item.title
 				&& array.findIndex(i => i.title === item.title) === index
 		})
 		.slice(0, settings.maxResults.value)

@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import { useSelector } from 'react-redux'
 import { selectedUserContentItems } from 'store/selectors/history'
+import Favicon from 'components/Favicon'
 import st from './styles.module.css'
 
 export default function () {
@@ -15,7 +16,7 @@ export default function () {
 					title={item.title}
 				>
 					<a href={item.url} className={st.link}>
-						{item.title}
+						{item.url && <Favicon href={item.url} size={16} />} {item.title}
 					</a>
 				</div>
 			))}

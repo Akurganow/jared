@@ -58,7 +58,7 @@
 	--accent-color: var(--token-unknown-foreground);
 }
 
-.filter, .board, .topics {
+.filter, .board, .topics, .job, .pipeline {
 	--accent-color: var(--token-filter-foreground);
 }
 

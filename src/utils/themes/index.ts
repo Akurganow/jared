@@ -2,21 +2,25 @@ import merge from 'lodash/merge'
 import memoize from 'lodash/memoize'
 import { Theme } from 'utils/themes/types'
 import defaultThemeDark from 'utils/themes/themes/default-dark'
+import defaultThemeLight from 'utils/themes/themes/default-light'
 
 const defaultThemes = {
 	dark: defaultThemeDark,
-	light: defaultThemeDark,
+	light: defaultThemeLight,
 }
-const themes: { [key: string]: Theme } = {}
+const themes: { [key: string]: Theme } = {
+	'default-dark': defaultThemeDark,
+	'default-light': defaultThemeLight,
+}
 
-export function getTheme(name: string = 'default'): Theme {
+export function getTheme(name: string = 'default-dark'): Theme {
 	const theme = themes[name] || {}
 
 	return merge(defaultThemes[theme.type || 'dark'], theme)
 }
 
 export function getThemesNames(): string[] {
-	return [...Object.keys(themes), 'default']
+	return [...Object.keys(themes), 'default-dark', 'default-light']
 }
 
 function getColorOrVarGetter(colors: Theme['colors']) {
@@ -30,11 +34,7 @@ function getColorOrVarGetter(colors: Theme['colors']) {
 }
 
 function rawGetThemeStylesheet(name: string): string {
-	let theme = getTheme()
-
-	if (name !== 'default') {
-		theme = getTheme(name)
-	}
+	const theme = getTheme(name)
 
 	const { colors, tokens, areas } = theme
 	const getColorOrVar = getColorOrVarGetter(colors)

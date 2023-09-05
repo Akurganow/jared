@@ -19,4 +19,7 @@
 .link {
 	color: var(--color-primaryForeground);
 	text-decoration: none;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }

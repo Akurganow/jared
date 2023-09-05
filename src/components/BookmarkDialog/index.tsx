@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { FormEvent, useCallback } from 'react'
 import { nanoid } from 'nanoid'
+import memoize from 'lodash/memoize'
 import Dialog, { DialogHeader, DialogBody, DialogFooter } from 'components/Dialog'
 import Button from 'components/Button'
 import { closeDialog } from 'store/actions/dialogs'
@@ -21,6 +22,7 @@ function getValues(form: HTMLFormElement, keys: string[]) {
 
 	return values
 }
+
 export default function () {
 	const dispatch = useDispatch()
 	const editingBookmark = useSelector(selectedEditingBookmark)
@@ -29,12 +31,12 @@ export default function () {
 		event.preventDefault()
 
 		const form = event.target as HTMLFormElement
-		const id = nanoid()
 		const [ title, url] = getValues(form, ['title', 'url'])
 
 		if (editingBookmark) {
 			dispatch(editBookmark({ id: editingBookmark.id, title, url }))
 		} else {
+			const id = nanoid()
 			dispatch(addBookmark({ id, title, url }))
 		}
 		dispatch(closeDialog('bookmark'))
@@ -54,6 +56,7 @@ export default function () {
 					<input
 						type="text"
 						name="title"
+						required
 						defaultValue={editingBookmark?.title}
 					/>
 				</div>
@@ -61,8 +64,9 @@ export default function () {
 				<div className={st.name}>URL:</div>
 				<div className={st.value}>
 					<input
-						type="text"
+						type="url"
 						name="url"
+						required
 						defaultValue={editingBookmark?.url}
 					/>
 				</div>

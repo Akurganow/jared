@@ -14,6 +14,11 @@ export default function () {
 	const theme = useSelector(selectedSettingValue('theme')) as unknown as string
 	const themeStylesheet = getThemeStylesheet(theme)
 
+	console.log({
+		theme,
+		themeStylesheet,
+	})
+
 	return (
 		<>
 			<style>{themeStylesheet}</style>

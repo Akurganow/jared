@@ -1,11 +1,11 @@
 import { getUrl } from 'utils/history/helpers'
-import { VCSHistoryItem, ProcessConfigItem } from 'utils/history/types'
+import { ProcessConfigItem, VCSHistoryItem } from 'utils/history/types'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')
 
-		return path.includes('merge_requests') && path.indexOf('merge_requests') === path.length - 1
+		return path.includes('jobs')
 	},
 	(item: chrome.history.HistoryItem) => {
 		const [url, path] = getUrl(item.url || '')
@@ -15,14 +15,14 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			...item,
 			url,
 			provider: 'gitlab',
-			type: 'filter',
+			type: 'job',
 			name: repoName,
-			title: 'Merge requests',
+			title: item.title?.split(' · ')[0] || 'Jobs',
 		}
 	},
 	{
-		type: 'pipeline',
-		name: 'Merge requests'
+		type: 'job',
+		name: 'Jobs',
 	}
 ]
 
