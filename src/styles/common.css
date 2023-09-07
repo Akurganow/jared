@@ -11,3 +11,12 @@ body {
 	background-color: var(--area-page-background);
 	color: var(--area-page-foreground);
 }
+
+a {
+	color: var(--area-page-foreground);
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--area-page-hoverForeground);
+}

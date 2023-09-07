@@ -1,5 +1,4 @@
 import { ProcessConfig, VCSHistoryItem } from 'utils/history/types'
-import { getConfigTypes } from 'utils/history/helpers'
 import settings from 'utils/history/vcs/github/settings'
 import topics from 'utils/history/vcs/github/topics'
 import repo from 'utils/history/vcs/github/repo'
@@ -22,5 +21,3 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSH
 	blobSearch,
 	tree,
 ]
-
-export const githubProcessConfigTypes = getConfigTypes(githubProcessConfig)

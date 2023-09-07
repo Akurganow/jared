@@ -24,7 +24,8 @@ const theme: Theme = {
 	areas: {
 		page: {
 			background: 'primaryBackground',
-			foreground: 'primaryForeground'
+			foreground: 'primaryForeground',
+			hoverForeground: 'secondaryForeground',
 		},
 		modal: {
 			background: 'secondaryBackground',

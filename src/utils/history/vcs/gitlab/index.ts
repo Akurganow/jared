@@ -1,5 +1,4 @@
 import { ProcessConfig, VCSHistoryItem } from 'utils/history/types'
-import { getConfigTypes } from 'utils/history/helpers'
 import mergeRequest from 'utils/history/vcs/gitlab/mergeRequest'
 import filterMergeRequests from 'utils/history/vcs/gitlab/filter-mergeRequests'
 import jobs from 'utils/history/vcs/gitlab/jobs'
@@ -12,5 +11,3 @@ export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSH
 	jobs,
 	pipelines,
 ]
-
-export const gitlabProcessConfigTypes = getConfigTypes(gitlabProcessConfig)

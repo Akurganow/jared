@@ -19,6 +19,7 @@ function processDefaultGit(item: chrome.history.HistoryItem): VCSHistoryItem {
 export function processVCS(item: chrome.history.HistoryItem): VCSHistoryItem {
 	const [url] = getUrl(item.url || '')
 
+	// TODO: support settings value like 'gitlab https://gitlab.com \n gitlab https://vcs.mycompany.com \n github https://github.com'
 	switch (true) {
 	case (url.pathname.includes('github-copilot')): {
 		return processDefaultGit(item)
@@ -50,6 +51,6 @@ export function processVCS(item: chrome.history.HistoryItem): VCSHistoryItem {
 }
 
 export const gitConfigTypes = {
-	gitlab: getConfigTypes(gitlabProcessConfig),
 	github: getConfigTypes(githubProcessConfig),
+	gitlab: getConfigTypes(gitlabProcessConfig),
 }

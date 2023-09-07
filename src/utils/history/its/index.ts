@@ -17,6 +17,7 @@ function processDefaultTicket(item: chrome.history.HistoryItem): ITSHistoryItem 
 export function processITS(item: chrome.history.HistoryItem): ITSHistoryItem {
 	const [url] = getUrl(item.url || '')
 
+	// TODO: support syntax 'jira https://jira.atlassian.com/) \n jira https://jira.mycompany.com'
 	switch (true) {
 	case (url.hostname.includes('jira')): {
 		const index = jiraProcessConfig.findIndex(([condition]) => condition(item))

@@ -6,28 +6,21 @@
 	max-width: 100%;
 	position: relative;
 	padding-left: 0.5rem;
+	padding-top: 0.5rem;
 	display: block;
 	text-decoration: none;
 	color: var(--color-primaryForeground);
-}
-
-.item + .item {
-	margin-top: 0.5rem;
+	background-color: var(--color-primaryBackground);
 }
 
 .item:after {
 	content: ' ';
 	position: absolute;
-	top: 0;
+	top: 0.25rem;
 	left: 0;
 	width: 0.25rem;
-	height: 100%;
+	height: calc(100% - 0.5rem);
 	background-color: var(--accent-color);
-}
-
-.item a {
-	color: var(--color-primaryForeground);
-	text-decoration: none;
 }
 
 .icon	{
