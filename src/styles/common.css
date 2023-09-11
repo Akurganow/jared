@@ -1,12 +1,19 @@
+@import "src/styles/default-light-theme.css";
+@import "src/styles/default-dark-theme.css";
+
+:root {
+	--basic-fontSize: 13px;
+	--basic-layout-gap: 0.5rem;
+}
+
 #root,
 #popup {
-	--basic-fontSize: 13px;
 	display: contents;
 }
 
 body {
 	font-family: 'JetBrains Mono', monospace;
-	font-size: 13px;
+	font-size: var(--basic-fontSize);
 	line-height: 1.4;
 	background-color: var(--area-page-background);
 	color: var(--area-page-foreground);

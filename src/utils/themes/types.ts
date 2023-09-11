@@ -4,13 +4,11 @@ type ThemeSettings = Partial<{
 	foreground: string
 	secondaryBackground: string
 	secondaryForeground: string
+	hoverBackground?: string
+	hoverForeground?: string
 	border: string
 	fontStyle: string
 }>
-type ThemeButtonSettings = Partial<{
-	hoverBackground: string
-	hoverForeground: string
-}> & ThemeSettings
 interface ThemeData {
 	name: string
 	settings: ThemeSettings
@@ -24,11 +22,11 @@ export interface Theme {
 	tokens: ThemeData[];
 	areas: {
 		button?: {
-			default?: ThemeButtonSettings
-			action?: ThemeButtonSettings
-			danger?: ThemeButtonSettings
-			warning?: ThemeButtonSettings
-			disabled?: ThemeButtonSettings
+			default?: ThemeSettings
+			action?: ThemeSettings
+			danger?: ThemeSettings
+			warning?: ThemeSettings
+			disabled?: ThemeSettings
 		};
 	} & {
 		[key in ThemeAreas]?: ThemeSettings;

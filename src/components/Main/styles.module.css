@@ -1,12 +1,17 @@
 .main {
-	box-sizing: border-box;
+	--main-width: 100vw;
+	--main-sidebar-width: 2rem;
+	--main-sidecolumn-width: calc(25vw - var(--main-sidebar-width));
+	--main-centercolumn-width: auto;
+
+	width: var(--main-width);
 	height: 100vh;
 	display: grid;
-	grid-template-columns: 2rem 25vw auto 25vw;
+	grid-template-columns: var(--main-sidebar-width) var(--main-sidecolumn-width) var(--main-centercolumn-width) var(--main-sidecolumn-width);
 	grid-template-rows: 1fr max-content;
 	grid-template-areas:
 		"sidebar tickets content repo"
 		"sidebar tickets bookmarks repo";
-	grid-gap: 0.5rem;
-	overflow: hidden;
+	grid-gap: var(--basic-layout-gap);
+	/*overflow: hidden;*/
 }

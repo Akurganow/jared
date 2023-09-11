@@ -1,0 +1,43 @@
+:root {
+	--color-primaryBackground: #fff;
+	--color-primaryForeground: #3c4043;
+	--color-primaryBorder: #dbdcdd;
+	--color-secondaryBackground: #dfe1e5;
+	--color-secondaryForeground: #000;
+	--color-tertiaryBackground: #f4f5f6;
+	--color-tertiaryForeground: #616161;
+	--color-icon: #424242;
+	--color-iconHover: #4e4e4e;
+	--color-red: #d93025;
+	--color-green: #178038;
+	--color-blue: #1b73e8;
+	--color-purple: #a242f4;
+	--color-yellow: #faab00;
+	--color-orange: #ea6e12;
+	--color-pink: #d01884;
+
+	--token-item-foreground: var(--color-orange);
+	--token-filter-foreground: var(--color-purple);
+	--token-preferences-foreground: var(--color-blue);
+	--token-person-foreground: var(--color-pink);
+	--token-file-foreground: var(--color-green);
+	--token-changes-foreground: var(--color-yellow);
+	--token-unknown-foreground: var(--color-red);
+	--area-page-background: var(--color-primaryBackground);
+	--area-page-foreground: var(--color-primaryForeground);
+	--area-page-hoverForeground: var(--color-secondaryForeground);
+	--area-modal-background: var(--color-primaryBackground);
+	--area-modal-foreground: var(--color-primaryForeground);
+	--area-modal-secondaryBackground: var(--color-tertiaryBackground);
+	--area-modal-secondaryForeground: var(--color-tertiaryForeground);
+	--area-sidebar-background: var(--color-tertiaryBackground);
+	--area-sidebar-foreground: var(--color-tertiaryForeground);
+	--area-sidebar-border: var(--color-primaryBorder);
+	--area-form-background: var(--color-primaryBackground);
+	--area-form-foreground: var(--color-primaryForeground);
+	--area-form-border: var(--color-secondaryBackground);
+	--area-button-default-background: var(--color-secondaryBackground);
+	--area-button-default-foreground: var(--color-secondaryForeground);
+	--area-button-default-border: var(--color-tertiaryBackground);
+}
+

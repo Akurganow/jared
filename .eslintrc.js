@@ -9,7 +9,8 @@ module.exports = {
 		'react',
 		'react-hooks',
 		'formatjs',
-		'import'
+		'import',
+		'react-hooks'
 	],
 	extends: [
 		'eslint:recommended',
@@ -17,6 +18,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		'plugin:import/recommended',
 		'plugin:import/typescript',
+		'plugin:react-hooks/recommended'
 	],
 	root: true,
 	env: {

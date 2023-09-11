@@ -1,26 +1,19 @@
-import merge from 'lodash/merge'
 import memoize from 'lodash/memoize'
 import { Theme } from 'utils/themes/types'
-import defaultThemeDark from 'utils/themes/themes/default-dark'
-import defaultThemeLight from 'utils/themes/themes/default-light'
+import jbDarkula from 'utils/themes/themes/jb-darkula'
+import jbLight from 'utils/themes/themes/jb-light'
 
-const defaultThemes = {
-	dark: defaultThemeDark,
-	light: defaultThemeLight,
-}
 const themes: { [key: string]: Theme } = {
-	'default-dark': defaultThemeDark,
-	'default-light': defaultThemeLight,
+	'JB-Darcula': jbDarkula,
+	'JB-Light': jbLight,
 }
 
-export function getTheme(name: string = 'default-dark'): Theme {
-	const theme = themes[name] || {}
-
-	return merge(defaultThemes[theme.type || 'dark'], theme)
+export function getTheme(name: string = ''): Theme | undefined {
+	return themes[name]
 }
 
 export function getThemesNames(): string[] {
-	return [...Object.keys(themes), 'default-dark', 'default-light']
+	return ['none', ...Object.keys(themes)]
 }
 
 function getColorOrVarGetter(colors: Theme['colors']) {
@@ -33,8 +26,10 @@ function getColorOrVarGetter(colors: Theme['colors']) {
 	})
 }
 
-function rawGetThemeStylesheet(name: string): string {
+function rawGetThemeStylesheet(name: string): string | undefined {
 	const theme = getTheme(name)
+
+	if (!theme) return
 
 	const { colors, tokens, areas } = theme
 	const getColorOrVar = getColorOrVarGetter(colors)
