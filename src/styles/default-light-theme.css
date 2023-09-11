@@ -8,21 +8,21 @@
 	--color-tertiaryForeground: #616161;
 	--color-icon: #424242;
 	--color-iconHover: #4e4e4e;
-	--color-red: #d93025;
-	--color-green: #178038;
-	--color-blue: #1b73e8;
-	--color-purple: #a242f4;
-	--color-yellow: #faab00;
-	--color-orange: #ea6e12;
-	--color-pink: #d01884;
+	--color-danger: #d93025;
+	--color-success: #178038;
+	--color-info: #1b73e8;
+	--color-list: #a242f4;
+	--color-notify: #faab00;
+	--color-warning: #ea6e12;
+	--color-personal: #d01884;
 
-	--token-item-foreground: var(--color-orange);
-	--token-filter-foreground: var(--color-purple);
-	--token-preferences-foreground: var(--color-blue);
-	--token-person-foreground: var(--color-pink);
-	--token-file-foreground: var(--color-green);
-	--token-changes-foreground: var(--color-yellow);
-	--token-unknown-foreground: var(--color-red);
+	--token-item-foreground: var(--color-warning);
+	--token-filter-foreground: var(--color-list);
+	--token-preferences-foreground: var(--color-info);
+	--token-person-foreground: var(--color-personal);
+	--token-file-foreground: var(--color-success);
+	--token-changes-foreground: var(--color-notify);
+	--token-unknown-foreground: var(--color-danger);
 	--area-page-background: var(--color-primaryBackground);
 	--area-page-foreground: var(--color-primaryForeground);
 	--area-page-hoverForeground: var(--color-secondaryForeground);
@@ -39,5 +39,8 @@
 	--area-button-default-background: var(--color-secondaryBackground);
 	--area-button-default-foreground: var(--color-secondaryForeground);
 	--area-button-default-border: var(--color-tertiaryBackground);
+	--area-button-disabled-background: var(--color-tertiaryBackground);
+	--area-button-disabled-foreground: var(--color-primaryBorder);
+	--area-button-disabled-border: var(--color-primaryBorder);
 }
 

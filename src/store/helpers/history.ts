@@ -7,8 +7,8 @@ const configs = {
 	gitlab: gitlabProcessConfig,
 	github: githubProcessConfig,
 }
-export const getVCSQueries = memoize((query: string) => {
-	const lines = query
+export const getVCSQueries = memoize((query: string) =>
+	query
 		.split('\n')
 		.filter(Boolean)
 		.map((line) => {
@@ -21,9 +21,7 @@ export const getVCSQueries = memoize((query: string) => {
 				!config ? new Error(`Unknown type: ${type}`) : null
 			]
 		})
-
-	return lines
-})
+)
 export function filterItems(pinned: HistoryItem[]) {
 	return (item: HistoryItem, index: number, array: HistoryItem[]) =>
 		array.findIndex(i => i.title === item.title) === index

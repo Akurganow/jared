@@ -1,8 +1,9 @@
 .main {
 	--main-width: 100vw;
 	--main-sidebar-width: 2rem;
-	--main-sidecolumn-width: calc(25vw - var(--main-sidebar-width));
-	--main-centercolumn-width: auto;
+	--main-sidecolumn-width: 25vw;
+	--main-centercolumn-width: calc(50vw - var(--main-sidebar-width) - var(--basic-layout-gap) * 3);
+	/* half of viewport width - sidebar width - sum of gaps (3) */
 
 	width: var(--main-width);
 	height: 100vh;
@@ -13,5 +14,5 @@
 		"sidebar tickets content repo"
 		"sidebar tickets bookmarks repo";
 	grid-gap: var(--basic-layout-gap);
-	/*overflow: hidden;*/
+	overflow: hidden;
 }

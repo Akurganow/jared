@@ -44,7 +44,7 @@
 /* TODO: more meaningful use of colors, put in readme.md */
 
 .issue, .repo {
-	--accent-color: var(--token-item-foreground);
+	--accent-color: var(--token-changes-foreground);
 }
 
 .unknown {
@@ -56,7 +56,7 @@
 }
 
 .pullRequest, .mergeRequest {
-	--accent-color: var(--token-changes-foreground);
+	--accent-color: var(--token-item-foreground);
 }
 
 .profile {

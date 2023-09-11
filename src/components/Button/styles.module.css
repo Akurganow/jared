@@ -8,13 +8,24 @@
 	display: inline-block;
 	font-size: var(--basic-fontSize);
 	cursor: pointer;
-	transition: filter 0.2s ease-in-out;
+	transition: filter 0.15s ease-in-out;
+	user-select: none;
 }
 
 .button:hover {
-	filter: brightness(1.25);
+	filter: brightness(1.25) grayscale(0.75);
 }
 
 .button + .button {
 	margin-inline-start: 0.5rem;
 }
+
+.button:disabled, .button:disabled:hover, .button:disabled:focus {
+	color: var(--area-button-disabled-foreground);
+	background-color: var(--area-button-disabled-background);
+	border: 1px solid var(--area-button-disabled-border);
+	cursor: not-allowed;
+	filter: none;
+}
+
+/* TODO: move disabled color to area-button-disabled */

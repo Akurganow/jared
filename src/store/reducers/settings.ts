@@ -23,14 +23,12 @@ const reducer = reducerWithInitialState(initialState)
 			options,
 		}
 	}))
-	.case(rehydratePersistStore, state => {
-		return {
-			...state,
-			theme: {
-				...state.theme,
-				options: getThemesNames(),
-			}
-		}
-	})
+	// .case(rehydratePersistStore, state => ({
+	// 	...state,
+	// 	theme: {
+	// 		...state.theme,
+	// 		options: getThemesNames(),
+	// 	}
+	// }))
 
 export default reducer

@@ -13,13 +13,13 @@ const theme: Theme = {
 		tertiaryForeground: '#616161',
 		icon: '#424242',
 		iconHover: '#4e4e4e',
-		red: '#be1100',
-		green: '#008000',
-		blue: '#0070c1',
-		purple: '#001080',
-		yellow: '#bf8803',
-		orange: '#795e26',
-		pink: '#af00db',
+		danger: '#be1100',
+		success: '#008000',
+		info: '#0070c1',
+		list: '#001080',
+		notify: '#bf8803',
+		warning: '#795e26',
+		personal: '#af00db',
 	},
 	areas: {
 		page: {
@@ -55,43 +55,43 @@ const theme: Theme = {
 		{
 			name: 'item',
 			settings: {
-				foreground: 'orange'
+				foreground: 'warning'
 			}
 		},
 		{
 			name: 'filter',
 			settings: {
-				foreground: 'purple'
+				foreground: 'list'
 			}
 		},
 		{
 			name: 'preferences',
 			settings: {
-				foreground: 'blue'
+				foreground: 'info'
 			}
 		},
 		{
 			name: 'person',
 			settings: {
-				foreground: 'pink'
+				foreground: 'personal'
 			}
 		},
 		{
 			name: 'file',
 			settings: {
-				foreground: 'green'
+				foreground: 'success'
 			}
 		},
 		{
 			name: 'changes',
 			settings: {
-				foreground: 'yellow'
+				foreground: 'notify'
 			}
 		},
 		{
 			name: 'unknown',
 			settings: {
-				foreground: 'red'
+				foreground: 'danger'
 			}
 		}
 	]

@@ -30,7 +30,7 @@ export const initialState: SettingsState = {
 		name: 'Resents query',
 	},
 	theme: {
-		value: 'default',
+		value: 'none',
 		options: getThemesNames(),
 		type: 'option',
 		name: 'Theme',
