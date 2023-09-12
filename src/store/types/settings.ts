@@ -1,29 +1,29 @@
 export type SettingsTypes = 'number' | 'string' | 'boolean' | 'option'
+export type SettingsTypeCommon = {
+	name: string
+	hint: string
+}
 export type SettingTypeString = {
 	type: 'string'
-	name: string
 	value: string
 	pattern?: RegExp
-}
+} & SettingsTypeCommon
 export type SettingTypeNumber = {
 	type: 'number'
-	name: string
 	value: number
 	max?: number
 	min?: number
 	step?: number
-}
+} & SettingsTypeCommon
 export type SettingTypeBoolean = {
 	type: 'boolean'
-	name: string
 	value: boolean
-}
+} & SettingsTypeCommon
 export type SettingTypeOption = {
 	type: 'option'
-	name: string
 	value: string
 	options: string[]
-}
+} & SettingsTypeCommon
 
 export interface SettingsState {
 	maxResults: SettingTypeNumber

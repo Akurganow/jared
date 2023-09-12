@@ -2,24 +2,43 @@ import memoize from 'lodash/memoize'
 import { HistoryItem } from 'store/types/history'
 import { gitlabProcessConfig } from 'utils/history/vcs/gitlab'
 import { githubProcessConfig } from 'utils/history/vcs/github'
+import { jiraProcessConfig } from 'utils/history/its/jira'
 
-const configs = {
+const vcsConfigs = {
 	gitlab: gitlabProcessConfig,
 	github: githubProcessConfig,
+}
+const itsConfigs = {
+	jira: jiraProcessConfig,
 }
 export const getVCSQueries = memoize((query: string) =>
 	query
 		.split('\n')
 		.filter(Boolean)
 		.map((line) => {
-			const [type, query] = line.trim().split(' ')
-			const config = configs[type as keyof typeof configs]
+			const [query, type, maxResults] = line.trim().split(' ')
+			const config = vcsConfigs[type as keyof typeof vcsConfigs]
 
-			return [
-				config,
-				query,
-				!config ? new Error(`Unknown type: ${type}`) : null
-			]
+			return {
+				text: query,
+				maxResults: parseInt(maxResults, 10),
+				error: !config ? new Error(`Unknown type: ${type}`) : undefined,
+			}
+		})
+)
+export const getITSQueries = memoize((query: string) =>
+	query
+		.split('\n')
+		.filter(Boolean)
+		.map((line) => {
+			const [query, type, maxResults] = line.trim().split(' ')
+			const config = itsConfigs[type as keyof typeof itsConfigs]
+
+			return {
+				text: query,
+				maxResults: parseInt(maxResults, 10),
+				error: !config ? new Error(`Unknown type: ${type}`) : undefined,
+			}
 		})
 )
 export function filterItems(pinned: HistoryItem[]) {

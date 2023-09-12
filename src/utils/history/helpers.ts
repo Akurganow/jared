@@ -10,6 +10,7 @@ function rawGetUrl(itemUrl: string): [URL, string[]] {
 		path,
 	]
 }
+export const getUrl = memoize(rawGetUrl)
 
 function rawGetSplitTitle(title: string): string[] {
 	const splitTitle = title?.split(' - ')
@@ -18,10 +19,8 @@ function rawGetSplitTitle(title: string): string[] {
 
 	return splitTitle
 }
-
 export const getSplitTitle = memoize(rawGetSplitTitle)
 
-export const getUrl = memoize(rawGetUrl)
 
 export function getConfigTypes<T = unknown, R = unknown>(config: ProcessConfig<T , R>) {
 	return config.map(([, , type]) => type)

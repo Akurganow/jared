@@ -2,6 +2,7 @@
 	grid-area: content;
 	padding: 0.25rem 0;
 	margin: 0;
+	overflow: scroll;
 }
 
 .item {

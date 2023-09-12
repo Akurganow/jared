@@ -5,7 +5,7 @@ import jobs from 'utils/history/vcs/gitlab/jobs'
 import pipelines from 'utils/history/vcs/gitlab/pipelines'
 import commit from 'utils/history/vcs/gitlab/commit'
 
-// TODO: add login, help, blob, graphs, analytics, issues, tree, branches, tags, network, compare, settings, members, integrations, packages, repository
+// TODO: add login, mergeRequestEdit, help, blob, graphs, analytics, issues, tree, branches, tags, network, compare, settings, members, integrations, packages, repository
 export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
 	mergeRequest,
 	filterMergeRequests,

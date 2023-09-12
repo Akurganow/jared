@@ -5,10 +5,10 @@
 	margin: 0;
 	overflow: scroll;
 }
-/* Create settings item for sticky pinned items */
+/* TODO: Create settings item for sticky pinned items */
 .pinned {
-	position: sticky;
-	top: 0;
+	/*position: sticky;*/
+	/*top: 0;*/
 	z-index: 2;
 }
 

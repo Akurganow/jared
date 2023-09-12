@@ -10,7 +10,7 @@ export default function ({ setting }: SettingsFieldProps) {
 		<>
 			<div className={st.name}>{name}:</div>
 			<div className={st.value}>
-				<textarea name={setting} rows={3} defaultValue={value} />
+				<textarea name={setting} rows={3} cols={50} defaultValue={value} />
 			</div>
 		</>
 	)

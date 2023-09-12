@@ -3,7 +3,7 @@ import { sortByLastVisitTime, sortByVisitCount } from 'utils/history/helpers'
 import { processITS } from 'utils/history/its'
 import { processVCS } from 'utils/history/vcs'
 import { RootState } from 'store/types'
-import { getVCSQueries, filterItems } from 'store/helpers/history'
+import { filterItems } from 'store/helpers/history'
 import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 
@@ -41,19 +41,11 @@ export const selectedVCS = createSelector(
 		const maxResults = settings.maxResults.value
 		const filtered = items.filter(filterItems(pinned)).sort(sortByLastVisitTime)
 
-		const query =
-			`gitlab gitlab.com
-			gitlab git.ringcentral.com
-			gitgit unknown.com
-			github github.com`
-		const queries = getVCSQueries(query)
-		console.log({
-			query,
-			queries,
-		})
 		return [...pinned, ...filtered]
 			.slice(0, maxResults)
 			.map(processVCS)
+		// TODO: move processing to get action
+
 	}
 )
 
@@ -68,6 +60,7 @@ export const selectedITS = createSelector(
 		return [...pinned, ...filtered]
 			.slice(0, maxResults)
 			.map(processITS)
+		// TODO: move processing to get action
 	}
 )
 export const selectedUserContentItems = createSelector(
