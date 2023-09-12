@@ -1,5 +1,5 @@
 type ITSType = 'unknown' | 'issue' | 'filter' | 'project' | 'profile' | 'board'
-type VCSType = 'unknown' | 'settings' | 'repo' | 'tree' | 'blob' | 'filter' | 'topics' | 'mergeRequest' | 'pullRequest' | 'pipeline' | 'job'
+type VCSType = 'unknown' | 'settings' | 'repo' | 'tree' | 'blob' | 'filter' | 'topics' | 'mergeRequest' | 'pullRequest' | 'pipeline' | 'job' | 'commit'
 type VCSProviderType = 'unknown' | 'gitlab' | 'github'
 type ITSProviderType = 'unknown' | 'jira' // | 'youtrack' | 'trello'
 

@@ -43,7 +43,7 @@
 
 /* TODO: more meaningful use of colors, put in readme.md */
 
-.issue, .repo {
+.issue, .repo, .commit {
 	--accent-color: var(--token-changes-foreground);
 }
 

@@ -8,8 +8,9 @@ import filterIssues from 'utils/history/vcs/github/filter-issues'
 import filterSearch from 'utils/history/vcs/github/filter-search'
 import blobSearch from 'utils/history/vcs/github/blob-search'
 import tree from 'utils/history/vcs/github/tree'
+import blob from 'utils/history/vcs/github/blob'
 
-// TODO: add commits, releases, settings, notifications, orgs, pkgs
+// TODO: add commits, releases, settings, notifications, orgs, pkgs, tab=repositories
 export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
 	settings,
 	topics,
@@ -20,4 +21,5 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSH
 	filterSearch,
 	blobSearch,
 	tree,
+	blob,
 ]
