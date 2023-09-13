@@ -8,6 +8,6 @@ export interface PinButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<H
 }
 export default function PiButton({ pinned, className, ...props }: PinButtonProps) {
 	return <button {...props} className={cn(className, st.button)}>
-		{pinned ? <SVGIcon name="unpin" /> : <SVGIcon name="pin" />}
+		<SVGIcon name={pinned ? 'unpin' : 'pin'} />
 	</button>
 }

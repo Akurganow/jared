@@ -11,7 +11,7 @@ const meta: Meta = {
 	component: SVGIcon,
 	decorators: [
 		Story => (
-			<div style={{ fontSize: '3rem', color: '#000' }}>
+			<div style={{ fontSize: '3rem' }}>
 				<Story />
 			</div>)
 	],

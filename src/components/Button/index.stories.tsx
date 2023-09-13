@@ -31,3 +31,10 @@ export const Emojis: Story = {
 		text: '😀 😎 👍 💯',
 	}
 }
+
+export const Disabled: Story = {
+	args: {
+		text: 'Disabled Button',
+		disabled: true,
+	}
+}

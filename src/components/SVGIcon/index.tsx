@@ -1,4 +1,4 @@
-import React, { SVGAttributes } from 'react'
+import { SVGAttributes } from 'react'
 import cn from 'classnames'
 
 import * as icons from './icons'
