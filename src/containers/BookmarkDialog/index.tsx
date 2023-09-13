@@ -9,7 +9,7 @@ import { selectedEditingBookmark } from 'store/selectors/bookmarks'
 import st from './styles.module.css'
 
 function getValues(form: HTMLFormElement, keys: string[]) {
-	const values = keys.map(key => {
+	return keys.map(key => {
 		const element = form.elements.namedItem(key) as HTMLInputElement | undefined
 
 		if (element) {
@@ -18,8 +18,6 @@ function getValues(form: HTMLFormElement, keys: string[]) {
 
 		return ''
 	})
-
-	return values
 }
 
 export default function () {

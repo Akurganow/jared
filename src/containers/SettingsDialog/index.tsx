@@ -14,7 +14,7 @@ import { selectedSettings, selectedSettingsKeys, selectedSettingType } from 'sto
 import settingsTypes from './components'
 import st from './styles.module.css'
 
-const settingsField = (key: keyof SettingsState) => {
+const SettingsField = (key: keyof SettingsState) => {
 	const type = useSelector(selectedSettingType(key))
 
 	if (type === undefined) {
@@ -75,7 +75,7 @@ export default function () {
 				onSubmit={handleSettingsSubmit}
 				onChange={handleSettingChange}
 			>
-				{settingKeys.map(settingsField)}
+				{settingKeys.map(SettingsField)}
 			</form>
 		</DialogBody>
 		<DialogFooter>
