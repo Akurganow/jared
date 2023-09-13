@@ -9,30 +9,26 @@ const meta: Meta = {
 	},
 	tags: ['autodocs', 'ui', 'svg', 'icons'],
 	component: SVGIcon,
-	render: () => (
-		<div style={{
-			display: 'flex',
-			flexDirection: 'row',
-			gap: '1rem',
-			flexWrap: 'wrap',
-			fontSize: '2rem',
-		}}>
-			{Object.keys(icons).map((icon) => (
-				<div key={icon} title={`<SVGIcon name="${icon}" />`} style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					padding: '0.25rem'
-				}}>
-					<SVGIcon name={icon as keyof typeof icons} />
-				</div>
-			))}
-		</div>
-	)
+	decorators: [
+		Story => (
+			<div style={{ fontSize: '3rem', color: '#000' }}>
+				<Story />
+			</div>)
+	],
+	argTypes: {
+		name: {
+			control: 'select',
+			options: Object.keys(icons),
+		}
+	}
 }
 
 export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const Icons: Story = {}
+export const Icons: Story = {
+	args: {
+		name: 'settings'
+	}
+}
