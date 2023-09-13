@@ -4,7 +4,7 @@ import { selectedBookmarks } from 'store/selectors/bookmarks'
 import { openDialog } from 'store/actions/dialogs'
 import { clearEditingBookmark, removeBookmark, setEditingBookmark } from 'store/actions/bookmarks'
 import SVGIcon from 'components/SVGIcon'
-import Bookmark from 'components/Bookmarks/components/Bookmark'
+import Bookmark from 'containers/Bookmarks/components/Bookmark'
 import st from './styles.module.css'
 
 export default function () {

@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { FormEvent, useCallback } from 'react'
 import { nanoid } from 'nanoid'
-import memoize from 'lodash/memoize'
 import Dialog, { DialogHeader, DialogBody, DialogFooter } from 'components/Dialog'
 import Button from 'components/Button'
 import { closeDialog } from 'store/actions/dialogs'
