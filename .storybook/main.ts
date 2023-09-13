@@ -35,6 +35,13 @@ const config: StorybookConfig = {
 					}
 				}
 
+				if (typeof rule === 'object' && rule?.test && isEqual(rule?.test, /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/)) {
+					return {
+						...rule,
+						test: /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/,
+					}
+				}
+
 				return rule
 			})
 			.concat([
@@ -52,7 +59,17 @@ const config: StorybookConfig = {
 							}
 						},
 					]
-				}
+				},
+				{
+				test: /\.svg$/,
+				use: [
+					{
+						loader: 'svg-sprite-loader',
+						options: { symbolId: '[name]-[hash:8]' },
+					},
+					'svgo-loader',
+				],
+			},
 			])
 
 		console.log(rules)

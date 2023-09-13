@@ -12,6 +12,8 @@ export interface SVGIconProps extends SVGAttributes<SVGElement> {
 function SVGIcon({ name, className, ...rest }: SVGIconProps) {
 	const icon = icons[name]
 
+	if (!icon) return null
+
 	return (
 		<svg
 			{...rest}
