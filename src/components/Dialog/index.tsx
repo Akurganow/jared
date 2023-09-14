@@ -25,11 +25,20 @@ export default function Dialog({
 }: DialogProps) {
 	const dispatch = useDispatch()
 	const container = document.getElementById('dialog')
-
-	if (!container) return null
-
 	const dialog = useRef<HTMLDialogElement>(null)
 	const isOpen = useSelector(selectedDialog(name))
+
+	useEffect(() => {
+		if (dialog.current?.open === isOpen) return
+
+		if (isOpen) {
+			dialog.current?.showModal()
+		} else {
+			dialog.current?.close()
+		}
+	}, [isOpen])
+
+	if (!container) return null
 
 	const handleMouseDownDialog = (event: ReactMouseEvent<HTMLDialogElement, MouseEvent>) => {
 		const target = event.target as HTMLElement
@@ -41,17 +50,6 @@ export default function Dialog({
 			onCloseComplete?.()
 		}
 	}
-
-
-	useEffect(() => {
-		if (dialog.current?.open === isOpen) return
-
-		if (isOpen) {
-			dialog.current?.showModal()
-		} else {
-			dialog.current?.close()
-		}
-	}, [isOpen])
 
 	const element = (
 		<dialog ref={dialog} className={cn(st.dialog, className)} onMouseDown={handleMouseDownDialog}>

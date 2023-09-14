@@ -7,7 +7,7 @@
     "dev": "webextension-toolbox dev chrome",
     "build": "webextension-toolbox build chrome",
     "redux-devtools": "redux-devtools --hostname=localhost --port=1024",
-    "lint": "eslint --ext .ts,.tsx . --fix",
+    "lint": "eslint --fix --ext .ts,.tsx .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepare": "husky install",
