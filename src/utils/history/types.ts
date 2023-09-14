@@ -4,7 +4,7 @@ export type VCSProviderType = 'gitlab' | 'github'
 export type ITSProviderType = 'jira' // | 'youtrack'
 
 export interface HistoryItem extends Omit<chrome.history.HistoryItem, 'url'> {
-	url: URL // TODO: change to string
+	url?: string
 	name: string
 	title: string
 	pinned?: boolean

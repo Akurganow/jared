@@ -8,12 +8,11 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		return path.includes('issues') && path.indexOf('issues') === path.length - 1
 	},
 	(item: chrome.history.HistoryItem) => {
-		const [url, path] = getUrl(item.url || '')
+		const [, path] = getUrl(item.url || '')
 		const repoName = `${path[0]}/${path[1]}`
 
 		return {
 			...item,
-			url,
 			provider: 'github',
 			type: 'filter',
 			name: repoName,

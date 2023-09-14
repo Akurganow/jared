@@ -8,11 +8,10 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		return path[0] === 'topics'
 	},
 	(item: chrome.history.HistoryItem) => {
-		const [url, path] = getUrl(item.url || '')
+		const [, path] = getUrl(item.url || '')
 
 		return {
 			...item,
-			url,
 			provider: 'github',
 			type: 'topics',
 			name: '',

@@ -8,7 +8,6 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		return path[0] === 'issues'
 	},
 	(item: chrome.history.HistoryItem) => {
-		const [url] = getUrl(item.url || '')
 		const title = getSplitTitle(item.title || '')
 
 		const filterName = title
@@ -17,7 +16,6 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 
 		return {
 			...item,
-			url,
 			type: 'filter',
 			provider: 'jira',
 			name: filterName,

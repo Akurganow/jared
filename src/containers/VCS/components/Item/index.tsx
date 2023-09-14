@@ -20,7 +20,7 @@ export default function ({ id, type, url, title, name, provider, pinned }: VSCIt
 		<a
 			key={id}
 			title={title}
-			href={url.href}
+			href={url}
 			className={cn(st.item, st[type])}
 			data-at={id}
 		>

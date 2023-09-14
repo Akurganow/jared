@@ -8,13 +8,11 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		return path[0] === 'secure' && path[1] === 'ViewProfile.jspa'
 	},
 	(item: chrome.history.HistoryItem) => {
-		const [url] = getUrl(item.url || '')
 		const title = getSplitTitle(item.title || '')
 		const profileName = title[0].replace('User Profile: ', '')
 
 		return {
 			...item,
-			url,
 			type: 'profile',
 			provider: 'jira',
 			name: profileName,

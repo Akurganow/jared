@@ -3,11 +3,8 @@ import { getConfigTypes, getUrl } from '../helpers'
 import { jiraProcessConfig } from './jira'
 
 function processDefaultTicket(item: chrome.history.HistoryItem): ITSHistoryItem {
-	const [url] = getUrl(item.url || '')
-
 	return {
 		...item,
-		url,
 		type: 'unknown',
 		name: '',
 		title: item.title || '',

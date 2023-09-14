@@ -8,12 +8,11 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		return path[0] === 'projects'
 	},
 	(item: chrome.history.HistoryItem) => {
-		const [url, path] = getUrl(item.url || '')
+		const [, path] = getUrl(item.url || '')
 		const projectName = path[1]
 
 		return {
 			...item,
-			url,
 			type: 'project',
 			provider: 'jira',
 			name: projectName,

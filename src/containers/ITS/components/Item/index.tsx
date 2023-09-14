@@ -21,7 +21,7 @@ export default function ({ id, title, url, type, provider, pinned }: ITSItemProp
 		<a
 			key={id}
 			title={title}
-			href={url.href}
+			href={url}
 			className={cn(st.item, st[type])}
 			data-at={id}
 		>

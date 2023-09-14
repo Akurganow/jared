@@ -5,11 +5,8 @@ import { githubProcessConfig } from 'utils/history/vcs/github'
 
 
 function processDefaultGit(item: chrome.history.HistoryItem): VCSHistoryItem {
-	const [url] = getUrl(item.url || '')
-
 	return {
 		...item,
-		url,
 		type: 'unknown',
 		provider: 'unknown',
 		name: '',

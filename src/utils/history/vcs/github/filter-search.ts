@@ -7,18 +7,13 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 
 		return path.includes('search')
 	},
-	(item: chrome.history.HistoryItem) => {
-		const [url] = getUrl(item.url || '')
-
-		return {
-			...item,
-			url,
-			provider: 'github',
-			type: 'filter',
-			name: 'Search',
-			title: item.title || 'Search'
-		}
-	},
+	(item: chrome.history.HistoryItem) => ({
+		...item,
+		provider: 'github',
+		type: 'filter',
+		name: 'Search',
+		title: item.title || 'Search'
+	}),
 	{
 		type: 'filter',
 		name: 'Search'
