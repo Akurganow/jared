@@ -9,7 +9,9 @@
     "redux-devtools": "redux-devtools --hostname=localhost --port=1024",
     "lint": "eslint --ext .ts,.tsx . --fix",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "prepare": "husky install",
+    "postinstall": "husky install"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.10",
@@ -45,6 +47,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.13",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.1",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.7.6",
     "modern-css-reset": "^1.4.0",
