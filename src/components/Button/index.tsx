@@ -4,16 +4,13 @@ import st from './styles.module.css'
 
 interface HTMLButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {}
 
-type ButtonProps = HTMLButtonProps
-
-const Button: React.FC<ButtonProps> = ({ className, ...props }) => {
+const Button = ({ className, ...props }: HTMLButtonProps) => {
 	const classNames = cn(st.button, className)
 
 	return <button
 		className={classNames}
 		{...props}
 	/>
-
 }
 
 export default Button
