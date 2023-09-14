@@ -1,7 +1,10 @@
+import { ProcessorType } from 'utils/history'
+
 export interface HistoryItem extends chrome.history.HistoryItem {
 }
 
-export interface HistoryQuery {
+export type HistoryQuery = {
+	type?: ProcessorType;
 	text: string;
 	maxResults?: number;
 	error?: Error;

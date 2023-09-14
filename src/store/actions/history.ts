@@ -5,24 +5,33 @@ import { HistoryItem, HistoryQuery } from 'store/types/history'
 import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 import { getVCSQueries, getITSQueries } from 'store/helpers/history'
+import { createHistoryItemProcessor } from 'utils/history'
 
 const createAction = actionCreatorFactory(storeKey)
 const createAsync = asyncFactory<RootState>(createAction)
+
 const getHistoryItems = createAsync<HistoryQuery[], chrome.history.HistoryItem[]>(
 	'getHistoryItems',
-	async (q, _dispatch, getState) => {
+	async (queries, _dispatch, getState) => {
 		const { maxResults, numDays } = selectedSettings(getState())
 		const items: chrome.history.HistoryItem[] = []
 		const currentTime = new Date().getTime()
 		const oneWeekAgo = currentTime - 1000 * 60 * 60 * 24 * numDays.value
 
-		for (const key of q) {
+		for (const key of queries) {
 			const query: chrome.history.HistoryQuery = {
 				maxResults: (key.maxResults || maxResults.value) * 2, // double the max results to account for duplicates
 				text: key.text,
 				startTime: oneWeekAgo,
 			}
-			const results = await chrome.history.search(query)
+			let results = (await chrome.history.search(query))
+
+			if (key.type) {
+				const itemProcessor = createHistoryItemProcessor(key.type)
+				results = results.map(itemProcessor)
+
+			}
+
 			items.push(...results)
 		}
 
@@ -33,7 +42,7 @@ const getHistoryItems = createAsync<HistoryQuery[], chrome.history.HistoryItem[]
 	}
 )
 export const updateVCS = createAsync<void, void>(
-	'getVCS',
+	'updateVCS',
 	async (_, dispatch, getState) => {
 		const { vcsQuery } = selectedSettings(getState())
 		const queries = getVCSQueries(vcsQuery.value)
@@ -42,7 +51,7 @@ export const updateVCS = createAsync<void, void>(
 		dispatch(updateVCSHistory(vcs))
 	})
 export const updateITS = createAsync<void, void>(
-	'getITS',
+	'updateITS',
 	async (_, dispatch, getState) => {
 		const { itsQuery } = selectedSettings(getState())
 		const queries = getITSQueries(itsQuery.value)
@@ -51,7 +60,7 @@ export const updateITS = createAsync<void, void>(
 		dispatch(updateITSHistory(its))
 	})
 export const updateUserContent = createAsync<void, void>(
-	'getUserContent',
+	'updateUserContent',
 	async (_, dispatch, getState) => {
 		const state = getState()
 		const { userQuery } = selectedSettings(state)
@@ -65,7 +74,7 @@ export const updateUserContent = createAsync<void, void>(
 		dispatch(updateUserHistory(userContent))
 	})
 export const updateHistory = createAsync<void, void>(
-	'getHistory',
+	'updateHistory',
 	async (_, dispatch) => {
 		await dispatch(updateVCS())
 		await dispatch(updateITS())

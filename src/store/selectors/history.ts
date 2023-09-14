@@ -1,7 +1,5 @@
 import { createSelector } from 'reselect'
 import { sortByLastVisitTime, sortByVisitCount } from 'utils/history/helpers'
-import { processITS } from 'utils/history/its'
-import { processVCS } from 'utils/history/vcs'
 import { RootState } from 'store/types'
 import { filterItems } from 'store/helpers/history'
 import { selectedSettings } from 'store/selectors/settings'
@@ -41,11 +39,7 @@ export const selectedVCS = createSelector(
 		const maxResults = settings.maxResults.value
 		const filtered = items.filter(filterItems(pinned)).sort(sortByLastVisitTime)
 
-		return [...pinned, ...filtered]
-			.slice(0, maxResults)
-			.map(processVCS)
-		// TODO: move processing to get action
-
+		return [...pinned, ...filtered].slice(0, maxResults)
 	}
 )
 
@@ -57,10 +51,7 @@ export const selectedITS = createSelector(
 		const maxResults = settings.maxResults.value
 		const filtered = items.filter(filterItems(pinned)).sort(sortByVisitCount)
 
-		return [...pinned, ...filtered]
-			.slice(0, maxResults)
-			.map(processITS)
-		// TODO: move processing to get action
+		return [...pinned, ...filtered].slice(0, maxResults)
 	}
 )
 export const selectedUserContentItems = createSelector(
