@@ -5,4 +5,4 @@ packages/
 /test-results/
 /playwright-report/
 /playwright/.cache/
-/tests-examples/
+/playwright-examples/
