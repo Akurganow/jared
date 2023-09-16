@@ -5,8 +5,7 @@ import { selectedVCS } from 'store/selectors/history'
 import st from './styles.module.css'
 import Item from './components/Item'
 
-interface VSCProps
-	extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface VSCProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 }
 
 export default function ({ className, ...props }: VSCProps) {

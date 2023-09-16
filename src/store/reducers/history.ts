@@ -1,8 +1,7 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { movePinnedItemBetweenArrays } from 'store/helpers/history'
-// eslint-disable-next-line import/no-cycle
 import { pinItem, unpinItem, updateITSHistory, updateUserHistory, updateVCSHistory } from 'store/actions/history'
 import { initialState } from 'store/constants/history'
+import { movePinnedItemBetweenArrays } from 'utils/history/helpers'
 
 const reducer = reducerWithInitialState(initialState)
 	.case(updateUserHistory, (state, items) => ({

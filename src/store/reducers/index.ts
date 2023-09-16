@@ -3,36 +3,24 @@ import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import dialogsReducer from 'store/reducers/dialogs'
-import historyReducer from 'store/reducers/history' // eslint-disable-line import/no-cycle
+import historyReducer from 'store/reducers/history'
 import settingsReducer from 'store/reducers/settings'
 import bookmarksReducer from 'store/reducers/bookmarks'
 
-import {
-	initialState as dialogsInitialState,
-	storeKey as dialogsStoreKey
-} from 'store/constants/dialogs'
-import {
-	initialState as historyInitialState,
-	storeKey as historyStoreKey
-} from 'store/constants/history'
-import {
-	initialState as settingsInitialState,
-	storeKey as settingsStoreKey
-} from 'store/constants/settings'
-import {
-	initialState as bookmarksInitialState,
-	storeKey as bookmarksStoreKey
-} from 'store/constants/bookmarks'
+import { initialState as dialogsInitialState, storeKey as dialogsStoreKey } from 'store/constants/dialogs'
+import { initialState as historyInitialState, storeKey as historyStoreKey } from 'store/constants/history'
+import { initialState as settingsInitialState, storeKey as settingsStoreKey } from 'store/constants/settings'
+import { initialState as bookmarksInitialState, storeKey as bookmarksStoreKey } from 'store/constants/bookmarks'
+
+interface PersistPartial {
+	_persist: { version: number; rehydrated: boolean };
+}
 
 function createPersistConfig(key: string) {
 	return {
 		key: `jared/${key}`,
 		storage,
 	}
-}
-
-export interface PersistPartial {
-	_persist: { version: number; rehydrated: boolean };
 }
 
 export const initialState = {

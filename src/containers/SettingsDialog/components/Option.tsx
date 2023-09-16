@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
-import { SettingTypeOption } from 'store/types/settings'
 import { selectedSetting } from 'store/selectors/settings'
+import { SettingTypeOption } from 'src/types/settings'
 import st from '../styles.module.css'
 import { SettingsFieldProps } from './types'
 

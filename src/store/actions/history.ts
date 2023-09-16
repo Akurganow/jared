@@ -1,20 +1,21 @@
 import { actionCreatorFactory } from 'typescript-fsa'
 import { asyncFactory } from 'typescript-fsa-redux-thunk'
-import { RootState } from 'store/types' // eslint-disable-line import/no-cycle
-import { HistoryItem, HistoryQuery } from 'store/types/history'
+import { RootState } from 'store/types'
+import { HistoryItem, HistoryQuery, ITSHistoryItem, VCSHistoryItem } from 'src/types/history'
 import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
-import { getVCSQueries, getITSQueries } from 'store/helpers/history'
 import { createHistoryItemProcessor } from 'utils/history'
+import { getITSQueries, getVCSQueries } from 'utils/history/vcsConfigs'
 
 const createAction = actionCreatorFactory(storeKey)
 const createAsync = asyncFactory<RootState>(createAction)
 
-const getHistoryItems = createAsync<HistoryQuery[], chrome.history.HistoryItem[]>(
+type HistoryItemsTypes = HistoryItem[] | VCSHistoryItem[] | ITSHistoryItem[]
+const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 	'getHistoryItems',
 	async (queries, _dispatch, getState) => {
 		const { maxResults, numDays } = selectedSettings(getState())
-		const items: chrome.history.HistoryItem[] = []
+		const items: HistoryItem[] = []
 		const currentTime = new Date().getTime()
 		const oneWeekAgo = currentTime - 1000 * 60 * 60 * 24 * numDays.value
 
@@ -24,15 +25,17 @@ const getHistoryItems = createAsync<HistoryQuery[], chrome.history.HistoryItem[]
 				text: key.text,
 				startTime: oneWeekAgo,
 			}
-			let results = (await chrome.history.search(query))
 
 			if (key.type) {
 				const itemProcessor = createHistoryItemProcessor(key.type)
-				results = results.map(itemProcessor)
+				const results = (await chrome.history.search(query))
+					.map(itemProcessor)
 
+				items.push(...results)
+			} else {
+				const results = (await chrome.history.search(query))
+				items.push(...results as HistoryItem[])
 			}
-
-			items.push(...results)
 		}
 
 		return items
@@ -46,7 +49,7 @@ export const updateVCS = createAsync<void, void>(
 	async (_, dispatch, getState) => {
 		const { vcsQuery } = selectedSettings(getState())
 		const queries = getVCSQueries(vcsQuery.value)
-		const vcs = await dispatch(getHistoryItems(queries))
+		const vcs = await dispatch(getHistoryItems(queries)) as VCSHistoryItem[]
 
 		dispatch(updateVCSHistory(vcs))
 	})
@@ -55,7 +58,7 @@ export const updateITS = createAsync<void, void>(
 	async (_, dispatch, getState) => {
 		const { itsQuery } = selectedSettings(getState())
 		const queries = getITSQueries(itsQuery.value)
-		const its = await dispatch(getHistoryItems(queries))
+		const its = await dispatch(getHistoryItems(queries)) as ITSHistoryItem[]
 
 		dispatch(updateITSHistory(its))
 	})
@@ -84,5 +87,5 @@ export const updateHistory = createAsync<void, void>(
 export const pinItem = createAction<HistoryItem['id']>('pinItem')
 export const unpinItem = createAction<HistoryItem['id']>('unpinItem')
 export const updateUserHistory = createAction<HistoryItem[]>('updateHistory')
-export const updateVCSHistory = createAction<HistoryItem[]>('updateGitHistory')
-export const updateITSHistory = createAction<HistoryItem[]>('updateJiraHistory')
+export const updateVCSHistory = createAction<VCSHistoryItem[]>('updateGitHistory')
+export const updateITSHistory = createAction<ITSHistoryItem[]>('updateJiraHistory')

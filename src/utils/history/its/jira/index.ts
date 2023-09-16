@@ -1,4 +1,4 @@
-import { ProcessConfig, ITSHistoryItem } from 'utils/history/types'
+
 import { getConfigTypes } from 'utils/history/helpers'
 import issue from 'utils/history/its/jira/issue'
 import filter from 'utils/history/its/jira/filter'
@@ -7,6 +7,7 @@ import profile from 'utils/history/its/jira/profile'
 import rapidBoard from 'utils/history/its/jira/rapidBoard'
 import dashboard from 'utils/history/its/jira/dashboard'
 import unknown from 'utils/history/its/jira/unknown'
+import { ITSHistoryItem, ProcessConfig } from 'src/types/history'
 
 // TODO: filter items from settings
 export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHistoryItem> = [

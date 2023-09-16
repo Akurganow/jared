@@ -1,5 +1,5 @@
 import memoize from 'lodash/memoize'
-import { ProcessConfig } from './types'
+import { HistoryItem, ProcessConfig } from 'src/types/history'
 
 function rawGetUrl(itemUrl: string): [URL, string[]] {
 	const url = new URL(itemUrl)
@@ -36,4 +36,21 @@ export function sortByVisitCount(a: chrome.history.HistoryItem, b: chrome.histor
 
 export function sortByLastVisitTime(a: chrome.history.HistoryItem, b: chrome.history.HistoryItem) {
 	return sortBy(a, b, 'lastVisitTime')
+}
+
+export function filterItems(pinned: HistoryItem[]) {
+	return (item: HistoryItem, index: number, array: HistoryItem[]) =>
+		array.findIndex(i => i.title === item.title) === index
+		&& !pinned.find(pinnedItem => pinnedItem.title === item.title)
+}
+
+export function movePinnedItemBetweenArrays<T extends HistoryItem>(arrFrom: T[], arrTo: T[], id: string, pinned: boolean) {
+	const item = arrFrom.find(item => item.id === id)
+
+	return item
+		? [
+			arrFrom.filter(item => item.id !== id),
+			[...arrTo, { ...item, pinned }],
+		]
+		: [arrFrom, arrTo]
 }

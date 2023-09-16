@@ -1,4 +1,4 @@
-import { HistoryState } from 'store/types/history'
+import { HistoryState } from 'src/types/history'
 
 export const storeKey = 'history'
 export const initialState: HistoryState = {

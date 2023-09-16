@@ -1,5 +1,5 @@
 import { getUrl } from 'utils/history/helpers'
-import { VCSHistoryItem, ProcessConfigItem } from 'utils/history/types'
+import { ProcessConfigItem, VCSHistoryItem } from 'src/types/history'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {

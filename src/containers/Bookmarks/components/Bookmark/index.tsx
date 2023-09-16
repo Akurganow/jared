@@ -1,7 +1,7 @@
 import { MouseEvent as ReactMouseEvent } from 'react'
 import cn from 'classnames'
-import { Bookmark } from 'store/types/bookmarks'
 import Favicon from 'components/Favicon'
+import { Bookmark } from 'src/types/bookmarks'
 import st from './styles.module.css'
 
 interface BookmarkProps extends Bookmark {

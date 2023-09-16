@@ -1,4 +1,3 @@
-export type SettingsTypes = 'number' | 'string' | 'boolean' | 'option'
 export type SettingsTypeCommon = {
 	name: string
 	hint: string

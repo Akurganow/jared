@@ -9,10 +9,12 @@ type ThemeSettings = Partial<{
 	border: string
 	fontStyle: string
 }>
+
 interface ThemeData {
 	name: string
 	settings: ThemeSettings
 }
+
 export interface Theme {
 	name: string;
 	type: 'dark' | 'light'

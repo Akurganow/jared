@@ -1,5 +1,5 @@
-import { SettingsState } from 'store/types/settings'
 import { getThemesNames } from 'utils/themes'
+import { SettingsState } from 'src/types/settings'
 
 export const storeKey = 'settings'
 export const initialState: SettingsState = {

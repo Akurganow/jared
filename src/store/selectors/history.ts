@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
-import { sortByLastVisitTime, sortByVisitCount } from 'utils/history/helpers'
+import { filterItems, sortByLastVisitTime, sortByVisitCount } from 'utils/history/helpers'
 import { RootState } from 'store/types'
-import { filterItems } from 'store/helpers/history'
 import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 

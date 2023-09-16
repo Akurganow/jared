@@ -1,7 +1,7 @@
 import memoize from 'lodash/memoize'
-import { Theme } from 'utils/themes/types'
 import jbDarkula from 'utils/themes/themes/jb-darkula'
 import jbLight from 'utils/themes/themes/jb-light'
+import { Theme } from 'src/types/themes'
 
 const themes: { [key: string]: Theme } = {
 	'JB-Darcula': jbDarkula,

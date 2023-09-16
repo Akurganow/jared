@@ -1,11 +1,9 @@
 import memoize from 'lodash/memoize'
 import { createSelector } from 'reselect'
 import set from 'lodash/set'
-import { SettingsState } from 'store/types/settings'
-// eslint-disable-next-line import/no-cycle
 import { RootState } from 'store/types'
-
 import { storeKey } from 'store/constants/settings'
+import { SettingsState } from 'src/types/settings'
 
 const rawSelectedSettings = (state: RootState) => state[storeKey]
 export const selectedSettingsKeys = createSelector(
