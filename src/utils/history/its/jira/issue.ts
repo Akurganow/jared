@@ -1,5 +1,5 @@
 import { getUrl, getSplitTitle } from 'utils/history/helpers'
-import { ITSHistoryItem, ProcessConfigItem } from 'src/types/history'
+import { ITSHistoryItem, ProcessConfigItem } from 'types/history'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {

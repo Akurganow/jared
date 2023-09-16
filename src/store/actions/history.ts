@@ -1,7 +1,7 @@
 import { actionCreatorFactory } from 'typescript-fsa'
 import { asyncFactory } from 'typescript-fsa-redux-thunk'
 import { RootState } from 'store/types'
-import { HistoryItem, HistoryQuery, ITSHistoryItem, VCSHistoryItem } from 'src/types/history'
+import { HistoryItem, HistoryQuery, ITSHistoryItem, VCSHistoryItem } from 'types/history'
 import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 import { createHistoryItemProcessor } from 'utils/history'

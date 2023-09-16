@@ -78,6 +78,7 @@ module.exports = (config, { dev }) => merge(config, {
 			assets: path.resolve(__dirname, './src/assets'),
 			store: path.resolve(__dirname, './src/store'),
 			styles: path.resolve(__dirname, './src/styles'),
+			types: path.resolve(__dirname, './src/types'),
 			src: path.resolve(__dirname, './src'),
 			// i18n: path.resolve(__dirname, './src/i18n'),
 			// jest: path.resolve(__dirname, './.jest'),

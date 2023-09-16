@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react'
 
-import { VCSHistoryItem } from 'src/types/history'
+import { VCSHistoryItem } from 'types/history'
 
 export type VSCItemProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & VCSHistoryItem

@@ -1,8 +1,8 @@
 import { CombinedState } from 'redux'
-import { DialogsState } from 'src/types/dialogs'
-import { HistoryState } from 'src/types/history'
-import { SettingsState } from 'src/types/settings'
-import { BookmarksState } from 'src/types/bookmarks'
+import { DialogsState } from 'types/dialogs'
+import { HistoryState } from 'types/history'
+import { SettingsState } from 'types/settings'
+import { BookmarksState } from 'types/bookmarks'
 
 interface PersistPartial {
 	_persist: { version: number; rehydrated: boolean };

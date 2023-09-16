@@ -1,6 +1,6 @@
 import memoize from 'lodash/memoize'
 import { jiraProcessConfig } from 'utils/history/its/jira'
-import { HistoryQuery } from 'src/types/history'
+import { HistoryQuery } from 'types/history'
 import { gitlabProcessConfig } from 'utils/history/vcs/gitlab'
 import { githubProcessConfig } from 'utils/history/vcs/github'
 

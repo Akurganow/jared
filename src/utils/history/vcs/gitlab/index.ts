@@ -1,4 +1,4 @@
-import { ProcessConfig, VCSHistoryItem } from 'src/types/history'
+import { ProcessConfig, VCSHistoryItem } from 'types/history'
 import mergeRequest from 'utils/history/vcs/gitlab/mergeRequest'
 import filterMergeRequests from 'utils/history/vcs/gitlab/filter-mergeRequests'
 import jobs from 'utils/history/vcs/gitlab/jobs'

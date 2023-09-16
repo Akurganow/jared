@@ -1,4 +1,4 @@
-import { BookmarksState } from 'src/types/bookmarks'
+import { BookmarksState } from 'types/bookmarks'
 
 export const storeKey = 'bookmarks'
 export const initialState: BookmarksState = {

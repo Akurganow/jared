@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { RootState } from 'store/types'
 import { storeKey } from 'store/constants/dialogs'
-import { DialogsState } from 'src/types/dialogs'
+import { DialogsState } from 'types/dialogs'
 
 const rawSelectedDialogs = (state: RootState) => state[storeKey]
 export const selectedDialogs = createSelector(

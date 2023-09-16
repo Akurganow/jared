@@ -8,6 +8,7 @@
 			"pages/*": ["src/pages/*"],
 			"utils/*": ["src/utils/*"],
 			"styles/*": ["src/styles/*"],
+			"types/*": ["src/types/*"],
 			"i18n": ["src/i18n"],
 			"react-dom": ["@hot-loader/react-dom"],
 			"jest/*": [".jest/*"],

@@ -1,6 +1,6 @@
 import { actionCreatorFactory } from 'typescript-fsa'
 import { storeKey } from 'store/constants/dialogs'
-import { Bookmark } from 'src/types/bookmarks'
+import { Bookmark } from 'types/bookmarks'
 
 const createAction = actionCreatorFactory(storeKey)
 
