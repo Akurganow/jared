@@ -34,8 +34,7 @@ const meta: Meta<ComponentProps<typeof Dialog>> = {
 				{story()}
 			</div>
 	],
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	render: ({ ...args }) =>
+	render: () =>
 		<div style={{ width: '25rem' }}>
 			<DialogHeader>Dialog</DialogHeader>
 
