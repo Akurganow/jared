@@ -51,19 +51,14 @@ export default function HistoryItem({ id, title, name, url, type, provider, pinn
 		data-testid="HistoryItem"
 	>
 		<div>
-			{type} {name}
+			{name}
 		</div>
 		{title}
 		{
 			provider !== 'unknown'
-				? <SVGIcon name={`${provider}Logo`} className={st.icon}/>
+				? <SVGIcon data-testid="HistoryItem:ProviderLogo" name={`${provider}Logo`} className={st.icon}/>
 				: null
 		}
-		<PinButton
-			data-testid="HistoryItem:PinButton"
-			pinned={pinned}
-			className={st.pinButton}
-			onClick={handlePinClick}
-		/>
+		<PinButton data-testid="HistoryItem:PinButton" pinned={pinned} className={st.pinButton} onClick={handlePinClick} />
 	</a>
 }

@@ -1,0 +1,36 @@
+import { ProcessConfigItem, VCSHistoryItem } from 'types/history'
+import { getUrl } from 'utils/history/helpers'
+
+function getIssueName(path: string[]) {
+	if (path.includes('new')) {
+		return 'New Issue'
+	}
+	if (path[path.length - 1] === 'issues') {
+		return 'Issues'
+	}
+
+	return `Issue #${path[path.length - 1]}`
+}
+
+const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
+	(item: chrome.history.HistoryItem) => {
+		const [, path] = getUrl(item.url || '')
+
+		return path.includes('issues')
+	},
+	(item: chrome.history.HistoryItem) => {
+		const [, path] = getUrl(item.url || '')
+
+		return {
+			...item,
+			provider: 'github',
+			type: 'issue',
+			name: getIssueName(path),
+			title: item.title || 'Issue',
+		} },
+	{
+		type: 'issue',
+		name: 'Issue',
+	},
+]
+export default processor

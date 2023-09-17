@@ -4,7 +4,7 @@ import { HistoryQuery } from 'types/history'
 import { gitlabProcessConfig } from 'utils/history/vcs/gitlab'
 import { githubProcessConfig } from 'utils/history/vcs/github'
 
-const vcsConfigs = {
+const configs = {
 	gitlab: gitlabProcessConfig,
 	github: githubProcessConfig,
 }
@@ -17,7 +17,7 @@ export const getVCSQueries = memoize((query: string) =>
 		.filter(Boolean)
 		.map((line): HistoryQuery => {
 			const [query, type, maxResults] = line.trim().split(' ')
-			const config = vcsConfigs[type as keyof typeof vcsConfigs]
+			const config = configs[type as keyof typeof configs]
 
 			return {
 				type: type as HistoryQuery['type'],

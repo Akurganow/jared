@@ -8,6 +8,9 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 	title: 'UI/HistoryItem',
+	argTypes: {
+		id: { control: { disable: true } },
+	},
 	parameters: {
 		layout: 'centered',
 	},
@@ -29,7 +32,7 @@ const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 		await expect(item).toBeInTheDocument()
 		await expect(item).toHaveAttribute('href', args.url)
 		await expect(item).toHaveAttribute('title', args.title)
-		await expect(item).toHaveTextContent(`${args.type} ${args.name}${args.title}`)
+		await expect(item).toHaveTextContent(`${args.name}${args.title}`)
 		await expect(pinButton).toBeInTheDocument()
 
 		pinButton.click()
@@ -90,4 +93,21 @@ export const Jira: Story = {
 		provider: 'jira',
 		pinned: false,
 	}
+}
+
+export const Unknown: Story = {
+	argTypes: {
+		name: { control: { disable: true } },
+		provider: { control: { disable: true } },
+		type: { control: { disable: true } },
+	},
+	args: {
+		id: 'unknown-id',
+		title: 'Unknown',
+		name: '',
+		url: 'https://unknown.com',
+		type: 'unknown',
+		provider: 'unknown',
+		pinned: false,
+	},
 }

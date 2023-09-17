@@ -5,7 +5,7 @@ import { HistoryItem, HistoryQuery, ITSHistoryItem, VCSHistoryItem } from 'types
 import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 import { createHistoryItemProcessor } from 'utils/history'
-import { getITSQueries, getVCSQueries } from 'utils/history/vcsConfigs'
+import { getITSQueries, getVCSQueries } from 'utils/history/configs'
 
 const createAction = actionCreatorFactory(storeKey)
 const createAsync = asyncFactory<RootState>(createAction)

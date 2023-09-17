@@ -1,6 +1,7 @@
 export type ITSType = 'unknown' | 'issue' | 'filter' | 'project' | 'profile' | 'board'
 export type VCSType =
 	'unknown'
+	| 'issue'
 	| 'settings'
 	| 'repo'
 	| 'tree'

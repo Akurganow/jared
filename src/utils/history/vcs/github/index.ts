@@ -1,4 +1,4 @@
-
+import issue from 'utils/history/vcs/github/issue'
 import settings from 'utils/history/vcs/github/settings'
 import topics from 'utils/history/vcs/github/topics'
 import repo from 'utils/history/vcs/github/repo'
@@ -14,6 +14,7 @@ import { ProcessConfig, VCSHistoryItem } from 'types/history'
 
 // TODO: add commits, releases, settings, notifications, orgs, pkgs, tab=repositories
 export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
+	issue,
 	settings,
 	topics,
 	repo,
