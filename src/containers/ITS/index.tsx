@@ -2,7 +2,7 @@ import cn from 'classnames'
 import { useSelector } from 'react-redux'
 import { DetailedHTMLProps, HTMLAttributes, useMemo } from 'react'
 import { selectedITS } from 'store/selectors/history'
-import Item from './components/Item'
+import HistoryItem from 'components/HistoryItem'
 import st from './styles.module.css'
 
 interface ITSProps
@@ -25,7 +25,7 @@ export default function ({ className, ...props }: ITSProps) {
 		>
 			<div className={st.pinned}>
 				{pinned.map((item) =>
-					<Item
+					<HistoryItem
 						key={`pinned${item.id}`}
 						{...item}
 					/>
@@ -33,7 +33,7 @@ export default function ({ className, ...props }: ITSProps) {
 			</div>
 			<div className={st.unpinned}>
 				{unpinned.map((item) =>
-					<Item
+					<HistoryItem
 						key={item.id}
 						{...item}
 					/>

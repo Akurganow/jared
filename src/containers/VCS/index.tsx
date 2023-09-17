@@ -2,8 +2,8 @@ import { DetailedHTMLProps, HTMLAttributes, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import cn from 'classnames'
 import { selectedVCS } from 'store/selectors/history'
+import HistoryItem from 'components/HistoryItem'
 import st from './styles.module.css'
-import Item from './components/Item'
 
 interface VSCProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
 }
@@ -26,7 +26,7 @@ export default function ({ className, ...props }: VSCProps) {
 		>
 			<div className={st.pinned}>
 				{pinned.map((item) =>
-					<Item
+					<HistoryItem
 						key={`pinned${item.id}`}
 						{...item}
 					/>
@@ -34,7 +34,7 @@ export default function ({ className, ...props }: VSCProps) {
 			</div>
 			<div className={st.unpinned}>
 				{unpinned.map((item) =>
-					<Item
+					<HistoryItem
 						key={item.id}
 						{...item}
 					/>

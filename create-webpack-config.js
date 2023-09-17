@@ -82,7 +82,7 @@ module.exports = (config, { dev }) => merge(config, {
 			src: path.resolve(__dirname, './src'),
 			// i18n: path.resolve(__dirname, './src/i18n'),
 			// jest: path.resolve(__dirname, './.jest'),
-			// storybook: path.resolve(__dirname, './.storybook'),
+			storybook: path.resolve(__dirname, './.storybook'),
 		}),
 	}),
 	plugins: get(config, 'plugins', []).concat([

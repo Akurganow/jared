@@ -1,3 +1,5 @@
+import { expect } from '@storybook/jest'
+import { within } from '@storybook/testing-library'
 import SVGIcon from 'components/SVGIcon'
 import * as icons from 'components/SVGIcon/icons'
 import type { Meta, StoryObj } from '@storybook/react'
@@ -30,5 +32,11 @@ type Story = StoryObj<typeof meta>
 export const Icons: Story = {
 	args: {
 		name: 'settings'
-	}
+	},
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement)
+		const icon = canvas.getByTestId('SVGIcon')
+
+		await expect(icon).toBeInTheDocument()
+	},
 }

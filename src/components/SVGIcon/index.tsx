@@ -17,6 +17,7 @@ function SVGIcon({ name, className, ...rest }: SVGIconProps) {
 	return (
 		<svg
 			{...rest}
+			data-testid="SVGIcon"
 			className={cn(st.icon, className)}
 		>
 			<use xlinkHref={`#${icon.id}`} />

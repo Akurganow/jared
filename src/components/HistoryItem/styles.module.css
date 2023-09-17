@@ -6,7 +6,8 @@
 	max-width: 100%;
 	position: relative;
 	padding-left: 0.5rem;
-	padding-top: 0.5rem;
+	padding-top: 0.25rem;
+	padding-bottom: 0.25rem;
 	display: block;
 	text-decoration: none;
 	color: var(--color-primaryForeground);
@@ -41,32 +42,30 @@
 	right: 0;
 }
 
-/* TODO: more meaningful use of colors, put in readme.md */
-
-.issue, .repo, .commit {
+.changes {
 	--accent-color: var(--token-changes-foreground);
+}
+
+.item {
+	--accent-color: var(--token-item-foreground);
 }
 
 .unknown {
 	--accent-color: var(--token-unknown-foreground);
 }
 
-.filter, .board, .topics, .job, .pipeline {
+.filter {
 	--accent-color: var(--token-filter-foreground);
 }
 
-.pullRequest, .mergeRequest {
-	--accent-color: var(--token-item-foreground);
-}
-
-.profile {
-	--accent-color: var(--token-person-foreground);
-}
-
-.settings {
+.preferences {
 	--accent-color: var(--token-preferences-foreground);
 }
 
-.blob, .tree {
+.person {
+	--accent-color: var(--token-person-foreground);
+}
+
+.file {
 	--accent-color: var(--token-file-foreground);
 }

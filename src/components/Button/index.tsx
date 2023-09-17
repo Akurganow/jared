@@ -8,6 +8,7 @@ const Button = ({ className, ...props }: HTMLButtonProps) => {
 	const classNames = cn(st.button, className)
 
 	return <button
+		data-testid="Button"
 		className={classNames}
 		{...props}
 	/>
