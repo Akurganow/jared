@@ -10,6 +10,9 @@ const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 	title: 'UI/HistoryItem',
 	argTypes: {
 		id: { control: { disable: true } },
+		title: { control: 'text', description: 'Title of the item' },
+		name: { control: 'text', description: 'Name of the item' },
+		url: { control: 'text', description: 'URL of the item' },
 	},
 	parameters: {
 		layout: 'centered',
@@ -95,10 +98,21 @@ export const Jira: Story = {
 	}
 }
 
+export const LargeText: Story = {
+	args: {
+		id: 'webextension-toolbox-id',
+		title: 'Small CLI toolbox for cross-browser WebExtension development',
+		name: 'webextension-toolbox/webextension-toolbox',
+		url: 'https://github.com/webextension-toolbox/webextension-toolbox/',
+		type: 'repo',
+		provider: 'github',
+		pinned: false,
+	}
+}
+
 export const Unknown: Story = {
 	argTypes: {
 		name: { control: { disable: true } },
-		provider: { control: { disable: true } },
 		type: { control: { disable: true } },
 	},
 	args: {

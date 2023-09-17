@@ -26,6 +26,7 @@ export type HistoryQuery = {
 export interface HistoryItem extends chrome.history.HistoryItem {
 	name: string
 	title: string
+	url: string
 	pinned?: boolean
 }
 

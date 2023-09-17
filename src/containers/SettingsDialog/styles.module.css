@@ -27,5 +27,5 @@
     background-color: var(--area-form-background); /* background color from Darcula Solid */
     padding: 5px;
     font-size: var(--basic-fontSize);
-    color: var(--area-form-foreground); 
+    color: var(--area-form-foreground);
 }

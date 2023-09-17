@@ -11,14 +11,16 @@ import DialogBody from './components/Body'
 import DialogFooter from './components/Footer'
 
 interface DialogProps extends DetailedHTMLProps<HTMLAttributes<HTMLDialogElement>, HTMLDialogElement> {
-    name: string
-    isClickOutsideClose?: boolean
+	name: string
+	isOpen?: boolean
+	isClickOutsideClose?: boolean
 	onCloseComplete?: () => void
 }
 
 export default function Dialog({
 	name,
 	isClickOutsideClose = true,
+	isOpen = false,
 	onCloseComplete,
 	className,
 	children
@@ -26,17 +28,18 @@ export default function Dialog({
 	const dispatch = useDispatch()
 	const container = document.getElementById('dialog')
 	const dialog = useRef<HTMLDialogElement>(null)
-	const isOpen = useSelector(selectedDialog(name))
+	const isOpenStored = useSelector(selectedDialog(name))
+	const isOpenCurrent = isOpen || isOpenStored
 
 	useEffect(() => {
-		if (dialog.current?.open === isOpen) return
+		if (dialog.current?.open === isOpenCurrent) return
 
-		if (isOpen) {
+		if (isOpenCurrent) {
 			dialog.current?.showModal()
 		} else {
 			dialog.current?.close()
 		}
-	}, [isOpen])
+	}, [isOpenCurrent])
 
 	if (!container) return null
 
@@ -57,7 +60,7 @@ export default function Dialog({
 		</dialog>
 	)
 
-	return isOpen ? createPortal(element, container) : null
+	return isOpenCurrent ? createPortal(element, container) : null
 }
 
 export { DialogHeader, DialogBody, DialogFooter }

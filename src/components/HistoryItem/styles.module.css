@@ -24,22 +24,29 @@
 	background-color: var(--accent-color);
 }
 
+.name {
+	margin-right: 1rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 .icon	{
 	position: absolute;
-	top: -25%;
-	right: 1rem;
-	z-index: -1;
+	top: 50%;
+	left: 1rem;
+	z-index: 1;
 	filter: grayscale(0.25);
 	width: 5rem;
-	height: 150%;
+	height: 5rem;
 	opacity: 0.1;
-	transform: rotate(25deg);
+	transform: translateY(-50%) rotate(25deg);
 }
 
 .pinButton {
 	position: absolute;
 	top: 0;
 	right: 0;
+	z-index: 2;
 }
 
 .changes {

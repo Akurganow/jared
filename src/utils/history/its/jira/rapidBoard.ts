@@ -16,7 +16,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 			...item,
 			type: 'board',
 			provider: 'jira',
-			name: boardId,
+			name: `view #${boardId}`,
 			title: title.join(' ')
 		}
 	},

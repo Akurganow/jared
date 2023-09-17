@@ -2,7 +2,6 @@ import cn from 'classnames'
 import { MouseEvent } from 'react'
 import { useDispatch } from 'react-redux'
 import { HistoryItem, ITSProviderType, ITSType, VCSProviderType, VCSType } from 'types/history'
-import SVGIcon from 'components/SVGIcon'
 import PinButton from 'components/PinButton'
 import { pinItem, unpinItem } from 'store/actions/history'
 import st from './styles.module.css'
@@ -32,7 +31,7 @@ const typesMap: Record<VCSType | ITSType, TypeTokens> = {
 	project: 'preferences',
 }
 
-export default function HistoryItem({ id, title, name, url, type, provider, pinned }: HistoryItemProps) {
+export default function HistoryItem({ id, title, name, url, type, pinned }: HistoryItemProps) {
 	const dispatch = useDispatch()
 	const handlePinClick = (event: MouseEvent) => {
 		event.preventDefault()
@@ -50,15 +49,16 @@ export default function HistoryItem({ id, title, name, url, type, provider, pinn
 		className={cn(st.item, st[currentType])}
 		data-testid="HistoryItem"
 	>
-		<div>
+		<div className={st.name}>
 			{name}
 		</div>
 		{title}
-		{
-			provider !== 'unknown'
-				? <SVGIcon data-testid="HistoryItem:ProviderLogo" name={`${provider}Logo`} className={st.icon}/>
-				: null
-		}
-		<PinButton data-testid="HistoryItem:PinButton" pinned={pinned} className={st.pinButton} onClick={handlePinClick} />
+		<PinButton
+			data-testid="HistoryItem:PinButton"
+			title={pinned ? 'Unpin' : 'Pin'}
+			pinned={pinned}
+			className={st.pinButton}
+			onClick={handlePinClick}
+		/>
 	</a>
 }
