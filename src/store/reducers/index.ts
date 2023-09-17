@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-
+import { localStorage, syncStorage } from 'redux-persist-webextension-storage'
 import dialogsReducer from 'store/reducers/dialogs'
 import historyReducer from 'store/reducers/history'
 import settingsReducer from 'store/reducers/settings'
@@ -16,7 +15,8 @@ interface PersistPartial {
 	_persist: { version: number; rehydrated: boolean };
 }
 
-function createPersistConfig(key: string) {
+type Storage = typeof localStorage | typeof syncStorage
+function createPersistConfig(key: string, storage: Storage) {
 	return {
 		key: `jared/${key}`,
 		storage,
@@ -33,15 +33,15 @@ export const initialState = {
 export const rootReducer = combineReducers({
 	[dialogsStoreKey]: dialogsReducer,
 	[historyStoreKey]: persistReducer(
-		createPersistConfig(historyStoreKey),
+		createPersistConfig(historyStoreKey, localStorage),
 		historyReducer,
 	),
 	[settingsStoreKey]: persistReducer(
-		createPersistConfig(settingsStoreKey),
+		createPersistConfig(settingsStoreKey, syncStorage),
 		settingsReducer,
 	),
 	[bookmarksStoreKey]: persistReducer(
-		createPersistConfig(bookmarksStoreKey),
+		createPersistConfig(bookmarksStoreKey, localStorage),
 		bookmarksReducer,
 	),
 })

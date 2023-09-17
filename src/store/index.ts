@@ -31,4 +31,3 @@ async function updateStore(store: Store) {
 updateStore(store)
 
 export { store, persistor }
-export { PersistPartial } from 'store/types'

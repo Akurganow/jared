@@ -9,8 +9,8 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: flex-start;
-	justify-content: space-between;
-	gap: 0.125rem;
+	justify-content: flex-start;
+	gap: 0.5rem;
 }
 
 .actions {

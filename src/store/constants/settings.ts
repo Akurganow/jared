@@ -31,10 +31,10 @@ export const initialState: SettingsState = {
 		hint: 'Type: jira',
 	},
 	userQuery: {
-		value: 'rwc, rcv',
+		value: 'google, reddit.com/r/dev, web.dev',
 		type: 'string',
 		name: 'Resents query',
-		hint: 'Type: rwc, rcv',
+		hint: 'Comma separated queries',
 	},
 	theme: {
 		value: 'none',
@@ -44,4 +44,4 @@ export const initialState: SettingsState = {
 		hint: 'Select a theme',
 	}
 }
-// TODO: add settings for queries to show/hide types
+// TODO: add settings for queries to show/hide each type
