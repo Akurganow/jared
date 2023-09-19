@@ -6,10 +6,11 @@ import pipelines from 'utils/history/vcs/gitlab/pipelines'
 import commit from 'utils/history/vcs/gitlab/commit'
 import unknown from 'utils/history/vcs/gitlab/unknown'
 import profile from 'utils/history/vcs/gitlab/profile'
+import tree from 'utils/history/vcs/gitlab/tree'
+
 /*
 TODO: add missing handlers
 import settings from 'utils/history/vcs/gitlab/settings'
-import tree from 'utils/history/vcs/gitlab/tree'
 import blob from 'utils/history/vcs/gitlab/blob'
 import issues from 'utils/history/vcs/gitlab/issues'
 import branches from 'utils/history/vcs/gitlab/branches'
@@ -27,8 +28,10 @@ import integrations from 'utils/history/vcs/gitlab/integrations'
 import packages from 'utils/history/vcs/gitlab/packages'
 import repository from 'utils/history/vcs/gitlab/repository'
 */
+
 export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
 	profile,
+	tree,
 	mergeRequest,
 	filterMergeRequests,
 	jobs,
