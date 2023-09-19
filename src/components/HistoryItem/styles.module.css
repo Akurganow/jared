@@ -25,6 +25,7 @@
 }
 
 .name {
+	font-size: 0.75rem;
 	margin-right: 1rem;
 	overflow: hidden;
 	text-overflow: ellipsis;

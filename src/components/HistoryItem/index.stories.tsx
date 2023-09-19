@@ -22,7 +22,7 @@ const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 	decorators: [
 		(story) =>
 			<Mockstore>
-				<div style={{ width: '16rem' }}>
+				<div style={{ width: '15rem' }}>
 					{story()}
 				</div>
 			</Mockstore>,

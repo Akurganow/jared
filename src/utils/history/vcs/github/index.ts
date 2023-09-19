@@ -10,10 +10,22 @@ import blobSearch from 'utils/history/vcs/github/blob-search'
 import tree from 'utils/history/vcs/github/tree'
 import blob from 'utils/history/vcs/github/blob'
 import unknown from 'utils/history/vcs/github/unknown'
+import profile from 'utils/history/vcs/github/profile'
 import { ProcessConfig, VCSHistoryItem } from 'types/history'
 
-// TODO: add commits, releases, settings, notifications, orgs, pkgs, tab=repositories
+/*
+ TODO: add missing handlers
+ import commits from 'utils/history/vcs/github/commits'
+ import releases from 'utils/history/vcs/github/releases'
+ import notifications from 'utils/history/vcs/github/notifications'
+ import orgs from 'utils/history/vcs/github/orgs'
+ import pkgs from 'utils/history/vcs/github/pkgs'
+ import settings from 'utils/history/vcs/github/settings'
+ import tabs from 'utils/history/vcs/github/tabs'
+ */
+
 export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
+	profile,
 	issue,
 	settings,
 	topics,

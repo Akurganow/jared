@@ -15,8 +15,8 @@ type TypeTokens = 'unknown' | 'item' | 'filter' | 'person' | 'preferences' | 'fi
 const typesMap: Record<VCSType | ITSType, TypeTokens> = {
 	unknown: 'unknown',
 	issue: 'item',
-	commit: 'item',
-	repo: 'item',
+	commit: 'file',
+	repo: 'file',
 	pullRequest: 'item',
 	mergeRequest: 'item',
 	filter: 'filter',

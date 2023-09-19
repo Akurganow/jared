@@ -2,6 +2,8 @@ import { ProcessConfigItem, VCSHistoryItem } from 'types/history'
 import { getUrl } from 'utils/history/helpers'
 
 function getIssueName(path: string[]) {
+	const repoName = `${path[0]}/${path[1]}`
+
 	if (path.includes('new')) {
 		return 'New Issue'
 	}
@@ -9,7 +11,7 @@ function getIssueName(path: string[]) {
 		return 'Issues'
 	}
 
-	return `Issue #${path[path.length - 1]}`
+	return `Issue #${path[path.length - 1]} ${repoName}`
 }
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
