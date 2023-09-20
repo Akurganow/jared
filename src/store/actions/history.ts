@@ -52,6 +52,7 @@ export const updateVCS = createAsync<void, void>(
 		const vcs = await dispatch(getHistoryItems(queries)) as VCSHistoryItem[]
 
 		dispatch(updateVCSHistory(vcs))
+		dispatch(updateVCSPinnedHistory(vcs))
 	})
 export const updateITS = createAsync<void, void>(
 	'updateITS',
@@ -61,6 +62,8 @@ export const updateITS = createAsync<void, void>(
 		const its = await dispatch(getHistoryItems(queries)) as ITSHistoryItem[]
 
 		dispatch(updateITSHistory(its))
+		dispatch(updateITSPinnedHistory(its))
+
 	})
 export const updateUserContent = createAsync<void, void>(
 	'updateUserContent',
@@ -86,6 +89,8 @@ export const updateHistory = createAsync<void, void>(
 )
 export const pinItem = createAction<HistoryItem['id']>('pinItem')
 export const unpinItem = createAction<HistoryItem['id']>('unpinItem')
-export const updateUserHistory = createAction<HistoryItem[]>('updateHistory')
-export const updateVCSHistory = createAction<VCSHistoryItem[]>('updateGitHistory')
-export const updateITSHistory = createAction<ITSHistoryItem[]>('updateJiraHistory')
+export const updateUserHistory = createAction<HistoryItem[]>('updateUserHistory')
+export const updateVCSHistory = createAction<VCSHistoryItem[]>('updateVCSHistory')
+export const updateVCSPinnedHistory = createAction<VCSHistoryItem[]>('updateVCSPinnedHistory')
+export const updateITSHistory = createAction<ITSHistoryItem[]>('updateITSHistory')
+export const updateITSPinnedHistory = createAction<ITSHistoryItem[]>('updateITSPinnedHistory')

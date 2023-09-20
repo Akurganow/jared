@@ -1,5 +1,12 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { pinItem, unpinItem, updateITSHistory, updateUserHistory, updateVCSHistory } from 'store/actions/history'
+import {
+	pinItem,
+	unpinItem,
+	updateITSHistory, updateITSPinnedHistory,
+	updateUserHistory,
+	updateVCSHistory,
+	updateVCSPinnedHistory
+} from 'store/actions/history'
 import { initialState } from 'store/constants/history'
 import { movePinnedItemBetweenArrays } from 'utils/history/helpers'
 
@@ -12,6 +19,52 @@ const reducer = reducerWithInitialState(initialState)
 		...state,
 		vcs: items,
 	}))
+	.case(updateVCSPinnedHistory, (state, items) => {
+		const vcsPinned = state.pinned.vcs
+			.map(pinned => {
+				const updated = items.find(item => item.id === pinned.id)
+
+				if (updated) {
+					return {
+						...pinned,
+						...updated,
+					}
+				}
+
+				return pinned
+			})
+
+		return {
+			...state,
+			pinned: {
+				...state.pinned,
+				vcs: vcsPinned,
+			}
+		}
+	})
+	.case(updateITSPinnedHistory, (state, items) => {
+		const itsPinned = state.pinned.its
+			.map(pinned => {
+				const updated = items.find(item => item.id === pinned.id)
+
+				if (updated) {
+					return {
+						...pinned,
+						...updated,
+					}
+				}
+
+				return pinned
+			})
+
+		return {
+			...state,
+			pinned: {
+				...state.pinned,
+				its: itsPinned,
+			}
+		}
+	})
 	.case(updateITSHistory, (state, items) => ({
 		...state,
 		its: items,

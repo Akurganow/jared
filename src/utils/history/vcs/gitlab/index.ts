@@ -30,6 +30,25 @@ import repository from 'utils/history/vcs/gitlab/repository'
 */
 
 export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
+	/*
+	settings,
+	blob,
+	issues,
+	branches,
+	analytics,
+	snippets,
+	tags,
+	help,
+	graphs,
+	login,
+	mergeRequestEdit,
+	network,
+	compare,
+	members,
+	integrations,
+	packages,
+	repository,
+	 */
 	profile,
 	tree,
 	mergeRequest,

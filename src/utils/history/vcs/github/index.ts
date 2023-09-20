@@ -25,6 +25,15 @@ import { ProcessConfig, VCSHistoryItem } from 'types/history'
  */
 
 export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
+	/*
+	commits,
+	releases,
+	notifications,
+	orgs,
+	pkgs,
+	settings,
+	tabs,
+	 */
 	profile,
 	issue,
 	settings,
