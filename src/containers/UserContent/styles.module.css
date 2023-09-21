@@ -11,6 +11,7 @@
 	overflow: hidden;
 	max-width: 100%;
 	color: var(--color-primaryForeground);
+	user-select: none;
 }
 
 .item + .item {

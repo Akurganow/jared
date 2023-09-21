@@ -23,14 +23,14 @@ export interface Theme {
 	}
 	tokens: ThemeData[];
 	areas: {
-		button?: {
-			default?: ThemeSettings
-			action?: ThemeSettings
-			danger?: ThemeSettings
-			warning?: ThemeSettings
-			disabled?: ThemeSettings
+		button: {
+			default: ThemeSettings
+			action: ThemeSettings
+			danger: ThemeSettings
+			warning: ThemeSettings
+			disabled: ThemeSettings
 		};
 	} & {
-		[key in ThemeAreas]?: ThemeSettings;
+		[key in ThemeAreas]: ThemeSettings;
 	}
 }

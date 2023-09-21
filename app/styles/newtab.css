@@ -1,5 +1,30 @@
+@import './default-light-theme.css';
+@import './default-dark-theme.css';
+
+:root {
+	--basic-fontSize: 13px;
+	--basic-layout-gap: 0.5rem;
+}
+
 body {
 	min-height: 100%;
-	background: var(--black);
-	color: var(--white);
+	font-family: 'JetBrains Mono', monospace;
+	font-size: var(--basic-fontSize);
+	line-height: 1.4;
+	background-color: var(--area-page-background);
+	color: var(--area-page-foreground);
+}
+
+#root,
+#popup {
+	display: contents;
+}
+
+a {
+	color: var(--area-page-foreground);
+	text-decoration: none;
+}
+
+a:hover {
+	color: var(--area-page-hoverForeground);
 }

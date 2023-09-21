@@ -12,6 +12,7 @@
 	text-decoration: none;
 	color: var(--color-primaryForeground);
 	background-color: var(--color-primaryBackground);
+	user-select: none;
 }
 
 .item:after {

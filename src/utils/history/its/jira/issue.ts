@@ -10,13 +10,16 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')
 		const title = getSplitTitle(item.title || '')
+			.join(' - ')
+			.replace(`[${path[1]}]`, '')
+			.trim()
 
 		return {
 			...item,
 			type: 'issue',
 			provider: 'jira',
 			name: path[1],
-			title: title?.join(' - ') || path[1],
+			title: title || path[1],
 		}
 	},
 	{

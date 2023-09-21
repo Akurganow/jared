@@ -17,6 +17,8 @@
 		--color-list: #c589f9;
 		--color-personal: #ff8bcb;
 
+		--area-button-default-background: var(--color-secondaryBackground);
+		--area-button-default-foreground: var(--color-secondaryForeground);
 		--area-button-default-border: var(--color-secondaryBackground);
 	}
 }

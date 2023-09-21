@@ -39,6 +39,15 @@
 	--area-button-default-background: var(--color-secondaryBackground);
 	--area-button-default-foreground: var(--color-secondaryForeground);
 	--area-button-default-border: var(--color-tertiaryBackground);
+	--area-button-action-background: var(--color-info);
+	--area-button-action-foreground: var(--color-primaryBackground);
+	--area-button-action-border: var(--color-info);
+	--area-button-danger-background: var(--color-danger);
+	--area-button-danger-foreground: var(--color-primaryForeground);
+	--area-button-danger-border: var(--color-danger);
+	--area-button-warning-background: var(--color-warning);
+	--area-button-warning-foreground: var(--color-primaryForeground);
+	--area-button-warning-border: var(--color-warning);
 	--area-button-disabled-background: var(--color-tertiaryBackground);
 	--area-button-disabled-foreground: var(--color-primaryBorder);
 	--area-button-disabled-border: var(--color-primaryBorder);
