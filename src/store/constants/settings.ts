@@ -31,17 +31,17 @@ export const initialState: SettingsState = {
 		hint: 'Type: jira',
 	},
 	userQuery: {
-		value: 'google, reddit.com/r/dev, web.dev',
+		value: 'google, reddit.com/r/dev, https://web.dev',
 		type: 'string',
 		name: 'Resents query',
 		hint: 'Comma separated queries',
 	},
 	theme: {
-		value: 'none',
+		value: 'System',
 		options: getThemesNames(),
 		type: 'option',
 		name: 'Theme',
 		hint: 'Select a theme',
 	}
 }
-// TODO: add settings for queries to show/hide each type
+// TODO: add settings for queries to show/hide each type in side-columns

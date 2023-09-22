@@ -48,6 +48,26 @@ const theme: Theme = {
 				background: 'secondaryBackground',
 				foreground: 'secondaryForeground',
 				border: 'tertiaryBackground',
+			},
+			action: {
+				background: 'info',
+				foreground: 'primaryBackground',
+				border: 'info',
+			},
+			danger: {
+				background: 'danger',
+				foreground: 'primaryBackground',
+				border: 'danger',
+			},
+			warning: {
+				background: 'warning',
+				foreground: 'primaryBackground',
+				border: 'warning',
+			},
+			disabled: {
+				background: 'tertiaryBackground',
+				foreground: 'primaryBorder',
+				border: 'primaryBorder',
 			}
 		}
 	},

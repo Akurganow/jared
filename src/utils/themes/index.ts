@@ -13,7 +13,7 @@ export function getTheme(name: string = ''): Theme | undefined {
 }
 
 export function getThemesNames(): string[] {
-	return ['none', ...Object.keys(themes)]
+	return ['System', ...Object.keys(themes)]
 }
 
 function getColorOrVarGetter(colors: Theme['colors']) {
