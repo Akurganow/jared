@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ThunkDispatch } from '@reduxjs/toolkit'
 import { AnyAction } from 'redux'
 import isEqual from 'lodash/isEqual'
-import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from 'react'
+import { ChangeEvent, useCallback, useMemo, useState } from 'react'
 import Dialog, { DialogHeader, DialogBody, DialogFooter } from 'components/Dialog'
 import Button from 'components/Button'
 import { closeDialog } from 'store/actions/dialogs'
@@ -54,17 +54,25 @@ export default function () {
 		}
 	}, [settingKeys, currentSettings, createUpdatedSettings])
 
-	const handleSettingsSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault()
-
+	const handleSettingsSave = useCallback(() => {
 		dispatch(setSettings(updatedSettings))
 		dispatch(updateHistory())
 		dispatch(closeDialog('settings'))
 	}, [dispatch, updatedSettings])
 
+	const handleApply = useCallback(() => {
+		dispatch(setSettings(updatedSettings))
+		dispatch(updateHistory())
+	}, [dispatch, updatedSettings])
+
 	const handleClose = useCallback(() => {
 		dispatch(closeDialog('settings'))
 	}, [dispatch])
+
+	const isDisabledSave = useMemo(() =>
+		isEqual(currentSettings, updatedSettings),
+	[currentSettings, updatedSettings],
+	)
 
 	return <Dialog name="settings">
 		<DialogHeader>Settings</DialogHeader>
@@ -72,23 +80,15 @@ export default function () {
 			<form
 				id="settings-form"
 				className={st.container}
-				onSubmit={handleSettingsSubmit}
 				onChange={handleSettingChange}
 			>
 				{settingKeys.map(SettingsField)}
 			</form>
 		</DialogBody>
 		<DialogFooter>
-			<Button
-				type="submit"
-				form="settings-form"
-				disabled={isEqual(currentSettings, updatedSettings)}
-			>
-				Save
-			</Button>
-			<Button onClick={handleClose}>
-				Close
-			</Button>
+			<Button disabled={isDisabledSave} onClick={handleApply} text="Apply" />
+			<Button disabled={isDisabledSave} onClick={handleSettingsSave} text="Save" variant="action"  />
+			<Button onClick={handleClose} text="Close" />
 		</DialogFooter>
 	</Dialog>
 }

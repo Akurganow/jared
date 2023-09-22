@@ -1,7 +1,5 @@
 .button {
-	background-color: var(--area-button-default-background);
-	color: var(--area-button-default-foreground);
-	border: 1px solid var(--area-button-default-border);
+	border: 1px solid transparent;
 	padding: 0.25rem 0.5rem;
 	text-align: center;
 	text-decoration: none;
@@ -12,7 +10,21 @@
 	user-select: none;
 }
 
-.button:hover {
+.button:disabled,
+.button:disabled:hover,
+.button:disabled:focus
+{
+	cursor: not-allowed;
+	filter: none;
+}
+
+.default {
+	color: var(--area-button-default-foreground);
+	background-color: var(--area-button-default-background);
+	border-color: var(--area-button-default-border);
+}
+
+.default:hover {
 	filter: brightness(1.25) grayscale(0.75);
 }
 
@@ -20,28 +32,52 @@
 	margin-inline-start: 0.5rem;
 }
 
-.button:disabled, .button:disabled:hover, .button:disabled:focus {
-	color: var(--area-button-disabled-foreground);
-	background-color: var(--area-button-disabled-background);
-	border: 1px solid var(--area-button-disabled-border);
-	cursor: not-allowed;
-	filter: none;
+.default:disabled,
+.default:disabled:hover,
+.default:disabled:focus {
+	color: var(--area-button-default-disabled-foreground);
+	background-color: var(--area-button-default-disabled-background);
+	border-color: var(--area-button-default-disabled-border);
 }
 
 .action {
 	background-color: var(--area-button-action-background);
 	color: var(--area-button-action-foreground);
-	border: 1px solid var(--area-button-action-border);
+	border-color: var(--area-button-action-border);
+}
+
+.action:disabled,
+.action:disabled:hover,
+.action:disabled:focus {
+	color: var(--area-button-action-disabled-foreground);
+	background-color: var(--area-button-action-disabled-background);
+	border-color: var(--area-button-action-disabled-border);
 }
 
 .danger {
 	background-color: var(--area-button-danger-background);
 	color: var(--area-button-danger-foreground);
-	border: 1px solid var(--area-button-danger-border);
+	border-color: var(--area-button-danger-border);
+}
+
+.danger:disabled,
+.danger:disabled:hover,
+.danger:disabled:focus {
+	color: var(--area-button-danger-disabled-foreground);
+	background-color: var(--area-button-danger-disabled-background);
+	border-color: var(--area-button-danger-disabled-border);
 }
 
 .warning {
 	background-color: var(--area-button-warning-background);
 	color: var(--area-button-warning-foreground);
-	border: 1px solid var(--area-button-warning-border);
+	border-color: var(--area-button-warning-border);
+}
+
+.warning:disabled,
+.warning:disabled:hover,
+.warning:disabled:focus {
+	color: var(--area-button-warning-disabled-foreground);
+	background-color: var(--area-button-warning-disabled-background);
+	border-color: var(--area-button-warning-disabled-border);
 }

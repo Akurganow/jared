@@ -9,12 +9,19 @@
 	--color-icon: #424242;
 	--color-iconHover: #4e4e4e;
 	--color-danger: #d93025;
+	--color-danger-disabled: #ffcfcc;
 	--color-success: #178038;
+	--color-success-disabled: #ccffdc;
 	--color-info: #1b73e8;
+	--color-info-disabled: #cce2ff;
 	--color-list: #a242f4;
+	--color-list-disabled: #e7ccff;
 	--color-notify: #faab00;
+	--color-notify-disabled: #ffefcc;
 	--color-warning: #ea6e12;
+	--color-warning-disabled: #ffe2cc;
 	--color-personal: #d01884;
+	--color-personal-disabled: #ffccea;
 
 	--token-item-foreground: var(--color-warning);
 	--token-filter-foreground: var(--color-list);
@@ -39,17 +46,26 @@
 	--area-button-default-background: var(--color-secondaryBackground);
 	--area-button-default-foreground: var(--color-secondaryForeground);
 	--area-button-default-border: var(--color-tertiaryBackground);
+	--area-button-default-disabled-background: var(--color-tertiaryBackground);
+	--area-button-default-disabled-foreground: var(--color-primaryBorder);
+	--area-button-default-disabled-border: var(--color-primaryBorder);
 	--area-button-action-background: var(--color-info);
 	--area-button-action-foreground: var(--color-primaryBackground);
 	--area-button-action-border: var(--color-info);
+	--area-button-action-disabled-background: var(--color-tertiaryBackground);
+	--area-button-action-disabled-foreground: var(--color-info-disabled);
+	--area-button-action-disabled-border: var(--color-info-disabled);
 	--area-button-danger-background: var(--color-danger);
-	--area-button-danger-foreground: var(--color-primaryForeground);
+	--area-button-danger-foreground: var(--color-primaryBackground);
 	--area-button-danger-border: var(--color-danger);
+	--area-button-danger-disabled-background: var(--color-tertiaryBackground);
+	--area-button-danger-disabled-foreground: var(--color-danger-disabled);
+	--area-button-danger-disabled-border: var(--color-danger-disabled);
 	--area-button-warning-background: var(--color-warning);
-	--area-button-warning-foreground: var(--color-primaryForeground);
+	--area-button-warning-foreground: var(--color-primaryBackground);
 	--area-button-warning-border: var(--color-warning);
-	--area-button-disabled-background: var(--color-tertiaryBackground);
-	--area-button-disabled-foreground: var(--color-primaryBorder);
-	--area-button-disabled-border: var(--color-primaryBorder);
+	--area-button-warning-disabled-background: var(--color-tertiaryBackground);
+	--area-button-warning-disabled-foreground: var(--color-warning-disabled);
+	--area-button-warning-disabled-border: var(--color-warning-disabled);
 }
 
