@@ -20,6 +20,15 @@ const theme: Theme = {
 		notify: '#bf8803',
 		warning: '#795e26',
 		personal: '#af00db',
+		disabled: {
+			danger: '#be1100',
+			success: '#008000',
+			info: '#0070c1',
+			list: '#001080',
+			notify: '#bf8803',
+			warning: '#795e26',
+			personal: '#af00db',
+		}
 	},
 	areas: {
 		page: {
@@ -48,27 +57,42 @@ const theme: Theme = {
 				background: 'secondaryBackground',
 				foreground: 'secondaryForeground',
 				border: 'tertiaryBackground',
+				disabled: {
+					background: 'tertiaryBackground',
+					foreground: 'primaryBorder',
+					border: 'primaryBorder',
+				}
 			},
 			action: {
 				background: 'info',
 				foreground: 'primaryBackground',
 				border: 'info',
+				disabled: {
+					background: 'tertiaryBackground',
+					foreground: 'disabled-info',
+					border: 'disabled-info',
+				}
 			},
 			danger: {
 				background: 'danger',
 				foreground: 'primaryBackground',
 				border: 'danger',
+				disabled: {
+					background: 'tertiaryBackground',
+					foreground: 'disabled-danger',
+					border: 'disabled-danger',
+				}
 			},
 			warning: {
 				background: 'warning',
 				foreground: 'primaryBackground',
 				border: 'warning',
+				disabled: {
+					background: 'tertiaryBackground',
+					foreground: 'disabled-warning',
+					border: 'disabled-warning',
+				}
 			},
-			disabled: {
-				background: 'tertiaryBackground',
-				foreground: 'primaryBorder',
-				border: 'primaryBorder',
-			}
 		}
 	},
 	tokens: [

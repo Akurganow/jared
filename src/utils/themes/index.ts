@@ -26,6 +26,25 @@ function getColorOrVarGetter(colors: Theme['colors']) {
 	})
 }
 
+interface CSSVar {
+	[key: string]: string | CSSVar | { [key: string]: string | CSSVar }
+}
+function convertToCSSVar(
+	key: string,
+	value: string | CSSVar,
+	valueFunction: (value: string) => string = memoize((value) => value),
+	prefix: string = '',
+): string {
+	console.log(key, value, prefix)
+	if (typeof value === 'string') {
+		return `--${prefix}-${key}: ${valueFunction(value)};`
+	} else {
+		return Object.entries(value).map(([k, v]) => {
+			return convertToCSSVar(k, v, valueFunction, `${prefix && `${prefix}-`}${key}`)
+		}).join('\n')
+	}
+}
+
 function rawGetThemeStylesheet(name: string): string | undefined {
 	const theme = getTheme(name)
 
@@ -33,32 +52,13 @@ function rawGetThemeStylesheet(name: string): string | undefined {
 
 	const { colors, tokens, areas } = theme
 	const getColorOrVar = getColorOrVarGetter(colors)
-
-	const colorVars = Object.entries(colors).reduce((acc, [key, value]) => {
-		return `${acc}--color-${key}: ${value};\n`
-	}, '')
-
+	const colorVars = convertToCSSVar('color', colors, getColorOrVar)
 	const tokenVars = tokens.flatMap(token => {
 		const { name, settings } = token
-		return Object.entries(settings).map(([key, value]) => {
-			return `--token-${name}-${key}: ${getColorOrVar(value)};`
-		})
+		return convertToCSSVar(name, settings, getColorOrVar, 'token')
 	}).join('\n')
 
-	const areaVars = Object.entries(areas).flatMap(([key, value]) => {
-		return Object.entries(value).flatMap(([vKey, vValue]) => {
-			if (key === 'button') {
-				return Object.entries(vValue).map(([vvKey, vvValue]) => {
-					if (typeof vvValue !== 'string') {
-						throw new Error(`Expected theme ${key}.${vKey}.${vvKey} to be a string, but got ${typeof vvValue}`)
-					}
-					return `--area-${key}-${vKey}-${vvKey}: ${getColorOrVar(vvValue)};`
-				})
-			} else {
-				return `--area-${key}-${vKey}: ${getColorOrVar(vValue)};`
-			}
-		})
-	}).join('\n')
+	const areaVars = convertToCSSVar('area', areas, getColorOrVar)
 
 	return `
 		:root {

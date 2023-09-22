@@ -10,19 +10,19 @@
 		--color-icon: #ffffff66;
 		--color-iconHover: #ffffff;
 		--color-danger: #f28b82;
-		--color-danger-disabled: #8d322a;
+		--color-disabled-danger: #8d322a;
 		--color-warning: #f8b072;
-		--color-warning-disabled: #8f5624;
+		--color-disabled-warning: #8f5624;
 		--color-notify: #fdd663;
-		--color-notify-disabled: #935825;
+		--color-disabled-notify: #935825;
 		--color-success: #81c995;
-		--color-success-disabled: #3d6649;
+		--color-disabled-success: #3d6649;
 		--color-info: #8ab4f7;
-		--color-info-disabled: #285295;
+		--color-disabled-info: #285295;
 		--color-list: #c589f9;
-		--color-list-disabled: #65279b;
+		--color-disabled-list: #65279b;
 		--color-personal: #ff8bcb;
-		--color-personal-disabled: #aa1868;
+		--color-disabled-personal: #aa1868;
 
 		--area-button-default-background: var(--color-secondaryBackground);
 		--area-button-default-foreground: var(--color-secondaryForeground);

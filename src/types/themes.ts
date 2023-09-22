@@ -2,11 +2,16 @@ type ThemeAreas = 'page' | 'sidebar' | 'modal' | 'form'
 type ThemeSettings = Partial<{
 	background: string
 	foreground: string
+	border: string
+	disabled: {
+		background: string
+		foreground: string
+		border: string
+	}
 	secondaryBackground: string
 	secondaryForeground: string
 	hoverBackground?: string
 	hoverForeground?: string
-	border: string
 	fontStyle: string
 }>
 
@@ -19,7 +24,10 @@ export interface Theme {
 	name: string;
 	type: 'dark' | 'light'
 	colors: {
-		[key: string]: string
+		[key: string]: string | { [key: string]: string }
+		disabled: {
+			[key: string]: string
+		}
 	}
 	tokens: ThemeData[];
 	areas: {
@@ -28,7 +36,6 @@ export interface Theme {
 			action: ThemeSettings
 			danger: ThemeSettings
 			warning: ThemeSettings
-			disabled: ThemeSettings
 		};
 	} & {
 		[key in ThemeAreas]: ThemeSettings;

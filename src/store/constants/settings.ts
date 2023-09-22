@@ -19,18 +19,29 @@ export const initialState: SettingsState = {
 		hint: 'Number of days to search',
 	},
 	vcsQuery: {
+		/*
+		https://gitlab.com gitlab
+		https://github.com github
+		https://git.ringcentral.com gitlab 100
+		 */
 		value: 'https://gitlab.com gitlab\nhttps://github.com github',
 		type: 'string',
 		name: 'VCS query',
 		hint: 'Type: gitlab, github',
 	},
 	itsQuery: {
+		/*
+		https://jira.ringcentral.com/ jira 100
+		 */
 		value: 'https://jira.atlassian.com/ jira',
 		type: 'string',
 		name: 'ITS query',
 		hint: 'Type: jira',
 	},
 	userQuery: {
+		/*
+		rwc, rcv, ringcentral
+		 */
 		value: 'google, reddit.com/r/dev, https://web.dev',
 		type: 'string',
 		name: 'Resents query',
