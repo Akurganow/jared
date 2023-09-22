@@ -1,4 +1,3 @@
-import { ProcessConfig, VCSHistoryItem } from 'types/history'
 import mergeRequest from 'utils/history/vcs/gitlab/mergeRequest'
 import filterMergeRequests from 'utils/history/vcs/gitlab/filter-mergeRequests'
 import jobs from 'utils/history/vcs/gitlab/jobs'
@@ -7,6 +6,8 @@ import commit from 'utils/history/vcs/gitlab/commit'
 import unknown from 'utils/history/vcs/gitlab/unknown'
 import profile from 'utils/history/vcs/gitlab/profile'
 import tree from 'utils/history/vcs/gitlab/tree'
+import repository from 'utils/history/vcs/gitlab/repository'
+import type { ProcessConfig, VCSHistoryItem } from 'types/history'
 
 /*
 TODO: add missing handlers
@@ -26,7 +27,6 @@ import compare from 'utils/history/vcs/gitlab/compare'
 import members from 'utils/history/vcs/gitlab/members'
 import integrations from 'utils/history/vcs/gitlab/integrations'
 import packages from 'utils/history/vcs/gitlab/packages'
-import repository from 'utils/history/vcs/gitlab/repository'
 */
 
 export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
@@ -47,7 +47,6 @@ export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSH
 	members,
 	integrations,
 	packages,
-	repository,
 	 */
 	profile,
 	tree,
@@ -56,5 +55,6 @@ export const gitlabProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSH
 	jobs,
 	pipelines,
 	commit,
+	repository,
 	unknown,
 ]

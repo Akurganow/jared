@@ -1,6 +1,6 @@
 import { actionCreatorFactory } from 'typescript-fsa'
 import { storeKey } from 'store/constants/settings'
-import { SettingsState } from 'types/settings'
+import type { SettingsState } from 'types/settings'
 
 const createAction = actionCreatorFactory(storeKey)
 export const setSetting =

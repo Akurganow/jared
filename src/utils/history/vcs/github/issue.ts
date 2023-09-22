@@ -1,5 +1,5 @@
-import { ProcessConfigItem, VCSHistoryItem } from 'types/history'
 import { getUrl } from 'utils/history/helpers'
+import type { ProcessConfigItem, VCSHistoryItem } from 'types/history'
 
 function getIssueName(path: string[]) {
 	const repoName = `${path[0]}/${path[1]}`

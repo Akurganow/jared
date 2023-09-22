@@ -1,8 +1,8 @@
 import { MouseEvent as ReactMouseEvent } from 'react'
 import cn from 'classnames'
 import Favicon from 'components/Favicon'
-import { Bookmark } from 'types/bookmarks'
 import st from './styles.module.css'
+import type { Bookmark } from 'types/bookmarks'
 
 interface BookmarkProps extends Bookmark {
 	onEditClick: (event: ReactMouseEvent<HTMLButtonElement>) => void

@@ -1,7 +1,7 @@
 import issue from 'utils/history/vcs/github/issue'
 import settings from 'utils/history/vcs/github/settings'
 import topics from 'utils/history/vcs/github/topics'
-import repo from 'utils/history/vcs/github/repo'
+import repository from 'utils/history/vcs/github/repository'
 import pullRequest from 'utils/history/vcs/github/pullRequest'
 import filterPullRequests from 'utils/history/vcs/github/filter-pullRequests'
 import filterIssues from 'utils/history/vcs/github/filter-issues'
@@ -11,7 +11,7 @@ import tree from 'utils/history/vcs/github/tree'
 import blob from 'utils/history/vcs/github/blob'
 import unknown from 'utils/history/vcs/github/unknown'
 import profile from 'utils/history/vcs/github/profile'
-import { ProcessConfig, VCSHistoryItem } from 'types/history'
+import type { ProcessConfig, VCSHistoryItem } from 'types/history'
 
 /*
  TODO: add missing handlers
@@ -38,7 +38,6 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSH
 	issue,
 	settings,
 	topics,
-	repo,
 	pullRequest,
 	filterPullRequests,
 	filterIssues,
@@ -46,5 +45,6 @@ export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSH
 	blobSearch,
 	tree,
 	blob,
+	repository,
 	unknown,
 ]

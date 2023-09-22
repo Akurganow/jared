@@ -1,8 +1,8 @@
 import memoize from 'lodash/memoize'
 import { jiraProcessConfig } from 'utils/history/its/jira'
-import { HistoryQuery } from 'types/history'
 import { gitlabProcessConfig } from 'utils/history/vcs/gitlab'
 import { githubProcessConfig } from 'utils/history/vcs/github'
+import type { HistoryQuery } from 'types/history'
 
 const configs = {
 	gitlab: gitlabProcessConfig,

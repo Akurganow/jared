@@ -1,10 +1,10 @@
 import cn from 'classnames'
-import { MouseEvent } from 'react'
 import { useDispatch } from 'react-redux'
-import { HistoryItem, ITSProviderType, ITSType, VCSProviderType, VCSType } from 'types/history'
 import PinButton from 'components/PinButton'
 import { pinItem, unpinItem } from 'store/actions/history'
 import st from './styles.module.css'
+import type { MouseEvent } from 'react'
+import type { HistoryItem, ITSProviderType, ITSType, VCSProviderType, VCSType } from 'types/history'
 
 interface HistoryItemProps extends HistoryItem {
 	type: VCSType | ITSType

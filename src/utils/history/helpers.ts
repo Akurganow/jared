@@ -1,5 +1,5 @@
 import memoize from 'lodash/memoize'
-import { HistoryItem, ProcessConfig } from 'types/history'
+import type { HistoryItem, ProcessConfig } from 'types/history'
 
 function rawGetUrl(itemUrl: string): [URL, string[]] {
 	const url = new URL(itemUrl)
