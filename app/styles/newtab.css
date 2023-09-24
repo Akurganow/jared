@@ -28,3 +28,15 @@ a {
 a:hover {
 	color: var(--area-page-hoverForeground);
 }
+
+p, figure, blockquote, dl, dd {
+	margin-block: 1em;
+}
+h1, h2, h3, h4, h5, h6 {
+	margin-block-end: 1em;
+}
+
+a:focus-visible,
+button:focus-visible {
+	outline-color: transparent;
+}

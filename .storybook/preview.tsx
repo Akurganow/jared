@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react'
 import { themes } from '@storybook/theming'
-import '../app/styles/newtab.css'
 import 'modern-css-reset/dist/reset.min.css'
+import '../app/styles/newtab.css'
 
 const preview: Preview = {
 	parameters: {

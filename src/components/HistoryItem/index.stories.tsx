@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { ComponentProps } from 'react'
 import { expect } from '@storybook/jest'
 import { within } from '@storybook/testing-library'
