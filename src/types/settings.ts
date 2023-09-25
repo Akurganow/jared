@@ -1,3 +1,5 @@
+import type { ITSProviderType, ProcessorConfigType, VCSProviderType } from 'types/history'
+
 export type SettingsTypeCommon = {
 	name: string
 	hint: string
@@ -31,4 +33,14 @@ export interface SettingsState {
 	vcsQuery: SettingTypeString
 	itsQuery: SettingTypeString
 	theme: SettingTypeOption
+	processing: {
+		type: 'custom',
+		name: 'Processing',
+		value: '',
+		providers: {
+			[key in VCSProviderType | ITSProviderType]: {
+				disabled: ProcessorConfigType['name'][]
+			}
+		},
+	}
 }

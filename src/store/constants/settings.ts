@@ -53,6 +53,22 @@ export const initialState: SettingsState = {
 		type: 'option',
 		name: 'Theme',
 		hint: 'Select a theme',
-	}
+	},
+	processing: {
+		type: 'custom',
+		name: 'Processing',
+		value: '',
+		providers: {
+			gitlab: {
+				disabled: [],
+			},
+			github: {
+				disabled: [],
+			},
+			jira: {
+				disabled: [],
+			},
+		},
+	},
 }
 // TODO: add settings for queries to show/hide each type in side-columns

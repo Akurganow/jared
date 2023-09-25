@@ -10,3 +10,11 @@ export const setSettings =
 
 export const setThemeOptions = createAction<SettingsState['theme']['options']>('setThemeOptions')
 
+type ProcessingProvider = keyof SettingsState['processing']['providers']
+type ProcessingOption = SettingsState['processing']['providers'][ProcessingProvider]['disabled'][number]
+export const setProcessingOptions =
+	createAction<{
+		provider: ProcessingProvider
+		option: ProcessingOption
+		disabled: boolean
+	}>('setProcessingOptions')

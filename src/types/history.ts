@@ -32,21 +32,25 @@ export interface HistoryItem extends chrome.history.HistoryItem {
 
 export interface VCSHistoryItem extends HistoryItem {
 	type: VCSType
+	typeName: string
 	provider: 'unknown' | VCSProviderType
 }
 
 export interface ITSHistoryItem extends HistoryItem {
 	type: ITSType
+	typeName: string
 	provider: 'unknown' | ITSProviderType
+}
+
+export interface ProcessorConfigType {
+	type: ITSType | VCSType
+	name: string
 }
 
 export type ProcessConfigItem<T, R> = [
 	(item: T) => boolean,
 	(item: T) => R,
-	{
-		type: ITSType | VCSType
-		name: string
-	}
+	ProcessorConfigType
 ]
 export type ProcessConfig<T, R> = ProcessConfigItem<T, R>[]
 

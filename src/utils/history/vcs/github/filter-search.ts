@@ -11,6 +11,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		...item,
 		provider: 'github',
 		type: 'filter',
+		typeName: 'Search',
 		name: 'Search',
 		title: item.title || 'Search'
 	}),

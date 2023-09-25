@@ -1,5 +1,11 @@
 import memoize from 'lodash/memoize'
-import type { HistoryItem, ProcessConfig } from 'types/history'
+import type {
+	HistoryItem,
+	ITSHistoryItem,
+	ITSProviderType,
+	ProcessConfig, VCSHistoryItem,
+	VCSProviderType,
+} from 'types/history'
 
 function rawGetUrl(itemUrl: string): [URL, string[]] {
 	const url = new URL(itemUrl)
@@ -21,7 +27,6 @@ function rawGetSplitTitle(title: string): string[] {
 }
 export const getSplitTitle = memoize(rawGetSplitTitle)
 
-
 export function getConfigTypes<T = unknown, R = unknown>(config: ProcessConfig<T , R>) {
 	return config.map(([, , type]) => type)
 }
@@ -42,6 +47,16 @@ export function filterItems(pinned: HistoryItem[]) {
 	return (item: HistoryItem, index: number, array: HistoryItem[]) =>
 		array.findIndex(i => i.title === item.title) === index
 		&& !pinned.find(pinnedItem => pinnedItem.title === item.title)
+}
+
+export function filterDisabledItems(disabled: Record<VCSProviderType | ITSProviderType, string[]>) {
+	return (item: VCSHistoryItem | ITSHistoryItem) => {
+		const { typeName, provider } = item
+
+		if (!provider || provider === 'unknown') return true
+
+		return !disabled[provider].includes(typeName)
+	}
 }
 
 export function movePinnedItemBetweenArrays<T extends HistoryItem>(arrFrom: T[], arrTo: T[], id: string, pinned: boolean) {

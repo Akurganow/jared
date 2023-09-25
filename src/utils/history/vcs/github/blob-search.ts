@@ -15,13 +15,14 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			...item,
 			provider: 'github',
 			type: 'blob',
+			typeName: 'Blob search',
 			name: repoName,
 			title: item.title?.replace(` · ${repoName}`, '') || ''
 		}
 	},
 	{
 		type: 'blob',
-		name: 'Blob'
+		name: 'Blob search'
 	}
 ]
 

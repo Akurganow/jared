@@ -19,7 +19,6 @@
 	backdrop-filter: blur(2px);
 }
 
-
 @keyframes slidein {
 	from {
 		transform: scale(0.95) translate3d(0, 1rem, 0);

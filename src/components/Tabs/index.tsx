@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import st from './styles.module.css'
 import type { HTMLAttributes, ReactNode } from 'react'
 
-interface Tab {
+export interface Tab {
 	title: string | ReactNode
 	disabled?: boolean
 	children?: TabsProps['children']
@@ -11,9 +11,10 @@ interface Tab {
 
 interface TabsProps extends HTMLAttributes<HTMLDivElement> {
 	items: Tab[]
+	withoutPreflight?: boolean
 }
 
-export default function Tabs({ items, ...props }: TabsProps) {
+export default function Tabs({ items, withoutPreflight, ...props }: TabsProps) {
 	const contentRef = useRef<HTMLDivElement>(null)
 	const [
 		contentSize,
@@ -28,26 +29,30 @@ export default function Tabs({ items, ...props }: TabsProps) {
 		setActiveTab(index)
 	}, [])
 
-	useEffect(() => {
+	const getContentSize = useCallback(() => {
 		const content = contentRef.current
 
-		if (!content) return
+		if (!content) return { width: 0, height: 0 }
 
-		const children = Array.from(content.children)
+		const children = Array.from(content.children).map(child => child as HTMLElement)
 		const childrenRects = children.map(child => child.getBoundingClientRect())
 		const childrenMaxHeight = Math.max.apply(null, childrenRects.map(rect => rect.height))
 		const childrenMaxWidth = Math.max.apply(null, childrenRects.map(rect => rect.width))
-		const childrenHeight = Math.ceil(childrenMaxHeight)
-		const childrenWidth = Math.ceil(childrenMaxWidth)
+		const height = Math.ceil(childrenMaxHeight)
+		const width = Math.ceil(childrenMaxWidth)
 
-		console.log('boundiWidth', childrenRects.map(rect => rect.width))
-		console.log('boundiHeight', childrenRects.map(rect => rect.height))
+		return { width, height }
+	}, [])
 
-		setContentSize({
-			width: childrenWidth,
-			height: childrenHeight,
-		})
-	}, [contentRef])
+	useEffect(() => {
+		setTimeout(() => {
+			const { width, height } = getContentSize()
+
+			if (width <= 0 || height <= 0) return
+
+			setContentSize({ width, height })
+		}, 0)
+	}, [getContentSize, contentRef])
 
 	return (
 		<>
@@ -93,7 +98,7 @@ export default function Tabs({ items, ...props }: TabsProps) {
 						const isActive = isTabActive(index)
 						const classNames = cn(st.contentItem, {
 							[st.active]: isActive,
-							[st.preflight]: !contentSize,
+							[st.preflight]: !withoutPreflight && !contentSize,
 						})
 
 						return (

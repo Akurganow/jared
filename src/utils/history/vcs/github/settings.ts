@@ -15,6 +15,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			...item,
 			provider: 'github',
 			type: 'settings',
+			typeName: 'Settings',
 			name: repoName,
 			title: `${item.title || path[1]}`,
 		}

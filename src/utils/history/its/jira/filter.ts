@@ -19,6 +19,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		return {
 			...item,
 			type: 'filter',
+			typeName: 'Filter',
 			provider: 'jira',
 			name: filterId ? `filter #${filterId}` : 'filter',
 			title: filterName,

@@ -27,6 +27,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			...item,
 			provider: 'github',
 			type: 'issue',
+			typeName: 'Issue',
 			name: getIssueName(path),
 			title: item.title || 'Issue',
 		} },

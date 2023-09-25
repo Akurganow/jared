@@ -5,6 +5,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 	(item: chrome.history.HistoryItem) => ({
 		...item,
 		type: 'unknown',
+		typeName: 'Unknown',
 		provider: 'gitlab',
 		name: '',
 		title: item.title || '',

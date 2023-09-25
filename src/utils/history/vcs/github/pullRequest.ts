@@ -15,6 +15,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			...item,
 			provider: 'github',
 			type: 'pullRequest',
+			typeName: 'Pull request',
 			name: repoName,
 			title: item.title?.split(' · ')[0] || `Pull request #${path[path.length - 1]}`
 		}

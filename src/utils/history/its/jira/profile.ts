@@ -14,6 +14,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		return {
 			...item,
 			type: 'profile',
+			typeName: 'Profile',
 			provider: 'jira',
 			name: profileName,
 			title: profileName,

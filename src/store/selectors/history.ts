@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
-import { filterItems, sortByLastVisitTime, sortByVisitCount } from 'utils/history/helpers'
+import { filterItems, filterDisabledItems, sortByLastVisitTime, sortByVisitCount } from 'utils/history/helpers'
 import { RootState } from 'store/types'
-import { selectedSettings } from 'store/selectors/settings'
+import { selectedDisabledTypes, selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 
 const rawSelectedMainItems = (state: RootState) => state[storeKey].main
@@ -34,9 +34,13 @@ export const selectedVCS = createSelector(
 	rawSelectedVCSItems,
 	selectedPinnedVCSItems,
 	selectedSettings,
-	(items, pinned, settings) => {
+	selectedDisabledTypes,
+	(items, pinned, settings, disabled) => {
 		const maxResults = settings.maxResults.value
-		const filtered = items.filter(filterItems(pinned)).sort(sortByLastVisitTime)
+		const filtered = items
+			.filter(filterItems(pinned))
+			.filter(filterDisabledItems(disabled))
+			.sort(sortByLastVisitTime)
 
 		return [...pinned, ...filtered].slice(0, maxResults)
 	}
@@ -46,9 +50,13 @@ export const selectedITS = createSelector(
 	rawSelectedITSItems,
 	selectedPinnedITSItems,
 	selectedSettings,
-	(items, pinned, settings) => {
+	selectedDisabledTypes,
+	(items, pinned, settings, disabled) => {
 		const maxResults = settings.maxResults.value
-		const filtered = items.filter(filterItems(pinned)).sort(sortByVisitCount)
+		const filtered = items
+			.filter(filterItems(pinned))
+			.filter(filterDisabledItems(disabled))
+			.sort(sortByVisitCount)
 
 		return [...pinned, ...filtered].slice(0, maxResults)
 	}

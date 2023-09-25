@@ -6,6 +6,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 	(item: chrome.history.HistoryItem) => ({
 		...item,
 		type: 'unknown',
+		typeName: 'Unknown',
 		name: '',
 		title: item.title || '',
 		provider: 'jira',

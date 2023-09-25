@@ -15,6 +15,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			...item,
 			provider: 'gitlab',
 			type: 'filter',
+			typeName: 'Merge requests',
 			name: repoName,
 			title: 'Merge requests',
 		}

@@ -16,6 +16,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			...item,
 			provider: 'gitlab',
 			type: 'mergeRequest',
+			typeName: 'Merge Request',
 			name: mergeRequestId ? `${repoName} !${mergeRequestId}` : repoName,
 			title: item.title?.split(' · ')[0].replace(`(!${mergeRequestId})`, '').trim() || '',
 		}

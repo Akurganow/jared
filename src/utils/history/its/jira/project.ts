@@ -14,6 +14,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		return {
 			...item,
 			type: 'project',
+			typeName: 'Project',
 			provider: 'jira',
 			name: projectName,
 			title: projectName,

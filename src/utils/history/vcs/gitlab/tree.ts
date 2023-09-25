@@ -16,6 +16,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			...item,
 			provider: 'github',
 			type: 'tree',
+			typeName: 'Tree',
 			name: repoName,
 			title: `${splitTitle[0]} ${splitTitle[1]}`
 		}

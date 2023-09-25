@@ -11,12 +11,11 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		const [, path] = getUrl(item.url || '')
 		const repoName = `${path[0]}/${path[1]}`
 
-		console.log('repoName', repoName)
-
 		return {
 			...item,
 			provider: 'gitlab',
 			type: 'repo',
+			typeName: 'Repository',
 			name: repoName,
 			title: item.title?.split(' · ')[0].replace(`${repoName}: `, '') || repoName,
 		}

@@ -12,6 +12,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		provider: 'github',
 		type: 'profile',
 		name: 'profile',
+		typeName: 'Profile',
 		title: item.title?.split(' · ')[0] || 'Profile',
 	}),
 	{

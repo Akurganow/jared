@@ -11,6 +11,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		...item,
 		provider: 'gitlab',
 		type: 'profile',
+		typeName: 'Profile',
 		name: 'profile',
 		title: item.title?.split(' · ')[0] || 'Profile',
 	}),
