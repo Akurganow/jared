@@ -6,3 +6,5 @@ packages/
 /playwright-report/
 /playwright/.cache/
 /playwright-examples/
+/src/utils/api/
+/temp/
