@@ -46,7 +46,7 @@ const meta: Meta<ComponentProps<typeof Dialog>> = {
 					gridGap: '0.25rem',
 					alignContent: 'center',
 					alignItems: 'center',
-					margin: '0.25rem 0',
+					padding: '0.5rem',
 				}}>
 					<label htmlFor="name">Name</label>
 					<input id="name" type="text" placeholder="Enter name" required />
