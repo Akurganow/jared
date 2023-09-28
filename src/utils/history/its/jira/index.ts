@@ -1,4 +1,3 @@
-
 import { getConfigTypes } from 'utils/history/helpers'
 import issue from 'utils/history/its/jira/issue'
 import filter from 'utils/history/its/jira/filter'
@@ -9,7 +8,6 @@ import dashboard from 'utils/history/its/jira/dashboard'
 import unknown from 'utils/history/its/jira/unknown'
 import type { ITSHistoryItem, ProcessConfig } from 'types/history'
 
-// TODO: filter items from settings
 export const jiraProcessConfig: ProcessConfig<chrome.history.HistoryItem, ITSHistoryItem> = [
 	issue,
 	filter,

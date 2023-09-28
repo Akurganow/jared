@@ -4,6 +4,7 @@ import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 import { createHistoryItemProcessor } from 'utils/history'
 import { getITSQueries, getVCSQueries } from 'utils/history/configs'
+import { sortByVisitCount } from 'utils/history/helpers'
 import type { HistoryItem, HistoryQuery, ITSHistoryItem, VCSHistoryItem } from 'types/history'
 import type { RootState } from 'store/types'
 
@@ -21,7 +22,7 @@ const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 
 		for (const key of queries) {
 			const query: chrome.history.HistoryQuery = {
-				maxResults: (key.maxResults || maxResults.value) * 2, // double the max results to account for duplicates
+				maxResults: key.maxResults || maxResults.value,
 				text: key.text,
 				startTime: oneWeekAgo,
 			}
@@ -30,6 +31,14 @@ const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 				const itemProcessor = createHistoryItemProcessor(key.type)
 				const results = (await chrome.history.search(query))
 					.map(itemProcessor)
+
+				if (key.type === 'youtrack') {
+					console.log('getHistoryItems', {
+						key,
+						query,
+						results,
+					})
+				}
 
 				items.push(...results)
 			} else {
@@ -42,6 +51,7 @@ const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 			.filter((value, index, array) =>
 				array.indexOf(value) === index
 			)
+			.sort(sortByVisitCount)
 	}
 )
 export const updateVCS = createAsync<void, void>(
@@ -63,7 +73,6 @@ export const updateITS = createAsync<void, void>(
 
 		dispatch(updateITSHistory(its))
 		dispatch(updateITSPinnedHistory(its))
-
 	})
 export const updateUserContent = createAsync<void, void>(
 	'updateUserContent',

@@ -8,7 +8,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		typeName: 'Unknown',
 		name: '',
 		title: item.title || '',
-		provider: 'jira',
+		provider: 'youtrack',
 	}),
 	{
 		type: 'unknown',

@@ -15,7 +15,7 @@ export type VCSType =
 	| 'job'
 	| 'commit'
 export type VCSProviderType = 'gitlab' | 'github'
-export type ITSProviderType = 'jira' // | 'youtrack'
+export type ITSProviderType = 'jira' | 'youtrack'
 
 export type HistoryQuery = {
 	type?: VCSProviderType | ITSProviderType;

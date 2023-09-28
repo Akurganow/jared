@@ -32,8 +32,9 @@ export const initialState: SettingsState = {
 	itsQuery: {
 		/*
 		https://jira.ringcentral.com/ jira 100
+		https://youtrack.jetbrains.com/ youtrack
 		 */
-		value: 'https://jira.atlassian.com/ jira',
+		value: 'https://jira.atlassian.com/ jira\nhttps://youtrack.jetbrains.com/ youtrack',
 		type: 'string',
 		name: 'ITS query',
 		hint: 'Type: jira',
@@ -68,7 +69,10 @@ export const initialState: SettingsState = {
 			jira: {
 				disabled: [],
 			},
+			youtrack: {
+				disabled: [],
+			}
 		},
 	},
 }
-// TODO: add settings for queries to show/hide each type in side-columns
+

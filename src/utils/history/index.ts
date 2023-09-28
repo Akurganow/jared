@@ -2,10 +2,12 @@ import memoize from 'lodash/memoize'
 import { gitlabProcessConfig as gitlab } from 'utils/history/vcs/gitlab'
 import { githubProcessConfig as github } from 'utils/history/vcs/github'
 import { jiraProcessConfig as jira } from 'utils/history/its/jira'
+import { youtrackProcessConfig as youtrack } from 'utils/history/its/youtrack'
 import type { ProcessorConfigType } from 'types/history'
 
 const processorTypes = {
 	jira,
+	youtrack,
 	github,
 	gitlab,
 }
@@ -22,6 +24,15 @@ export function createHistoryItemProcessor(type: ProcessorType): ProcessorCreato
 	return function (item: chrome.history.HistoryItem): ProcessorReturnType {
 		const index = processor.findIndex(([condition]) => condition(item))
 		const [, process] = processor[index]
+
+		if (type === 'youtrack') {
+			console.log('createHistoryItemProcessor', {
+				type,
+				processor,
+				item,
+				processed: process(item),
+			})
+		}
 
 		return process(item)
 	}
