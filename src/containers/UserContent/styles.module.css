@@ -6,10 +6,12 @@
 }
 
 .item {
-	display: flex;
-	flex-wrap: nowrap;
+	display: grid;
+	grid-template-columns: 16px 1fr 16px;
+	grid-template-rows: 1fr;
+	grid-gap: 0.5rem;
 	align-items: center;
-	justify-content: flex-start;
+	text-decoration: none;
 	color: var(--color-primaryForeground);
 	user-select: none;
 	position: relative;
@@ -19,17 +21,10 @@
 	margin-top: 0.5rem;
 }
 
-.link {
-	color: var(--color-primaryForeground);
-	text-decoration: none;
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
-	margin-right: 1.5rem;
-	white-space: nowrap;
+.text {
 	text-overflow: ellipsis;
+	white-space: nowrap;
 	overflow: hidden;
-	max-width: 100%;
 }
 
 .pinButton {
@@ -37,8 +32,4 @@
 	right: 0;
 	top: 0;
 	z-index: 2;
-}
-
-.pinIcon {
-
 }

@@ -22,20 +22,20 @@ export default function () {
 	return (
 		<div className={cn(st.content)}>
 			{history.map(({ id, title, url, pinned }) => (
-				<div
+				<a
+					href={url}
 					key={id + title}
 					className={cn(st.item)}
 					title={title}
 				>
-					<a href={url} className={st.link}>
-						{url && <Favicon href={url} size={16} />} {title}
-					</a>
+					{url && <Favicon href={url} size={16} />}
+					<div className={st.text}>{title}</div>
 					<PinButton
 						className={st.pinButton}
 						pinned={pinned}
 						onClick={handlePinClick({ id, pinned })}
 					/>
-				</div>
+				</a>
 			))}
 		</div>
 	)

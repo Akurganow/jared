@@ -3,14 +3,16 @@
 	grid-template-columns: max-content max-content;
 	grid-auto-rows: max-content;
 	grid-row-gap: 0.25rem;
-	margin: 0.25rem 0;
+	margin: 0.25rem 0 0.5rem;
 	width: 35rem;
 }
 
 .processing {
 	display: block;
 }
-.processingItem {}
+.processingItem {
+	padding: 0 0 0.25rem;
+}
 .processingItem + .processingItem {
 	margin-top: 0.5rem;
 }
@@ -29,7 +31,16 @@
 	width: 100%;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
+	margin-bottom: 0.5rem;
+}
+
+.providerTitle:after {
+	content: '';
+	width: 100%;
+	height: 1px;
+	border-bottom: 1px solid var(--color-primaryBorder);
+	margin-left: 0.5rem;
 }
 
 .name {
