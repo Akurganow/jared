@@ -1,0 +1,16 @@
+.container {
+	padding: 0 0 0.25rem;
+	margin: 0;
+	overflow: scroll;
+}
+.pinned {
+	/*position: sticky;*/
+	/*top: 0;*/
+	z-index: 2;
+}
+.unpinned {
+	/*position: relative;*/
+	z-index: 1;
+}
+
+/* TODO: Create settings item for sticky pinned items */

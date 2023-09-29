@@ -1,45 +1,17 @@
-import { DetailedHTMLProps, HTMLAttributes, useMemo } from 'react'
-import { useSelector } from 'react-redux'
 import cn from 'classnames'
+import { useSelector } from 'react-redux'
 import { selectedVCS } from 'store/selectors/history'
-import HistoryItem from 'components/HistoryItem'
+import HistoryItemList from 'components/HistoryItemList'
 import st from './styles.module.css'
+import type { DetailedHTMLProps, HTMLAttributes } from 'react'
 
-interface VSCProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-}
-
+type VSCProps = DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 export default function ({ className, ...props }: VSCProps) {
 	const vcsHistory = useSelector(selectedVCS)
-	const pinned = useMemo(() =>
-		vcsHistory.filter((item) => item.pinned),
-	[vcsHistory]
-	)
-	const unpinned = useMemo(() =>
-		vcsHistory.filter((item) => !item.pinned),
-	[vcsHistory]
-	)
 
-	return (
-		<div
-			className={cn(st.repo, className)}
-			{...props}
-		>
-			<div className={st.pinned}>
-				{pinned.map((item) =>
-					<HistoryItem
-						key={`pinned${item.id}`}
-						{...item}
-					/>
-				)}
-			</div>
-			<div className={st.unpinned}>
-				{unpinned.map((item) =>
-					<HistoryItem
-						key={item.id}
-						{...item}
-					/>
-				)}
-			</div>
-		</div>
-	)
+	return <HistoryItemList
+		{...props}
+		className={cn(st.vcs, className)}
+		items={vcsHistory}
+	/>
 }

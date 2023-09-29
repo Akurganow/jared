@@ -11,8 +11,8 @@
 	grid-template-columns: var(--main-sidebar-width) var(--main-sidecolumn-width) var(--main-centercolumn-width) var(--main-sidecolumn-width);
 	grid-template-rows: 1fr max-content;
 	grid-template-areas:
-		"sidebar tickets content repo"
-		"sidebar tickets bookmarks repo";
+		"sidebar left-column content right-column"
+		"sidebar left-column bookmarks right-column";
 	grid-gap: var(--basic-layout-gap);
 	overflow: hidden;
 }
