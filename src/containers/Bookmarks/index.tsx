@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectedBookmarks } from 'store/selectors/bookmarks'
 import { openDialog } from 'store/actions/dialogs'
 import { clearEditingBookmark, removeBookmark, setEditingBookmark } from 'store/actions/bookmarks'
-import SVGIcon from 'components/SVGIcon'
 import Bookmark from 'containers/Bookmarks/components/Bookmark'
+import Button from 'components/Button'
 import st from './styles.module.css'
 
 export default function () {
@@ -37,15 +37,13 @@ export default function () {
 						{...bookmark}
 					/>
 				})}
-			</div>
-			<div className={st.actions}>
-				<button
+				<Button
 					title="Add bookmark"
 					className={st.action}
 					onClick={handleAddClick}
 				>
-					<SVGIcon name="plus" className={st.icon} />
-				</button>
+					+
+				</Button>
 			</div>
 		</div>
 	)

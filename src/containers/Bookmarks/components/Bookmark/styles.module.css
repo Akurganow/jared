@@ -6,7 +6,7 @@
 	align-items: center;
 	justify-content: flex-start;
 	padding: 0.5rem;
-	margin-bottom: 0.5rem;
+	margin-bottom: 0.25rem;
 	position: relative;
 	overflow: visible;
 	user-select: none;
@@ -44,8 +44,8 @@
 	justify-content: center;
 }
 
-.action + .action {
-	margin-left: 0.5rem;
+.action + * {
+	margin-left: 0.25rem;
 }
 
 .action:hover, .action:focus {
