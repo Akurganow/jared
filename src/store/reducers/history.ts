@@ -3,7 +3,7 @@ import {
 	pinItem,
 	unpinItem,
 	updateITSHistory, updateITSPinnedHistory,
-	updateUserHistory,
+	updateUserHistory, updateUserPinnedHistory,
 	updateVCSHistory,
 	updateVCSPinnedHistory
 } from 'store/actions/history'
@@ -19,6 +19,29 @@ const reducer = reducerWithInitialState(initialState)
 		...state,
 		vcs: items,
 	}))
+	.case(updateUserPinnedHistory, (state, items) => {
+		const pinned = state.pinned.main
+			.map(pinned => {
+				const updated = items.find(item => item.id === pinned.id)
+
+				if (updated) {
+					return {
+						...pinned,
+						...updated,
+					}
+				}
+
+				return pinned
+			})
+
+		return {
+			...state,
+			pinned: {
+				...state.pinned,
+				main: pinned,
+			}
+		}
+	})
 	.case(updateVCSPinnedHistory, (state, items) => {
 		const vcsPinned = state.pinned.vcs
 			.map(pinned => {
@@ -70,20 +93,45 @@ const reducer = reducerWithInitialState(initialState)
 		its: items,
 	}))
 	.case(pinItem, (state, id) => {
-		const [main, mainPinned] = movePinnedItemBetweenArrays(state.main, state.pinned.main, id, true)
-		const [vcs, vcsPinned] = movePinnedItemBetweenArrays(state.vcs, state.pinned.vcs, id, true)
-		const [its, itsPinned] = movePinnedItemBetweenArrays(state.its, state.pinned.its, id, true)
+		const isVCS = [...state.vcs, ...state.pinned.vcs]
+			.find(item => item.id === id)
+		const isITS = [...state.its, ...state.pinned.its]
+			.find(item => item.id === id)
 
-		return {
-			...state,
-			pinned: {
-				main: mainPinned,
-				vcs: vcsPinned,
-				its: itsPinned,
-			},
-			main,
-			vcs,
-			its,
+		switch (true) {
+		case Boolean(isVCS): {
+			const [vcs, vcsPinned] = movePinnedItemBetweenArrays(state.vcs, state.pinned.vcs, id, true)
+			return {
+				...state,
+				vcs,
+				pinned: {
+					...state.pinned,
+					vcs: vcsPinned,
+				}
+			}
+		}
+		case Boolean(isITS): {
+			const [its, itsPinned] = movePinnedItemBetweenArrays(state.its, state.pinned.its, id, true)
+			return {
+				...state,
+				its,
+				pinned: {
+					...state.pinned,
+					its: itsPinned,
+				}
+			}
+		}
+		default: {
+			const [main, mainPinned] = movePinnedItemBetweenArrays(state.main, state.pinned.main, id, true)
+			return {
+				...state,
+				main,
+				pinned: {
+					...state.pinned,
+					main: mainPinned,
+				}
+			}
+		}
 		}
 	})
 	.case(unpinItem, (state, id) => {

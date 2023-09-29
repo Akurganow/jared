@@ -22,13 +22,15 @@ export const selectedPinnedUserContentItems = createSelector(
 )
 export const selectedITSItemById = createSelector(
 	rawSelectedITSItems,
-	(items) => (id: string) =>
-		items.find(item => item.id === id)
+	selectedPinnedITSItems,
+	(items, pinned) => (id: string) =>
+		[...items, ...pinned].find(item => item.id === id)
 )
 export const selectedVCSItemById = createSelector(
 	rawSelectedVCSItems,
-	(items) => (id: string) =>
-		items.find(item => item.id === id)
+	selectedPinnedVCSItems,
+	(items, pinned) => (id: string) =>
+		[...items, ...pinned].find(item => item.id === id)
 )
 export const selectedVCS = createSelector(
 	rawSelectedVCSItems,
@@ -63,17 +65,25 @@ export const selectedITS = createSelector(
 )
 export const selectedUserContentItems = createSelector(
 	rawSelectedMainItems,
+	selectedPinnedUserContentItems,
+	selectedPinnedVCSItems,
+	selectedPinnedITSItems,
 	selectedVCSItemById,
 	selectedITSItemById,
 	selectedSettings,
-	(main, getVCS, getITS, settings) => main
-		.filter((item, index, array) => {
-			const foundInVCS = getVCS(item.id)
-			const foundInITS = getITS(item.id)
+	(main, pinned, pinnedVCS, pinnedITS, getVCS, getITS, settings) => {
+		const maxResults = settings.maxResults.value
+		const filtered = main
+			.filter(filterItems([...pinned]))
+			.filter((item, index, array) => {
+				const foundInVCS = getVCS(item.id)
+				const foundInITS = getITS(item.id)
 
-			return !foundInVCS && !foundInITS
-				&& item.title
-				&& array.findIndex(i => i.title === item.title) === index
-		})
-		.slice(0, settings.maxResults.value)
+				return !foundInVCS && !foundInITS
+					&& item.title
+					&& array.findIndex(i => i.title === item.title) === index
+			})
+
+		return [...pinned, ...filtered].slice(0, maxResults)
+	}
 )

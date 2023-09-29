@@ -6,12 +6,13 @@
 }
 
 .item {
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	max-width: 100%;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: flex-start;
 	color: var(--color-primaryForeground);
 	user-select: none;
+	position: relative;
 }
 
 .item + .item {
@@ -24,4 +25,20 @@
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	margin-right: 1.5rem;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	max-width: 100%;
+}
+
+.pinButton {
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 2;
+}
+
+.pinIcon {
+
 }

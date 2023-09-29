@@ -25,15 +25,6 @@ export function createHistoryItemProcessor(type: ProcessorType): ProcessorCreato
 		const index = processor.findIndex(([condition]) => condition(item))
 		const [, process] = processor[index]
 
-		if (type === 'youtrack') {
-			console.log('createHistoryItemProcessor', {
-				type,
-				processor,
-				item,
-				processed: process(item),
-			})
-		}
-
 		return process(item)
 	}
 }

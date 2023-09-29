@@ -87,6 +87,7 @@ export const updateUserContent = createAsync<void, void>(
 		const userContent = await dispatch(getHistoryItems(queries))
 
 		dispatch(updateUserHistory(userContent))
+		dispatch(updateUserPinnedHistory(userContent))
 	})
 export const updateHistory = createAsync<void, void>(
 	'updateHistory',
@@ -99,6 +100,7 @@ export const updateHistory = createAsync<void, void>(
 export const pinItem = createAction<HistoryItem['id']>('pinItem')
 export const unpinItem = createAction<HistoryItem['id']>('unpinItem')
 export const updateUserHistory = createAction<HistoryItem[]>('updateUserHistory')
+export const updateUserPinnedHistory = createAction<HistoryItem[]>('updateUserPinnedHistory')
 export const updateVCSHistory = createAction<VCSHistoryItem[]>('updateVCSHistory')
 export const updateVCSPinnedHistory = createAction<VCSHistoryItem[]>('updateVCSPinnedHistory')
 export const updateITSHistory = createAction<ITSHistoryItem[]>('updateITSHistory')
