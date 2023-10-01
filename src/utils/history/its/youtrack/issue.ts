@@ -9,7 +9,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 	},
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')
-		const title = item.title?.split(' : ')[0]
+		const title = item.title?.split(': ')[0]
 
 		return {
 			...item,
