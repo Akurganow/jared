@@ -10,7 +10,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')
 		const repoName = `${path[0]}/${path[1]}`
-		const mergeRequestId = item.title?.match(/!(\d+)/)?.[1] || ''
+		const mergeRequestId = path[path.length - 1] || ''
 
 		return {
 			...item,

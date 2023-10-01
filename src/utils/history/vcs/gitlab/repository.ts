@@ -14,14 +14,14 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		return {
 			...item,
 			provider: 'gitlab',
-			type: 'repo',
+			type: 'repository',
 			typeName: 'Repository',
 			name: repoName,
 			title: item.title?.split(' · ')[0].replace(`${repoName}: `, '') || repoName,
 		}
 	},
 	{
-		type: 'repo',
+		type: 'repository',
 		name: 'Repository'
 	}
 ]
