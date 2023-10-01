@@ -17,7 +17,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			type: 'blob',
 			typeName: 'Blob search',
 			name: repoName,
-			title: item.title?.replace(` · ${repoName}`, '') || ''
+			title: item.title?.split(' · ')[0] || ''
 		}
 	},
 	{

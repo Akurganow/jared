@@ -17,7 +17,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			type: 'filter',
 			typeName: 'Issues',
 			name: repoName,
-			title: item.title?.replace(` · ${repoName}`, '') || 'Issues'
+			title: item.title?.split(' · ')[0] || 'Issues'
 		}
 	},
 	{

@@ -17,7 +17,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			type: 'tree',
 			typeName: 'Tree',
 			name: repoName,
-			title: item.title?.replace(` · ${repoName}`, '') || ''
+			title: item.title?.split(' at ')[1] || ''
 		}
 	},
 	{

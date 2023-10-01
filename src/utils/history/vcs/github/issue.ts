@@ -29,7 +29,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			type: 'issue',
 			typeName: 'Issue',
 			name: getIssueName(path),
-			title: item.title || 'Issue',
+			title: item.title?.split(' · ')[0] || 'Issue',
 		} },
 	{
 		type: 'issue',

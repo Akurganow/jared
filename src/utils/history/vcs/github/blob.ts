@@ -11,6 +11,10 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')
 		const repoName = `${path[0]}/${path[1]}`
+		const splitTitle = item.title?.split(' at ')
+		const title = splitTitle
+			? splitTitle[0].split('/')[1] + ` at ${splitTitle[1].split(' · ')[0]}`
+			: item.title?.split(' · ')[0] || 'Blob'
 
 		return {
 			...item,
@@ -18,7 +22,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			type: 'blob',
 			typeName: 'Blob',
 			name: repoName,
-			title: item.title?.split(' · ')[0] || 'Blob'
+			title,
 		}
 	},
 	{

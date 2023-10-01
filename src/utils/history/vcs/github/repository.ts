@@ -14,14 +14,14 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		return {
 			...item,
 			provider: 'github',
-			type: 'repo',
+			type: 'repository',
 			typeName: 'Repository',
 			name: repoName,
-			title: item.title?.replace(`${repoName}: `, '') || repoName,
+			title: item.title?.split(' · ')[0] || repoName,
 		}
 	},
 	{
-		type: 'repo',
+		type: 'repository',
 		name: 'Repository'
 	}
 ]
