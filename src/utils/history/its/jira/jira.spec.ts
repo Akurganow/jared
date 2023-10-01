@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { createFakeHistoryItem } from 'utils/history/history.fixtures'
+import { createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
 import dashboard from 'utils/history/its/jira/dashboard'
 import filter from 'utils/history/its/jira/filter'
 import issue from 'utils/history/its/jira/issue'
@@ -10,131 +10,131 @@ import unknown from 'utils/history/its/jira/unknown'
 
 describe('utils/history/its/jira', () => {
 	test('unknown', () => {
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/fake-path/${faker.lorem.word({ length: { min: 2, max: 5 } })}`,
-			title: `${fakeTitle} - {{lorem.word}} JIRA`,
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate('/fake-path/{{lorem.word()}}'),
+			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(unknown[0](fakeHistoryItem)).toBeTruthy()
+		expect(unknown[0](historyItem)).toBeTruthy()
 
-		const result = unknown[1](fakeHistoryItem)
+		const result = unknown[1](historyItem)
 
 		expect(result.name).toBe('')
-		expect(result.title).toBe(fakeTitle)
+		expect(result.title).toBe(title)
 		expect(result.type).toBe('unknown')
 		expect(result.typeName).toBe('Unknown')
 		expect(result.provider).toBe('jira')
 	})
 
 	test('rapidBoard', () => {
-		const fakeViewId = faker.number.int({ min: 1000, max: 999999 })
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/secure/RapidBoard.jspa?rapidView=${fakeViewId}`,
-			title: `${fakeTitle} - {{lorem.word}} JIRA`,
+		const viewId = faker.number.int({ min: 1000, max: 999999 })
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/secure/RapidBoard.jspa?rapidView=${viewId}`),
+			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(rapidBoard[0](fakeHistoryItem)).toBeTruthy()
+		expect(rapidBoard[0](historyItem)).toBeTruthy()
 
-		const result = rapidBoard[1](fakeHistoryItem)
+		const result = rapidBoard[1](historyItem)
 
-		expect(result.name).toBe(`board #${fakeViewId}`)
-		expect(result.title).toBe(fakeTitle)
+		expect(result.name).toBe(`board #${viewId}`)
+		expect(result.title).toBe(title)
 		expect(result.type).toBe('board')
 		expect(result.typeName).toBe('Board')
 		expect(result.provider).toBe('jira')
 	})
 
 	test('project', () => {
-		const fakeProjectId = faker.lorem.word({ length: { min: 2, max: 5 } }).toUpperCase()
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/projects/${fakeProjectId}/issues`,
-			title: `${fakeTitle} - {{lorem.word}} JIRA`,
+		const projectId = faker.lorem.word({ length: { min: 2, max: 5 } }).toUpperCase()
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/projects/${projectId}/issues`),
+			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(project[0](fakeHistoryItem)).toBeTruthy()
+		expect(project[0](historyItem)).toBeTruthy()
 
-		const result = project[1](fakeHistoryItem)
+		const result = project[1](historyItem)
 
-		expect(result.name).toBe(fakeProjectId)
-		expect(result.title).toBe(fakeProjectId)
+		expect(result.name).toBe(projectId)
+		expect(result.title).toBe(projectId)
 		expect(result.type).toBe('project')
 		expect(result.typeName).toBe('Project')
 		expect(result.provider).toBe('jira')
 	})
 
 	test('profile', () => {
-		const fakeFirstName = faker.person.firstName()
-		const fakeLastName = faker.person.lastName()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/secure/ViewProfile.jspa?name=${fakeFirstName}.${fakeLastName}`,
-			title: `User Profile: ${fakeFirstName} ${fakeLastName} - {{lorem.word}} JIRA`,
+		const firstName = faker.person.firstName()
+		const lastName = faker.person.lastName()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/secure/ViewProfile.jspa?name=${firstName}.${lastName}`),
+			title: `User Profile: ${firstName} ${lastName} - {{lorem.word}} JIRA`,
 		})
 
-		expect(profile[0](fakeHistoryItem)).toBeTruthy()
+		expect(profile[0](historyItem)).toBeTruthy()
 
-		const result = profile[1](fakeHistoryItem)
+		const result = profile[1](historyItem)
 
-		expect(result.name).toBe(`${fakeFirstName} ${fakeLastName}`)
-		expect(result.title).toBe(`${fakeFirstName} ${fakeLastName}`)
+		expect(result.name).toBe(`${firstName} ${lastName}`)
+		expect(result.title).toBe(`${firstName} ${lastName}`)
 		expect(result.type).toBe('profile')
 		expect(result.typeName).toBe('Profile')
 		expect(result.provider).toBe('jira')
 	})
 
 	test('issue', () => {
-		const fakeIssueId = `${faker.lorem.word(3).toUpperCase()}-${faker.number.int({ min: 1000, max: 999999 })}`
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/browse/${fakeIssueId}`,
-			title: `${fakeTitle} - {{lorem.word}} JIRA`,
+		const issueId = `${faker.lorem.word(3).toUpperCase()}-${faker.number.int({ min: 1000, max: 999999 })}`
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/browse/${issueId}`),
+			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(issue[0](fakeHistoryItem)).toBeTruthy()
+		expect(issue[0](historyItem)).toBeTruthy()
 
-		const result = issue[1](fakeHistoryItem)
+		const result = issue[1](historyItem)
 
-		expect(result.name).toBe(`${fakeIssueId}`)
-		expect(result.title).toBe(`${fakeTitle}`)
+		expect(result.name).toBe(`${issueId}`)
+		expect(result.title).toBe(`${title}`)
 		expect(result.type).toBe('issue')
 		expect(result.typeName).toBe('Issue')
 		expect(result.provider).toBe('jira')
 	})
 
 	test('filter', () => {
-		const fakeFilterId = faker.number.int({ min: 1000, max: 999999 })
-		const fakeFilterName = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/issues/?filter=${fakeFilterId}`,
-			title: `[${fakeFilterName}] Issue Navigator - {{lorem.word}} JIRA`,
+		const filterId = faker.number.int({ min: 1000, max: 999999 })
+		const filterName = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/issues/?filter=${filterId}`),
+			title: `[${filterName}] Issue Navigator - {{lorem.word}} JIRA`,
 		})
 
-		expect(filter[0](fakeHistoryItem)).toBeTruthy()
+		expect(filter[0](historyItem)).toBeTruthy()
 
-		const result = filter[1](fakeHistoryItem)
+		const result = filter[1](historyItem)
 
-		expect(result.name).toBe(`filter #${fakeFilterId}`)
-		expect(result.title).toBe(fakeFilterName)
+		expect(result.name).toBe(`filter #${filterId}`)
+		expect(result.title).toBe(filterName)
 		expect(result.type).toBe('filter')
 		expect(result.typeName).toBe('Filter')
 		expect(result.provider).toBe('jira')
 	})
 
 	test('dashboard', () => {
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: '{{internet.protocol}}://{{internet.domainName}}/secure/Dashboard.jspa?selectPageId={{string.numeric(5)}}',
-			title: `${fakeTitle} - {{lorem.word}} JIRA`,
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate('/secure/Dashboard.jspa?selectPageId={{string.numeric(5)}}'),
+			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(dashboard[0](fakeHistoryItem)).toBeTruthy()
+		expect(dashboard[0](historyItem)).toBeTruthy()
 
-		const result = dashboard[1](fakeHistoryItem)
+		const result = dashboard[1](historyItem)
 
 		expect(result.name).toBe('board')
-		expect(result.title).toBe(fakeTitle)
+		expect(result.title).toBe(title)
 		expect(result.type).toBe('board')
 		expect(result.typeName).toBe('Dashboard')
 		expect(result.provider).toBe('jira')

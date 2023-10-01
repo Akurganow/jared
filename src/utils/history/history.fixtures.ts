@@ -2,6 +2,10 @@ import { faker } from '@faker-js/faker'
 
 type Template<T> = Partial<{ [K in keyof T]: string }>
 
+export function createUrlTemplate(path: string) {
+	return `{{internet.protocol}}://{{internet.domainName}}${path}`
+}
+
 export function createFakeHistoryItem(template: Template<chrome.history.HistoryItem>) {
 	const templateEntries = Object.entries(template)
 	const historyItem = {

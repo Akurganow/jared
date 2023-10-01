@@ -1,41 +1,43 @@
 import { faker } from '@faker-js/faker'
-import { createFakeHistoryItem } from 'utils/history/history.fixtures'
+import { createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
 import issue from 'utils/history/its/youtrack/issue'
 import unknown from 'utils/history/its/youtrack/unknown'
 
 describe('utils/history/its/youtrack', () => {
 	test('unknown', () => {
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/fake-path/${faker.lorem.word({ length: { min: 2, max: 5 } })}`,
-			title: fakeTitle,
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate('/fake-path/{{lorem.word()}}'),
+			title: title,
 		})
+		const [check, parse] = unknown
 
-		expect(unknown[0](fakeHistoryItem)).toBeTruthy()
+		expect(check(historyItem)).toBeTruthy()
 
-		const result = unknown[1](fakeHistoryItem)
+		const result = parse(historyItem)
 
 		expect(result.name).toBe('')
-		expect(result.title).toBe(fakeTitle)
+		expect(result.title).toBe(title)
 		expect(result.type).toBe('unknown')
 		expect(result.typeName).toBe('Unknown')
 		expect(result.provider).toBe('youtrack')
 	})
 
 	test('issue', () => {
-		const fakeIssueId = `${faker.lorem.word(3).toUpperCase()}-${faker.number.int({ min: 1000, max: 999999 })}`
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/issue/${fakeIssueId}`,
-			title: `${fakeTitle}: ${fakeIssueId}`,
+		const issueId = `${faker.lorem.word(3).toUpperCase()}-${faker.number.int({ min: 1000, max: 999999 })}`
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/issue/${issueId}`),
+			title: `${title}: ${issueId}`,
 		})
+		const [check, parse] = issue
 
-		expect(issue[0](fakeHistoryItem)).toBeTruthy()
+		expect(check(historyItem)).toBeTruthy()
 
-		const result = issue[1](fakeHistoryItem)
+		const result = parse(historyItem)
 
-		expect(result.name).toBe(fakeIssueId)
-		expect(result.title).toBe(fakeTitle)
+		expect(result.name).toBe(issueId)
+		expect(result.title).toBe(title)
 		expect(result.type).toBe('issue')
 		expect(result.typeName).toBe('Issue')
 		expect(result.provider).toBe('youtrack')
