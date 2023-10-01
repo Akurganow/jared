@@ -1,5 +1,10 @@
 import { faker } from '@faker-js/faker'
-import { createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
+import {
+	createFakeHistoryItem,
+	createUrlTemplate,
+	createRepositoryTemplate,
+	checkHistoryItem
+} from 'utils/history/history.fixtures'
 import unknown from 'utils/history/vcs/github/unknown'
 import tree from 'utils/history/vcs/github/tree'
 import topics from 'utils/history/vcs/github/topics'
@@ -16,154 +21,137 @@ import blob from 'utils/history/vcs/github/blob'
 
 describe('utils/history/vcs/github', () => {
 	test('unknown', () => {
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
 			url: createUrlTemplate(`/fake-path/${faker.lorem.word({ length: { min: 2, max: 5 } })}`),
-			title: fakeTitle,
+			title: title,
 		})
 
-		expect(unknown[0](fakeHistoryItem)).toBeTruthy()
-
-		const result = unknown[1](fakeHistoryItem)
+		const result = checkHistoryItem(historyItem, unknown)
 
 		expect(result.name).toBe('')
-		expect(result.title).toBe(fakeTitle)
+		expect(result.title).toBe(title)
 		expect(result.type).toBe('unknown')
 		expect(result.typeName).toBe('Unknown')
 		expect(result.provider).toBe('github')
 	})
 
 	test('tree', () => {
-		const fakeBranch = `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/tree/${fakeBranch}`),
-			title: `${fakeRepository} at ${fakeBranch}`,
+		const branch = `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`
+		const [repositoryName] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/tree/${branch}`),
+			title: `${repositoryName} at ${branch}`,
 		})
 
-		expect(tree[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, tree)
 
-		const result = tree[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(fakeBranch)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(branch)
 		expect(result.type).toBe('tree')
 		expect(result.typeName).toBe('Tree')
 		expect(result.provider).toBe('github')
 	})
 
 	test('topics', () => {
-		const fakeTopic = faker.git.branch()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/topics/${fakeTopic}`),
-			title: `${fakeTopic} · GitHub Topics`,
+		const topic = faker.git.branch()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/topics/${topic}`),
+			title: `${topic} · GitHub Topics`,
 		})
 
-		expect(topics[0](fakeHistoryItem)).toBeTruthy()
-
-		const result = topics[1](fakeHistoryItem)
+		const result = checkHistoryItem(historyItem, topics)
 
 		expect(result.name).toBe('')
-		expect(result.title).toBe(fakeTopic)
+		expect(result.title).toBe(topic)
 		expect(result.type).toBe('topics')
 		expect(result.typeName).toBe('Topics')
 		expect(result.provider).toBe('github')
 	})
 
 	test('settings', () => {
-		const fakePath = faker.lorem.word({ length: { min: 2, max: 5 } })
-		const fakeTitle = `${fakePath.toUpperCase()} settings`
-		const fakeHistoryItem = createFakeHistoryItem({
+		const path = faker.lorem.word({ length: { min: 2, max: 5 } })
+		const title = `${path.toUpperCase()} settings`
+		const historyItem = createFakeHistoryItem({
 			id: '{{string.nanoid}}',
-			url: `{{internet.url}}/settings/${fakePath}`,
-			title: fakeTitle,
+			url: `{{internet.url}}/settings/${path}`,
+			title: title,
 		})
 
-		expect(settings[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, settings)
 
-		const result = settings[1](fakeHistoryItem)
-
-		expect(result.name).toBe(`settings/${fakePath}`)
-		expect(result.title).toBe(fakeTitle)
+		expect(result.name).toBe(`settings/${path}`)
+		expect(result.title).toBe(title)
 		expect(result.type).toBe('settings')
 		expect(result.typeName).toBe('Settings')
 		expect(result.provider).toBe('github')
 	})
 
 	test('repository', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}`),
-			title: fakeRepository,
+		const [repositoryName] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}`),
+			title: repositoryName,
 		})
 
-		expect(repository[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, repository)
 
-		const result = repository[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(fakeRepository)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(repositoryName)
 		expect(result.type).toBe('repository')
 		expect(result.typeName).toBe('Repository')
 		expect(result.provider).toBe('github')
 	})
 
 	test('pullRequest', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakePullRequest = faker.git.branch()
-		const fakePullRequestId = faker.number.int({ min: 1, max: 999999 })
-		const fakePullRequestName = faker.lorem.sentence()
-		const fakeBotName = faker.person.firstName()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/pull/${fakePullRequest}`),
-			title: `${fakePullRequestName} by ${fakeBotName}[bot] · Pull Request #${fakePullRequestId} · ${fakeRepository}`,
+		const [repositoryName] = createRepositoryTemplate()
+		const pullRequestId = faker.number.int({ min: 1, max: 999999 })
+		const pullRequestName = faker.lorem.sentence()
+		const botName = faker.person.firstName()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/pull/${pullRequestId}`),
+			title: `${pullRequestName} by ${botName}[bot] · Pull Request #${pullRequestId} · ${repositoryName}`,
 		})
 
-		expect(pullRequest[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, pullRequest)
 
-		const result = pullRequest[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(`${fakePullRequestName} by ${fakeBotName}[bot]`)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(`${pullRequestName} by ${botName}[bot]`)
 		expect(result.type).toBe('pullRequest')
 		expect(result.typeName).toBe('Pull request')
 		expect(result.provider).toBe('github')
 	})
 
 	test('profile', () => {
-		const fakeUsername = faker.internet.userName()
-		const fakeFullName = faker.person.fullName()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeUsername}`),
-			title: `${fakeUsername} (${fakeFullName})`,
+		const userName = faker.internet.userName()
+		const fullName = faker.person.fullName()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${userName}`),
+			title: `${userName} (${fullName})`,
 		})
 
-		expect(profile[0](fakeHistoryItem)).toBeTruthy()
-
-		const result = profile[1](fakeHistoryItem)
+		const result = checkHistoryItem(historyItem, profile)
 
 		expect(result.name).toBe('profile')
-		expect(result.title).toBe(`${fakeUsername} (${fakeFullName})`)
+		expect(result.title).toBe(`${userName} (${fullName})`)
 		expect(result.type).toBe('profile')
 		expect(result.typeName).toBe('Profile')
 		expect(result.provider).toBe('github')
 	})
 
 	test('issue', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeIssueId = faker.number.int({ min: 1, max: 999999 })
-		const fakeIssueName = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/issues/${fakeIssueId}`),
-			title: `${fakeIssueName} · Issue #${fakeIssueId} · ${fakeRepository}`,
+		const [repositoryName] = createRepositoryTemplate()
+		const issueId = faker.number.int({ min: 1, max: 999999 })
+		const issueName = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/issues/${issueId}`),
+			title: `${issueName} · Issue #${issueId} · ${repositoryName}`,
 		})
 
-		expect(issue[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, issue)
 
-		const result = issue[1](fakeHistoryItem)
-
-		expect(result.name).toBe(`Issue #${fakeIssueId} ${fakeRepository}`)
-		expect(result.title).toBe(fakeIssueName)
+		expect(result.name).toBe(`Issue #${issueId} ${repositoryName}`)
+		expect(result.title).toBe(issueName)
 		expect(result.type).toBe('issue')
 		expect(result.typeName).toBe('Issue')
 		expect(result.provider).toBe('github')
@@ -171,14 +159,12 @@ describe('utils/history/vcs/github', () => {
 
 	test('filterSearch', () => {
 		const fakeSearch = faker.lorem.word({ length: { min: 2, max: 5 } })
-		const fakeHistoryItem = createFakeHistoryItem({
+		const historyItem = createFakeHistoryItem({
 			url: createUrlTemplate(`/search?q=${fakeSearch}`),
 			title: `${fakeSearch}`,
 		})
 
-		expect(filterSearch[0](fakeHistoryItem)).toBeTruthy()
-
-		const result = filterSearch[1](fakeHistoryItem)
+		const result = checkHistoryItem(historyItem, filterSearch)
 
 		expect(result.name).toBe(`Search ${fakeSearch}`)
 		expect(result.title).toBe(fakeSearch)
@@ -188,17 +174,15 @@ describe('utils/history/vcs/github', () => {
 	})
 
 	test('filterPullRequests', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/pulls`),
-			title: `Pull requests · ${fakeRepository}`,
+		const [repositoryName] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/pulls`),
+			title: `Pull requests · ${repositoryName}`,
 		})
 
-		expect(filterPullRequests[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, filterPullRequests)
 
-		const result = filterPullRequests[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
+		expect(result.name).toBe(repositoryName)
 		expect(result.title).toBe('Pull requests')
 		expect(result.type).toBe('filter')
 		expect(result.typeName).toBe('Pull requests')
@@ -206,17 +190,15 @@ describe('utils/history/vcs/github', () => {
 	})
 
 	test('filterIssues', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/issues`),
-			title: `Issues · ${fakeRepository}`,
+		const [repositoryName] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/issues`),
+			title: `Issues · ${repositoryName}`,
 		})
 
-		expect(filterIssues[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, filterIssues)
 
-		const result = filterIssues[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
+		expect(result.name).toBe(repositoryName)
 		expect(result.title).toBe('Issues')
 		expect(result.type).toBe('filter')
 		expect(result.typeName).toBe('Issues')
@@ -224,40 +206,34 @@ describe('utils/history/vcs/github', () => {
 	})
 
 	test('blobSearch', () => {
-		const fakeSearch = faker.lorem.word({ length: { min: 2, max: 5 } })
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/search?q=${fakeSearch}`),
-			title: `${fakeSearch}`,
+		const search = faker.lorem.word({ length: { min: 2, max: 5 } })
+		const [repositoryName] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/search?q=${search}`),
+			title: `${search}`,
 		})
 
-		expect(blobSearch[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, blobSearch)
 
-		const result = blobSearch[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(fakeSearch)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(search)
 		expect(result.type).toBe('blob')
 		expect(result.typeName).toBe('Blob search')
 		expect(result.provider).toBe('github')
 	})
 
 	test('blob', () => {
-		const fakeBranch = `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`
-		const fakeUsername = faker.internet.userName()
-		const fakeRepoName = faker.lorem.word({ length: { min: 2, max: 5 } })
-		const fakeRepository = `${fakeUsername}/${fakeRepoName}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/blob/${fakeBranch}/README.md`),
-			title: `${fakeRepoName}/README.md at ${fakeBranch} · ${fakeRepository}`,
+		const branch = `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`
+		const [repositoryName,, project] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/blob/${branch}/README.md`),
+			title: `${project}/README.md at ${branch} · ${repositoryName}`,
 		})
 
-		expect(blob[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, blob)
 
-		const result = blob[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(`README.md at ${fakeBranch}`)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(`README.md at ${branch}`)
 		expect(result.type).toBe('blob')
 		expect(result.typeName).toBe('Blob')
 		expect(result.provider).toBe('github')

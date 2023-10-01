@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
+import { checkHistoryItem, createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
 import issue from 'utils/history/its/youtrack/issue'
 import unknown from 'utils/history/its/youtrack/unknown'
 
@@ -10,11 +10,8 @@ describe('utils/history/its/youtrack', () => {
 			url: createUrlTemplate('/fake-path/{{lorem.word()}}'),
 			title: title,
 		})
-		const [check, parse] = unknown
 
-		expect(check(historyItem)).toBeTruthy()
-
-		const result = parse(historyItem)
+		const result = checkHistoryItem(historyItem, unknown)
 
 		expect(result.name).toBe('')
 		expect(result.title).toBe(title)
@@ -30,11 +27,8 @@ describe('utils/history/its/youtrack', () => {
 			url: createUrlTemplate(`/issue/${issueId}`),
 			title: `${title}: ${issueId}`,
 		})
-		const [check, parse] = issue
 
-		expect(check(historyItem)).toBeTruthy()
-
-		const result = parse(historyItem)
+		const result = checkHistoryItem(historyItem, issue)
 
 		expect(result.name).toBe(issueId)
 		expect(result.title).toBe(title)

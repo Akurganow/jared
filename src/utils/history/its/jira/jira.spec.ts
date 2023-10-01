@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
+import { checkHistoryItem, createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
 import dashboard from 'utils/history/its/jira/dashboard'
 import filter from 'utils/history/its/jira/filter'
 import issue from 'utils/history/its/jira/issue'
@@ -16,9 +16,7 @@ describe('utils/history/its/jira', () => {
 			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(unknown[0](historyItem)).toBeTruthy()
-
-		const result = unknown[1](historyItem)
+		const result = checkHistoryItem(historyItem, unknown)
 
 		expect(result.name).toBe('')
 		expect(result.title).toBe(title)
@@ -35,9 +33,7 @@ describe('utils/history/its/jira', () => {
 			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(rapidBoard[0](historyItem)).toBeTruthy()
-
-		const result = rapidBoard[1](historyItem)
+		const result = checkHistoryItem(historyItem, rapidBoard)
 
 		expect(result.name).toBe(`board #${viewId}`)
 		expect(result.title).toBe(title)
@@ -54,9 +50,7 @@ describe('utils/history/its/jira', () => {
 			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(project[0](historyItem)).toBeTruthy()
-
-		const result = project[1](historyItem)
+		const result = checkHistoryItem(historyItem, project)
 
 		expect(result.name).toBe(projectId)
 		expect(result.title).toBe(projectId)
@@ -73,9 +67,7 @@ describe('utils/history/its/jira', () => {
 			title: `User Profile: ${firstName} ${lastName} - {{lorem.word}} JIRA`,
 		})
 
-		expect(profile[0](historyItem)).toBeTruthy()
-
-		const result = profile[1](historyItem)
+		const result = checkHistoryItem(historyItem, profile)
 
 		expect(result.name).toBe(`${firstName} ${lastName}`)
 		expect(result.title).toBe(`${firstName} ${lastName}`)
@@ -92,9 +84,7 @@ describe('utils/history/its/jira', () => {
 			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(issue[0](historyItem)).toBeTruthy()
-
-		const result = issue[1](historyItem)
+		const result = checkHistoryItem(historyItem, issue)
 
 		expect(result.name).toBe(`${issueId}`)
 		expect(result.title).toBe(`${title}`)
@@ -111,9 +101,7 @@ describe('utils/history/its/jira', () => {
 			title: `[${filterName}] Issue Navigator - {{lorem.word}} JIRA`,
 		})
 
-		expect(filter[0](historyItem)).toBeTruthy()
-
-		const result = filter[1](historyItem)
+		const result = checkHistoryItem(historyItem, filter)
 
 		expect(result.name).toBe(`filter #${filterId}`)
 		expect(result.title).toBe(filterName)
@@ -129,9 +117,7 @@ describe('utils/history/its/jira', () => {
 			title: `${title} - {{lorem.word}} JIRA`,
 		})
 
-		expect(dashboard[0](historyItem)).toBeTruthy()
-
-		const result = dashboard[1](historyItem)
+		const result = checkHistoryItem(historyItem, dashboard)
 
 		expect(result.name).toBe('board')
 		expect(result.title).toBe(title)

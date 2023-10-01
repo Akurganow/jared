@@ -1,6 +1,11 @@
 import { faker } from '@faker-js/faker'
 import capitalize from 'lodash/capitalize'
-import { createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
+import {
+	checkHistoryItem,
+	createFakeHistoryItem,
+	createRepositoryTemplate,
+	createUrlTemplate
+} from 'utils/history/history.fixtures'
 import unknown from 'utils/history/vcs/gitlab/unknown'
 import tree from 'utils/history/vcs/gitlab/tree'
 import repository from 'utils/history/vcs/gitlab/repository'
@@ -13,111 +18,99 @@ import commit from 'utils/history/vcs/gitlab/commit'
 
 describe('utils/history/vcs/gitlab', () => {
 	test('unknown', () => {
-		const fakeTitle = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
+		const title = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
 			url: createUrlTemplate(`/fake-path/${faker.lorem.word()}`),
-			title: fakeTitle,
+			title: title,
 		})
 
-		expect(unknown[0](fakeHistoryItem)).toBeTruthy()
-
-		const result = unknown[1](fakeHistoryItem)
+		const result = checkHistoryItem(historyItem, unknown)
 
 		expect(result.name).toBe('')
-		expect(result.title).toBe(fakeTitle)
+		expect(result.title).toBe(title)
 		expect(result.type).toBe('unknown')
 		expect(result.typeName).toBe('Unknown')
 		expect(result.provider).toBe('gitlab')
 	})
 
 	test('tree', () => {
-		const fakeBranch = faker.git.branch()
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/tree/${fakeBranch}`),
-			title: `Files · ${fakeBranch} · ${fakeRepository}`,
+		const branch = faker.git.branch()
+		const [repositoryName] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/tree/${branch}`),
+			title: `Files · ${branch} · ${repositoryName}`,
 		})
 
-		expect(tree[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, tree)
 
-		const result = tree[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(`Files at ${fakeBranch}`)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(`Files at ${branch}`)
 		expect(result.type).toBe('tree')
 		expect(result.typeName).toBe('Tree')
 		expect(result.provider).toBe('gitlab')
 	})
 
 	test('repository', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}`),
-			title: `${fakeRepository} · GitLab`,
+		const [repositoryName] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}`),
+			title: `${repositoryName} · GitLab`,
 		})
 
-		expect(repository[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, repository)
 
-		const result = repository[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(fakeRepository)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(repositoryName)
 		expect(result.type).toBe('repository')
 		expect(result.typeName).toBe('Repository')
 		expect(result.provider).toBe('gitlab')
 	})
 
 	test('profile', () => {
-		const fakeUsername = faker.internet.userName()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeUsername}`),
-			title: `${fakeUsername} · GitLab`,
+		const userName = faker.internet.userName()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${userName}`),
+			title: `${userName} · GitLab`,
 		})
 
-		expect(profile[0](fakeHistoryItem)).toBeTruthy()
-
-		const result = profile[1](fakeHistoryItem)
+		const result = checkHistoryItem(historyItem, profile)
 
 		expect(result.name).toBe('profile')
-		expect(result.title).toBe(fakeUsername)
+		expect(result.title).toBe(userName)
 		expect(result.type).toBe('profile')
 		expect(result.typeName).toBe('Profile')
 		expect(result.provider).toBe('gitlab')
 	})
 
 	test('pipelines', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakePipelineId = faker.number.int({ min: 1 })
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/-/pipelines/${fakePipelineId}`),
-			title: `Pipeline · ${fakeRepository} · GitLab`,
+		const [repositoryName] = createRepositoryTemplate()
+		const pipelineId = faker.number.int({ min: 1 })
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/-/pipelines/${pipelineId}`),
+			title: `Pipeline · ${repositoryName} · GitLab`,
 		})
 
-		expect(pipelines[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, pipelines)
 
-		const result = pipelines[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(`Pipeline ${fakePipelineId}`)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(`Pipeline ${pipelineId}`)
 		expect(result.type).toBe('pipeline')
 		expect(result.typeName).toBe('Pipelines')
 		expect(result.provider).toBe('gitlab')
 	})
 
 	test('mergeRequest', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
+		const [repositoryName] = createRepositoryTemplate()
 		const fakeMergeRequestId = faker.number.int({ min: 1, max: 999999 })
 		const fakeMergeRequestName = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/-/merge_requests/${fakeMergeRequestId}`),
-			title: `${fakeMergeRequestName} (!${fakeMergeRequestId}) · Merge requests · ${fakeRepository} · GitLab`,
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/-/merge_requests/${fakeMergeRequestId}`),
+			title: `${fakeMergeRequestName} (!${fakeMergeRequestId}) · Merge requests · ${repositoryName} · GitLab`,
 		})
 
-		expect(mergeRequest[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, mergeRequest)
 
-		const result = mergeRequest[1](fakeHistoryItem)
-
-		expect(result.name).toBe(`${fakeRepository} !${fakeMergeRequestId}`)
+		expect(result.name).toBe(`${repositoryName} !${fakeMergeRequestId}`)
 		expect(result.title).toBe(`${fakeMergeRequestName}`)
 		expect(result.type).toBe('mergeRequest')
 		expect(result.typeName).toBe('Merge Request')
@@ -125,37 +118,33 @@ describe('utils/history/vcs/gitlab', () => {
 	})
 
 	test('jobs', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeJobId = faker.number.int({ min: 1 })
-		const fakeJobName = capitalize(faker.lorem.word())
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/-/jobs/${fakeJobId}`),
-			title: `${fakeJobName} (#${fakeJobId}) · Jobs · RND / rwc · GitLab`,
+		const [repositoryName] = createRepositoryTemplate()
+		const jobId = faker.number.int({ min: 1 })
+		const jobName = capitalize(faker.lorem.word())
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/-/jobs/${jobId}`),
+			title: `${jobName} (#${jobId}) · Jobs · RND / rwc · GitLab`,
 		})
 
-		expect(jobs[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, jobs)
 
-		const result = jobs[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(`${fakeJobName} (#${fakeJobId})`)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(`${jobName} (#${jobId})`)
 		expect(result.type).toBe('job')
 		expect(result.typeName).toBe('Jobs')
 		expect(result.provider).toBe('gitlab')
 	})
 
 	test('filterMergeRequests', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/-/merge_requests`),
-			title: `Merge requests · ${fakeRepository} · GitLab`,
+		const [repositoryName] = createRepositoryTemplate()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/-/merge_requests`),
+			title: `Merge requests · ${repositoryName} · GitLab`,
 		})
 
-		expect(filterMergeRequests[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, filterMergeRequests)
 
-		const result = filterMergeRequests[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
+		expect(result.name).toBe(repositoryName)
 		expect(result.title).toBe('Merge requests')
 		expect(result.type).toBe('filter')
 		expect(result.typeName).toBe('Merge requests')
@@ -163,20 +152,18 @@ describe('utils/history/vcs/gitlab', () => {
 	})
 
 	test('commit', () => {
-		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
-		const fakeCommitId = faker.git.commitSha()
-		const fakeCommitName = faker.lorem.sentence()
-		const fakeHistoryItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${fakeRepository}/-/commit/${fakeCommitId}`),
-			title: `${fakeCommitName} (${fakeCommitId.slice(0, 7)}) · Commits · ${fakeRepository} · GitLab`,
+		const [repositoryName] = createRepositoryTemplate()
+		const commitId = faker.git.commitSha()
+		const commitName = faker.lorem.sentence()
+		const historyItem = createFakeHistoryItem({
+			url: createUrlTemplate(`/${repositoryName}/-/commit/${commitId}`),
+			title: `${commitName} (${commitId.slice(0, 7)}) · Commits · ${repositoryName} · GitLab`,
 		})
 
-		expect(commit[0](fakeHistoryItem)).toBeTruthy()
+		const result = checkHistoryItem(historyItem, commit)
 
-		const result = commit[1](fakeHistoryItem)
-
-		expect(result.name).toBe(fakeRepository)
-		expect(result.title).toBe(`${fakeCommitName} (${fakeCommitId.slice(0, 7)})`)
+		expect(result.name).toBe(repositoryName)
+		expect(result.title).toBe(`${commitName} (${commitId.slice(0, 7)})`)
 		expect(result.type).toBe('commit')
 		expect(result.typeName).toBe('Commit')
 		expect(result.provider).toBe('gitlab')
