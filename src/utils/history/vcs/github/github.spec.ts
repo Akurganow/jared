@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { createFakeHistoryItem } from 'utils/history/history.fixtures'
+import { createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
 import unknown from 'utils/history/vcs/github/unknown'
 import tree from 'utils/history/vcs/github/tree'
 import topics from 'utils/history/vcs/github/topics'
@@ -18,7 +18,7 @@ describe('utils/history/vcs/github', () => {
 	test('unknown', () => {
 		const fakeTitle = faker.lorem.sentence()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/fake-path/${faker.lorem.word({ length: { min: 2, max: 5 } })}`,
+			url: createUrlTemplate(`/fake-path/${faker.lorem.word({ length: { min: 2, max: 5 } })}`),
 			title: fakeTitle,
 		})
 
@@ -37,7 +37,7 @@ describe('utils/history/vcs/github', () => {
 		const fakeBranch = `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/tree/${fakeBranch}`,
+			url: createUrlTemplate(`/${fakeRepository}/tree/${fakeBranch}`),
 			title: `${fakeRepository} at ${fakeBranch}`,
 		})
 
@@ -55,7 +55,7 @@ describe('utils/history/vcs/github', () => {
 	test('topics', () => {
 		const fakeTopic = faker.git.branch()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/topics/${fakeTopic}`,
+			url: createUrlTemplate(`/topics/${fakeTopic}`),
 			title: `${fakeTopic} · GitHub Topics`,
 		})
 
@@ -93,7 +93,7 @@ describe('utils/history/vcs/github', () => {
 	test('repository', () => {
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}`,
+			url: createUrlTemplate(`/${fakeRepository}`),
 			title: fakeRepository,
 		})
 
@@ -115,7 +115,7 @@ describe('utils/history/vcs/github', () => {
 		const fakePullRequestName = faker.lorem.sentence()
 		const fakeBotName = faker.person.firstName()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/pull/${fakePullRequest}`,
+			url: createUrlTemplate(`/${fakeRepository}/pull/${fakePullRequest}`),
 			title: `${fakePullRequestName} by ${fakeBotName}[bot] · Pull Request #${fakePullRequestId} · ${fakeRepository}`,
 		})
 
@@ -134,7 +134,7 @@ describe('utils/history/vcs/github', () => {
 		const fakeUsername = faker.internet.userName()
 		const fakeFullName = faker.person.fullName()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeUsername}`,
+			url: createUrlTemplate(`/${fakeUsername}`),
 			title: `${fakeUsername} (${fakeFullName})`,
 		})
 
@@ -154,7 +154,7 @@ describe('utils/history/vcs/github', () => {
 		const fakeIssueId = faker.number.int({ min: 1, max: 999999 })
 		const fakeIssueName = faker.lorem.sentence()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/issues/${fakeIssueId}`,
+			url: createUrlTemplate(`/${fakeRepository}/issues/${fakeIssueId}`),
 			title: `${fakeIssueName} · Issue #${fakeIssueId} · ${fakeRepository}`,
 		})
 
@@ -172,7 +172,7 @@ describe('utils/history/vcs/github', () => {
 	test('filterSearch', () => {
 		const fakeSearch = faker.lorem.word({ length: { min: 2, max: 5 } })
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/search?q=${fakeSearch}`,
+			url: createUrlTemplate(`/search?q=${fakeSearch}`),
 			title: `${fakeSearch}`,
 		})
 
@@ -190,7 +190,7 @@ describe('utils/history/vcs/github', () => {
 	test('filterPullRequests', () => {
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/pulls`,
+			url: createUrlTemplate(`/${fakeRepository}/pulls`),
 			title: `Pull requests · ${fakeRepository}`,
 		})
 
@@ -208,7 +208,7 @@ describe('utils/history/vcs/github', () => {
 	test('filterIssues', () => {
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/issues`,
+			url: createUrlTemplate(`/${fakeRepository}/issues`),
 			title: `Issues · ${fakeRepository}`,
 		})
 
@@ -227,7 +227,7 @@ describe('utils/history/vcs/github', () => {
 		const fakeSearch = faker.lorem.word({ length: { min: 2, max: 5 } })
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/search?q=${fakeSearch}`,
+			url: createUrlTemplate(`/${fakeRepository}/search?q=${fakeSearch}`),
 			title: `${fakeSearch}`,
 		})
 
@@ -248,7 +248,7 @@ describe('utils/history/vcs/github', () => {
 		const fakeRepoName = faker.lorem.word({ length: { min: 2, max: 5 } })
 		const fakeRepository = `${fakeUsername}/${fakeRepoName}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/blob/${fakeBranch}/README.md`,
+			url: createUrlTemplate(`/${fakeRepository}/blob/${fakeBranch}/README.md`),
 			title: `${fakeRepoName}/README.md at ${fakeBranch} · ${fakeRepository}`,
 		})
 

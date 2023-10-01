@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 import capitalize from 'lodash/capitalize'
-import { createFakeHistoryItem } from 'utils/history/history.fixtures'
+import { createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
 import unknown from 'utils/history/vcs/gitlab/unknown'
 import tree from 'utils/history/vcs/gitlab/tree'
 import repository from 'utils/history/vcs/gitlab/repository'
@@ -15,7 +15,7 @@ describe('utils/history/vcs/gitlab', () => {
 	test('unknown', () => {
 		const fakeTitle = faker.lorem.sentence()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/fake-path/${faker.lorem.word()}`,
+			url: createUrlTemplate(`/fake-path/${faker.lorem.word()}`),
 			title: fakeTitle,
 		})
 
@@ -34,7 +34,7 @@ describe('utils/history/vcs/gitlab', () => {
 		const fakeBranch = faker.git.branch()
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/tree/${fakeBranch}`,
+			url: createUrlTemplate(`/${fakeRepository}/tree/${fakeBranch}`),
 			title: `Files · ${fakeBranch} · ${fakeRepository}`,
 		})
 
@@ -52,7 +52,7 @@ describe('utils/history/vcs/gitlab', () => {
 	test('repository', () => {
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}`,
+			url: createUrlTemplate(`/${fakeRepository}`),
 			title: `${fakeRepository} · GitLab`,
 		})
 
@@ -70,7 +70,7 @@ describe('utils/history/vcs/gitlab', () => {
 	test('profile', () => {
 		const fakeUsername = faker.internet.userName()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeUsername}`,
+			url: createUrlTemplate(`/${fakeUsername}`),
 			title: `${fakeUsername} · GitLab`,
 		})
 
@@ -89,7 +89,7 @@ describe('utils/history/vcs/gitlab', () => {
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakePipelineId = faker.number.int({ min: 1 })
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/-/pipelines/${fakePipelineId}`,
+			url: createUrlTemplate(`/${fakeRepository}/-/pipelines/${fakePipelineId}`),
 			title: `Pipeline · ${fakeRepository} · GitLab`,
 		})
 
@@ -109,7 +109,7 @@ describe('utils/history/vcs/gitlab', () => {
 		const fakeMergeRequestId = faker.number.int({ min: 1, max: 999999 })
 		const fakeMergeRequestName = faker.lorem.sentence()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/-/merge_requests/${fakeMergeRequestId}`,
+			url: createUrlTemplate(`/${fakeRepository}/-/merge_requests/${fakeMergeRequestId}`),
 			title: `${fakeMergeRequestName} (!${fakeMergeRequestId}) · Merge requests · ${fakeRepository} · GitLab`,
 		})
 
@@ -129,7 +129,7 @@ describe('utils/history/vcs/gitlab', () => {
 		const fakeJobId = faker.number.int({ min: 1 })
 		const fakeJobName = capitalize(faker.lorem.word())
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/-/jobs/${fakeJobId}`,
+			url: createUrlTemplate(`/${fakeRepository}/-/jobs/${fakeJobId}`),
 			title: `${fakeJobName} (#${fakeJobId}) · Jobs · RND / rwc · GitLab`,
 		})
 
@@ -147,7 +147,7 @@ describe('utils/history/vcs/gitlab', () => {
 	test('filterMergeRequests', () => {
 		const fakeRepository = `${faker.lorem.word({ length: { min: 2, max: 5 } })}/${faker.lorem.word({ length: { min: 2, max: 5 } })}`
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/-/merge_requests`,
+			url: createUrlTemplate(`/${fakeRepository}/-/merge_requests`),
 			title: `Merge requests · ${fakeRepository} · GitLab`,
 		})
 
@@ -167,7 +167,7 @@ describe('utils/history/vcs/gitlab', () => {
 		const fakeCommitId = faker.git.commitSha()
 		const fakeCommitName = faker.lorem.sentence()
 		const fakeHistoryItem = createFakeHistoryItem({
-			url: `{{internet.protocol}}://{{internet.domainName}}/${fakeRepository}/-/commit/${fakeCommitId}`,
+			url: createUrlTemplate(`/${fakeRepository}/-/commit/${fakeCommitId}`),
 			title: `${fakeCommitName} (${fakeCommitId.slice(0, 7)}) · Commits · ${fakeRepository} · GitLab`,
 		})
 
