@@ -3,6 +3,7 @@ dist/
 packages/
 .idea/
 /.jest/
+/coverage/
 /test-results/
 /playwright-report/
 /playwright/.cache/
