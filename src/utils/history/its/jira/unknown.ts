@@ -7,7 +7,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		type: 'unknown',
 		typeName: 'Unknown',
 		name: '',
-		title: item.title || '',
+		title: item.title?.split(' - ')[0] || '',
 		provider: 'jira',
 	}),
 	{

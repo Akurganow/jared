@@ -9,7 +9,6 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 	},
 	(item: chrome.history.HistoryItem) => {
 		const title = getSplitTitle(item.title || '')
-		const name = title[0].replace('System Dashboard - ', '')
 
 		return {
 			...item,
@@ -17,7 +16,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 			typeName: 'Dashboard',
 			provider: 'jira',
 			name: 'board',
-			title: name,
+			title: title[0],
 		}
 	},
 	{

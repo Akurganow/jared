@@ -13,7 +13,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		const filterId = url.searchParams.get('filter') || ''
 
 		const filterName = title
-			? title[0].replace(/^[(.+)].+/ig, '$1')
+			? title[0].replace(/^\[(.+)].+/ig, '$1')
 			: ''
 
 		return {
