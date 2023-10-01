@@ -19,7 +19,11 @@ export default function HistoryItemList({ items, className, ...props }: HistoryI
 	)
 
 	return (
-		<div className={cn(st.container, className)} {...props}>
+		<div
+			className={cn(st.container, className)}
+			data-testid="HistoryItemList"
+			{...props}
+		>
 			<div className={st.pinned}>
 				{pinned.map(item =>
 					<HistoryItem key={`pinned${item.id}`} {...item} />

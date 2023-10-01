@@ -1,8 +1,8 @@
-import { ComponentProps } from 'react'
 import { expect } from '@storybook/jest'
 import { within } from '@storybook/testing-library'
 import HistoryItem from 'components/HistoryItem'
 import { store, Mockstore } from 'storybook/fixtures/mock-store'
+import type { ComponentProps } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
 const meta: Meta<ComponentProps<typeof HistoryItem>> = {
@@ -34,6 +34,9 @@ const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 		await expect(item).toBeInTheDocument()
 		await expect(item).toHaveAttribute('href', args.url)
 		await expect(item).toHaveAttribute('title', args.title)
+		await expect(item).toHaveAttribute('class', expect.stringContaining('item'))
+		await expect(item).toContainElement(canvas.getByTestId('HistoryItem:name'))
+		await expect(item).toContainElement(canvas.getByTestId('HistoryItem:PinButton'))
 		await expect(item).toHaveTextContent(`${args.name}${args.title}`)
 		await expect(pinButton).toBeInTheDocument()
 
@@ -53,9 +56,9 @@ export const Github: Story = {
 	args: {
 		id: 'github-id',
 		title: 'Github',
-		name: 'repo/Github',
+		name: 'repository/Github',
 		url: 'https://github.com',
-		type: 'repo',
+		type: 'repository',
 		provider: 'github',
 		pinned: false,
 	}
@@ -65,9 +68,9 @@ export const PinnedGithub: Story = {
 	args: {
 		id: 'github-id',
 		title: 'Github',
-		name: 'repo/Github',
+		name: 'repository/Github',
 		url: 'https://github.com',
-		type: 'repo',
+		type: 'repository',
 		provider: 'github',
 		pinned: true,
 	}
@@ -77,9 +80,9 @@ export const Gitlab: Story = {
 	args: {
 		id: 'gitlab-id',
 		title: 'Gitlub',
-		name: 'repo/Gitlab',
+		name: 'repository/Gitlab',
 		url: 'https://gitlab.com',
-		type: 'repo',
+		type: 'repository',
 		provider: 'gitlab',
 		pinned: false,
 	}
@@ -103,7 +106,7 @@ export const LargeText: Story = {
 		title: 'Small CLI toolbox for cross-browser WebExtension development',
 		name: 'webextension-toolbox/webextension-toolbox',
 		url: 'https://github.com/webextension-toolbox/webextension-toolbox/',
-		type: 'repo',
+		type: 'repository',
 		provider: 'github',
 		pinned: false,
 	}

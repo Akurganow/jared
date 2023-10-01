@@ -4,7 +4,7 @@ export type VCSType =
 	| 'profile'
 	| 'issue'
 	| 'settings'
-	| 'repo'
+	| 'repository'
 	| 'tree'
 	| 'blob'
 	| 'filter'

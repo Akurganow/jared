@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import type { ITSHistoryItem, ITSProviderType, ITSType, VCSHistoryItem, VCSProviderType, VCSType } from 'types/history'
 
-const vcsTypes: VCSType[] = ['tree', 'blob', 'filter', 'topics', 'mergeRequest', 'pullRequest', 'pipeline', 'job', 'commit']
+const vcsTypes: VCSType[] = ['unknown', 'tree', 'blob', 'filter', 'topics', 'mergeRequest', 'pullRequest', 'pipeline', 'job', 'commit']
 const itsTypes: ITSType[] = ['unknown', 'issue', 'filter', 'project', 'profile', 'board']
 const vcsProviders: VCSProviderType[] = ['gitlab', 'github']
 const itsProviders: ITSProviderType[] = ['jira', 'youtrack']
@@ -31,8 +31,8 @@ function generateHistoryItem<T extends (VCSHistoryItem | ITSHistoryItem)>(
 		title: generators?.title?.() || faker.lorem.sentence(),
 		url: generators?.url?.() || faker.internet.url(),
 		lastVisitTime: generators?.lastVisitTime?.() || faker.date.recent().getTime(),
-		visitCount: generators?.visitCount?.() || faker.number.int(),
-		typedCount: generators?.typedCount?.() || faker.number.int(),
+		visitCount: generators?.visitCount?.() || faker.number.int({ min: 10, max: 1000 }),
+		typedCount: generators?.typedCount?.() || faker.number.int({ min: 10, max: 1000 }),
 		name: generators?.name?.() || faker.lorem.word(),
 		type: generators?.type?.() || faker.helpers.arrayElement(types),
 		typeName: generators?.typeName?.() || faker.lorem.word(),

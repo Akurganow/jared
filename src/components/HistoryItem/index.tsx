@@ -16,7 +16,7 @@ const typesMap: Record<VCSType | ITSType, TypeTokens> = {
 	unknown: 'unknown',
 	issue: 'item',
 	commit: 'file',
-	repo: 'file',
+	repository: 'file',
 	pullRequest: 'item',
 	mergeRequest: 'item',
 	filter: 'filter',
@@ -49,7 +49,7 @@ export default function HistoryItem({ id, title, name, url, type, pinned }: Hist
 		className={cn(st.item, st[currentType])}
 		data-testid="HistoryItem"
 	>
-		<div className={st.name}>
+		<div className={st.name} data-testid="HistoryItem:name">
 			{name}
 		</div>
 		{title}
