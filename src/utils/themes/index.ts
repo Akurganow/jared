@@ -35,7 +35,6 @@ function convertToCSSVar(
 	valueFunction: (value: string) => string = memoize((value) => value),
 	prefix: string = '',
 ): string {
-	console.log(key, value, prefix)
 	if (typeof value === 'string') {
 		return `--${prefix}-${key}: ${valueFunction(value)};`
 	} else {

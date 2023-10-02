@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { checkHistoryItem, createFakeHistoryItem, createUrlTemplate } from 'utils/history/history.fixtures'
+import { checkProcessor } from 'utils/history/history.fixtures'
 import dashboard from 'utils/history/its/jira/dashboard'
 import filter from 'utils/history/its/jira/filter'
 import issue from 'utils/history/its/jira/issue'
@@ -7,122 +7,136 @@ import profile from 'utils/history/its/jira/profile'
 import project from 'utils/history/its/jira/project'
 import rapidBoard from 'utils/history/its/jira/rapidBoard'
 import unknown from 'utils/history/its/jira/unknown'
+import type { ITSHistoryItem } from 'types/history'
+import type { TemplateConfig } from 'utils/history/history.fixtures'
+
+const configs: TemplateConfig<ITSHistoryItem> = {
+	unknown: {
+		variables: {
+			title: () => faker.lorem.sentence(),
+		},
+		create: {
+			url: '/fake-path/{{lorem.word()}}',
+			title: '{{title}} - {{lorem.word}} JIRA',
+		},
+		check: {
+			name: '',
+			title: '{{title}}',
+			type: 'unknown',
+			typeName: 'Unknown',
+			provider: 'jira',
+		}
+	},
+	rapidBoard: {
+		variables: {
+			title: () => faker.lorem.sentence(),
+			viewId: () => faker.string.numeric(5),
+		},
+		create: {
+			url: '/secure/RapidBoard.jspa?rapidView={{viewId}}',
+			title: '{{title}} - {{lorem.word}} JIRA',
+		},
+		check: {
+			name: 'board #{{viewId}}',
+			title: '{{title}}',
+			type: 'board',
+			typeName: 'Board',
+			provider: 'jira',
+		}
+	},
+	project: {
+		variables: {
+			title: () => faker.lorem.sentence(),
+			projectId: () => faker.lorem.word({ length: { min: 2, max: 5 } }).toUpperCase(),
+		},
+		create: {
+			url: '/projects/{{projectId}}/issues',
+			title: '{{title}} - {{lorem.word}} JIRA',
+		},
+		check: {
+			name: '{{projectId}}',
+			title: '{{projectId}}',
+			type: 'project',
+			typeName: 'Project',
+			provider: 'jira',
+		}
+	},
+	profile: {
+		variables: {
+			firstName: () => faker.person.firstName(),
+			lastName: () => faker.person.lastName(),
+		},
+		create: {
+			url: '/secure/ViewProfile.jspa?name={{firstName}}.{{lastName}}',
+			title: 'User Profile: {{firstName}} {{lastName}} - {{lorem.word}} JIRA',
+		},
+		check: {
+			name: '{{firstName}} {{lastName}}',
+			title: '{{firstName}} {{lastName}}',
+			type: 'profile',
+			typeName: 'Profile',
+			provider: 'jira',
+		}
+	},
+	issue: {
+		variables: {
+			title: () => faker.lorem.sentence(),
+			issueId: () => `${faker.lorem.word(3).toUpperCase()}-${faker.string.numeric(5)}`,
+		},
+		create: {
+			url: '/browse/{{issueId}}',
+			title: '{{title}} - {{lorem.word}} JIRA',
+		},
+		check: {
+			name: '{{issueId}}',
+			title: '{{title}}',
+			type: 'issue',
+			typeName: 'Issue',
+			provider: 'jira',
+		}
+	},
+	filter: {
+		variables: {
+			filterId: () => faker.string.numeric(5),
+			filterName: () => faker.lorem.sentence(),
+		},
+		create: {
+			url: '/issues/?filter={{filterId}}',
+			title: '[{{filterName}}] Issue Navigator - {{lorem.word}} JIRA',
+		},
+		check: {
+			name: 'filter #{{filterId}}',
+			title: '{{filterName}}',
+			type: 'filter',
+			typeName: 'Filter',
+			provider: 'jira',
+		}
+	},
+	dashboard: {
+		variables: {
+			title: () => faker.lorem.sentence(),
+			pageId: () => faker.string.numeric(5),
+		},
+		create: {
+			url: '/secure/Dashboard.jspa?selectPageId={{pageId}}',
+			title: '{{title}} - {{lorem.word}} JIRA',
+		},
+		check: {
+			name: 'board',
+			title: '{{title}}',
+			type: 'board',
+			typeName: 'Dashboard',
+			provider: 'jira',
+		}
+	}
+}
 
 describe('utils/history/its/jira', () => {
-	test('unknown', () => {
-		const title = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate('/fake-path/{{lorem.word()}}'),
-			title: `${title} - {{lorem.word}} JIRA`,
-		})
-
-		const result = checkHistoryItem(historyItem, unknown)
-
-		expect(result.name).toBe('')
-		expect(result.title).toBe(title)
-		expect(result.type).toBe('unknown')
-		expect(result.typeName).toBe('Unknown')
-		expect(result.provider).toBe('jira')
-	})
-
-	test('rapidBoard', () => {
-		const viewId = faker.number.int({ min: 1000, max: 999999 })
-		const title = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/secure/RapidBoard.jspa?rapidView=${viewId}`),
-			title: `${title} - {{lorem.word}} JIRA`,
-		})
-
-		const result = checkHistoryItem(historyItem, rapidBoard)
-
-		expect(result.name).toBe(`board #${viewId}`)
-		expect(result.title).toBe(title)
-		expect(result.type).toBe('board')
-		expect(result.typeName).toBe('Board')
-		expect(result.provider).toBe('jira')
-	})
-
-	test('project', () => {
-		const projectId = faker.lorem.word({ length: { min: 2, max: 5 } }).toUpperCase()
-		const title = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/projects/${projectId}/issues`),
-			title: `${title} - {{lorem.word}} JIRA`,
-		})
-
-		const result = checkHistoryItem(historyItem, project)
-
-		expect(result.name).toBe(projectId)
-		expect(result.title).toBe(projectId)
-		expect(result.type).toBe('project')
-		expect(result.typeName).toBe('Project')
-		expect(result.provider).toBe('jira')
-	})
-
-	test('profile', () => {
-		const firstName = faker.person.firstName()
-		const lastName = faker.person.lastName()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/secure/ViewProfile.jspa?name=${firstName}.${lastName}`),
-			title: `User Profile: ${firstName} ${lastName} - {{lorem.word}} JIRA`,
-		})
-
-		const result = checkHistoryItem(historyItem, profile)
-
-		expect(result.name).toBe(`${firstName} ${lastName}`)
-		expect(result.title).toBe(`${firstName} ${lastName}`)
-		expect(result.type).toBe('profile')
-		expect(result.typeName).toBe('Profile')
-		expect(result.provider).toBe('jira')
-	})
-
-	test('issue', () => {
-		const issueId = `${faker.lorem.word(3).toUpperCase()}-${faker.number.int({ min: 1000, max: 999999 })}`
-		const title = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/browse/${issueId}`),
-			title: `${title} - {{lorem.word}} JIRA`,
-		})
-
-		const result = checkHistoryItem(historyItem, issue)
-
-		expect(result.name).toBe(`${issueId}`)
-		expect(result.title).toBe(`${title}`)
-		expect(result.type).toBe('issue')
-		expect(result.typeName).toBe('Issue')
-		expect(result.provider).toBe('jira')
-	})
-
-	test('filter', () => {
-		const filterId = faker.number.int({ min: 1000, max: 999999 })
-		const filterName = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/issues/?filter=${filterId}`),
-			title: `[${filterName}] Issue Navigator - {{lorem.word}} JIRA`,
-		})
-
-		const result = checkHistoryItem(historyItem, filter)
-
-		expect(result.name).toBe(`filter #${filterId}`)
-		expect(result.title).toBe(filterName)
-		expect(result.type).toBe('filter')
-		expect(result.typeName).toBe('Filter')
-		expect(result.provider).toBe('jira')
-	})
-
-	test('dashboard', () => {
-		const title = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate('/secure/Dashboard.jspa?selectPageId={{string.numeric(5)}}'),
-			title: `${title} - {{lorem.word}} JIRA`,
-		})
-
-		const result = checkHistoryItem(historyItem, dashboard)
-
-		expect(result.name).toBe('board')
-		expect(result.title).toBe(title)
-		expect(result.type).toBe('board')
-		expect(result.typeName).toBe('Dashboard')
-		expect(result.provider).toBe('jira')
-	})
+	checkProcessor(configs, 'unknown', unknown)
+	checkProcessor(configs, 'rapidBoard', rapidBoard)
+	checkProcessor(configs, 'project', project)
+	checkProcessor(configs, 'profile', profile)
+	checkProcessor(configs, 'issue', issue)
+	checkProcessor(configs, 'filter', filter)
+	checkProcessor(configs, 'dashboard', dashboard)
 })

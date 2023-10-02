@@ -32,14 +32,6 @@ const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 				const results = (await chrome.history.search(query))
 					.map(itemProcessor)
 
-				if (key.type === 'youtrack') {
-					console.log('getHistoryItems', {
-						key,
-						query,
-						results,
-					})
-				}
-
 				items.push(...results)
 			} else {
 				const results = (await chrome.history.search(query))

@@ -1,11 +1,6 @@
 import { faker } from '@faker-js/faker'
 import capitalize from 'lodash/capitalize'
-import {
-	checkHistoryItem,
-	createFakeHistoryItem,
-	createRepositoryTemplate,
-	createUrlTemplate
-} from 'utils/history/history.fixtures'
+import { createRepositoryTemplate, checkProcessor } from 'utils/history/history.fixtures'
 import unknown from 'utils/history/vcs/gitlab/unknown'
 import tree from 'utils/history/vcs/gitlab/tree'
 import repository from 'utils/history/vcs/gitlab/repository'
@@ -15,157 +10,173 @@ import mergeRequest from 'utils/history/vcs/gitlab/mergeRequest'
 import jobs from 'utils/history/vcs/gitlab/jobs'
 import filterMergeRequests from 'utils/history/vcs/gitlab/filter-mergeRequests'
 import commit from 'utils/history/vcs/gitlab/commit'
+import { VCSHistoryItem } from 'types/history'
+import type { TemplateConfig } from 'utils/history/history.fixtures'
+
+const configs: TemplateConfig<VCSHistoryItem> = {
+	unknown: {
+		variables: {
+			title: () => faker.lorem.sentence(),
+			path: () => `${faker.lorem.word()}/${faker.lorem.word()}`,
+		},
+		create: {
+			url: '/fake-path/{{path}}',
+			title: '{{title}}',
+		},
+		check: {
+			name: '',
+			title: '{{title}}',
+			type: 'unknown',
+			typeName: 'Unknown',
+			provider: 'gitlab',
+		}
+	},
+	tree: {
+		variables: {
+			branch: () => faker.git.branch(),
+			repositoryName: () => createRepositoryTemplate()[0],
+		},
+		create: {
+			url: '/{{repositoryName}}/tree/{{branch}}',
+			title: 'Files · ${branch} · ${repositoryName}',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: 'Files at ${branch}',
+			type: 'tree',
+			typeName: 'Tree',
+			provider: 'gitlab',
+		}
+	},
+	repository: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+		},
+		create: {
+			url: '/{{repositoryName}}',
+			title: '{{repositoryName}} · GitLab',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: '{{repositoryName}}',
+			type: 'repository',
+			typeName: 'Repository',
+			provider: 'gitlab',
+		}
+	},
+	profile: {
+		variables: {
+			userName: () => faker.internet.userName(),
+		},
+		create: {
+			url: '/{{userName}}',
+			title: '{{userName}} · GitLab',
+		},
+		check: {
+			name: 'profile',
+			title: '{{userName}}',
+			type: 'profile',
+			typeName: 'Profile',
+			provider: 'gitlab',
+		}
+	},
+	pipelines: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+			pipelineId: () => faker.string.numeric(6),
+		},
+		create: {
+			url: '/{{repositoryName}}/-/pipelines/{{pipelineId}}',
+			title: 'Pipeline · {{repositoryName}} · GitLab',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: 'Pipeline {{pipelineId}}',
+			type: 'pipeline',
+			typeName: 'Pipelines',
+			provider: 'gitlab',
+		}
+	},
+	mergeRequest: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+			mergeRequestId: () => faker.string.numeric(6),
+			mergeRequestName: () => faker.lorem.sentence(),
+		},
+		create: {
+			url: '/{{repositoryName}}/-/merge_requests/{{mergeRequestId}}',
+			title: '{{mergeRequestName}} (!{{mergeRequestId}}) · Merge requests · {{repositoryName}} · GitLab',
+		},
+		check: {
+			name: '{{repositoryName}} !{{mergeRequestId}}',
+			title: '{{mergeRequestName}}',
+			type: 'mergeRequest',
+			typeName: 'Merge Request',
+			provider: 'gitlab',
+		}
+	},
+	jobs: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+			jobId: () => faker.string.numeric(6),
+			jobName: () => capitalize(faker.lorem.word()),
+		},
+		create: {
+			url: '/{{repositoryName}}/-/jobs/{{jobId}}',
+			title: '{{jobName}} (#{{jobId}}) · Jobs · {{repositoryName}} · GitLab',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: '{{jobName}} (#{{jobId}})',
+			type: 'job',
+			typeName: 'Jobs',
+			provider: 'gitlab',
+		}
+	},
+	filterMergeRequests: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+		},
+		create: {
+			url: '/{{repositoryName}}/-/merge_requests',
+			title: 'Merge requests · {{repositoryName}} · GitLab',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: 'Merge requests',
+			type: 'filter',
+			typeName: 'Merge requests',
+			provider: 'gitlab',
+		}
+	},
+	commit: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+			commitId: () => faker.git.commitSha(),
+			commitName: () => faker.lorem.sentence(),
+		},
+		create: {
+			url: '/{{repositoryName}}/-/commit/{{commitId}}',
+			title: '{{commitName}} ({{commitId}}) · Commits · {{repositoryName}} · GitLab',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: '{{commitName}} ({{commitId}})',
+			type: 'commit',
+			typeName: 'Commit',
+			provider: 'gitlab',
+		}
+	},
+}
 
 describe('utils/history/vcs/gitlab', () => {
-	test('unknown', () => {
-		const title = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/fake-path/${faker.lorem.word()}`),
-			title: title,
-		})
-
-		const result = checkHistoryItem(historyItem, unknown)
-
-		expect(result.name).toBe('')
-		expect(result.title).toBe(title)
-		expect(result.type).toBe('unknown')
-		expect(result.typeName).toBe('Unknown')
-		expect(result.provider).toBe('gitlab')
-	})
-
-	test('tree', () => {
-		const branch = faker.git.branch()
-		const [repositoryName] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/tree/${branch}`),
-			title: `Files · ${branch} · ${repositoryName}`,
-		})
-
-		const result = checkHistoryItem(historyItem, tree)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(`Files at ${branch}`)
-		expect(result.type).toBe('tree')
-		expect(result.typeName).toBe('Tree')
-		expect(result.provider).toBe('gitlab')
-	})
-
-	test('repository', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}`),
-			title: `${repositoryName} · GitLab`,
-		})
-
-		const result = checkHistoryItem(historyItem, repository)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(repositoryName)
-		expect(result.type).toBe('repository')
-		expect(result.typeName).toBe('Repository')
-		expect(result.provider).toBe('gitlab')
-	})
-
-	test('profile', () => {
-		const userName = faker.internet.userName()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${userName}`),
-			title: `${userName} · GitLab`,
-		})
-
-		const result = checkHistoryItem(historyItem, profile)
-
-		expect(result.name).toBe('profile')
-		expect(result.title).toBe(userName)
-		expect(result.type).toBe('profile')
-		expect(result.typeName).toBe('Profile')
-		expect(result.provider).toBe('gitlab')
-	})
-
-	test('pipelines', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const pipelineId = faker.number.int({ min: 1 })
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/-/pipelines/${pipelineId}`),
-			title: `Pipeline · ${repositoryName} · GitLab`,
-		})
-
-		const result = checkHistoryItem(historyItem, pipelines)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(`Pipeline ${pipelineId}`)
-		expect(result.type).toBe('pipeline')
-		expect(result.typeName).toBe('Pipelines')
-		expect(result.provider).toBe('gitlab')
-	})
-
-	test('mergeRequest', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const fakeMergeRequestId = faker.number.int({ min: 1, max: 999999 })
-		const fakeMergeRequestName = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/-/merge_requests/${fakeMergeRequestId}`),
-			title: `${fakeMergeRequestName} (!${fakeMergeRequestId}) · Merge requests · ${repositoryName} · GitLab`,
-		})
-
-		const result = checkHistoryItem(historyItem, mergeRequest)
-
-		expect(result.name).toBe(`${repositoryName} !${fakeMergeRequestId}`)
-		expect(result.title).toBe(`${fakeMergeRequestName}`)
-		expect(result.type).toBe('mergeRequest')
-		expect(result.typeName).toBe('Merge Request')
-		expect(result.provider).toBe('gitlab')
-	})
-
-	test('jobs', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const jobId = faker.number.int({ min: 1 })
-		const jobName = capitalize(faker.lorem.word())
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/-/jobs/${jobId}`),
-			title: `${jobName} (#${jobId}) · Jobs · RND / rwc · GitLab`,
-		})
-
-		const result = checkHistoryItem(historyItem, jobs)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(`${jobName} (#${jobId})`)
-		expect(result.type).toBe('job')
-		expect(result.typeName).toBe('Jobs')
-		expect(result.provider).toBe('gitlab')
-	})
-
-	test('filterMergeRequests', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/-/merge_requests`),
-			title: `Merge requests · ${repositoryName} · GitLab`,
-		})
-
-		const result = checkHistoryItem(historyItem, filterMergeRequests)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe('Merge requests')
-		expect(result.type).toBe('filter')
-		expect(result.typeName).toBe('Merge requests')
-		expect(result.provider).toBe('gitlab')
-	})
-
-	test('commit', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const commitId = faker.git.commitSha()
-		const commitName = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/-/commit/${commitId}`),
-			title: `${commitName} (${commitId.slice(0, 7)}) · Commits · ${repositoryName} · GitLab`,
-		})
-
-		const result = checkHistoryItem(historyItem, commit)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(`${commitName} (${commitId.slice(0, 7)})`)
-		expect(result.type).toBe('commit')
-		expect(result.typeName).toBe('Commit')
-		expect(result.provider).toBe('gitlab')
-	})
+	checkProcessor(configs, 'unknown', unknown)
+	checkProcessor(configs, 'tree', tree)
+	checkProcessor(configs, 'repository', repository)
+	checkProcessor(configs, 'profile', profile)
+	checkProcessor(configs, 'pipelines', pipelines)
+	checkProcessor(configs, 'mergeRequest', mergeRequest)
+	checkProcessor(configs, 'jobs', jobs)
+	checkProcessor(configs, 'filterMergeRequests', filterMergeRequests)
+	checkProcessor(configs, 'commit', commit)
 })

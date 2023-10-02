@@ -19,6 +19,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		const [, path] = getUrl(item.url || '')
 
 		return path.includes('issues')
+		&& path[path.length - 1] !== 'issues'
 	},
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')

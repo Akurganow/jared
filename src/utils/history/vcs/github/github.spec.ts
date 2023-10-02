@@ -1,10 +1,5 @@
 import { faker } from '@faker-js/faker'
-import {
-	createFakeHistoryItem,
-	createUrlTemplate,
-	createRepositoryTemplate,
-	checkHistoryItem
-} from 'utils/history/history.fixtures'
+import { createRepositoryTemplate, checkProcessor } from 'utils/history/history.fixtures'
 import unknown from 'utils/history/vcs/github/unknown'
 import tree from 'utils/history/vcs/github/tree'
 import topics from 'utils/history/vcs/github/topics'
@@ -18,224 +13,243 @@ import filterPullRequests from 'utils/history/vcs/github/filter-pullRequests'
 import filterIssues from 'utils/history/vcs/github/filter-issues'
 import blobSearch from 'utils/history/vcs/github/blob-search'
 import blob from 'utils/history/vcs/github/blob'
+import type { VCSHistoryItem } from 'types/history'
+import type { TemplateConfig } from 'utils/history/history.fixtures'
+
+const configs: TemplateConfig<VCSHistoryItem> = {
+	unknown: {
+		variables: {
+			title: () => faker.lorem.sentence(),
+			path: () => `${faker.lorem.word()}/${faker.lorem.word()}`,
+		},
+		create: {
+			url: '/fake-path/{{path}}',
+			title: '{{title}}',
+		},
+		check: {
+			name: '',
+			title: '{{title}}',
+			type: 'unknown',
+			typeName: 'Unknown',
+			provider: 'github',
+		}
+	},
+	tree: {
+		variables: {
+			branch: () => `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`,
+			repositoryName: () => createRepositoryTemplate()[0],
+		},
+		create: {
+			url: '/{{repositoryName}}/tree/{{branch}}',
+			title: '{{repositoryName}} at {{branch}}',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: '{{branch}}',
+			type: 'tree',
+			typeName: 'Tree',
+			provider: 'github',
+		}
+	},
+	topics: {
+		variables: {
+			topic: () => faker.git.branch(),
+		},
+		create: {
+			url: '/topics/{{topic}}',
+			title: '{{topic}} · GitHub Topics',
+		},
+		check: {
+			name: '',
+			title: '{{topic}}',
+			type: 'topics',
+			typeName: 'Topics',
+			provider: 'github',
+		}
+	},
+	settings: {
+		variables: {
+			path: () => faker.lorem.word({ length: { min: 2, max: 5 } }),
+		},
+		create: {
+			url: '/settings/{{path}}',
+			title: '{{path}} settings',
+		},
+		check: {
+			name: 'settings/{{path}}',
+			title: '{{path}} settings',
+			type: 'settings',
+			typeName: 'Settings',
+			provider: 'github',
+		}
+	},
+	repository: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+		},
+		create: {
+			url: '/{{repositoryName}}',
+			title: '{{repositoryName}}',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: '{{repositoryName}}',
+			type: 'repository',
+			typeName: 'Repository',
+			provider: 'github',
+		}
+	},
+	pullRequest: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+			pullRequestId: () => faker.string.numeric(5),
+			pullRequestName: () => faker.lorem.sentence(),
+			botName: () => faker.person.firstName(),
+		},
+		create: {
+			url: '/{{repositoryName}}/pull/{{pullRequestId}}',
+			title: '{{pullRequestName}} by {{botName}}[bot] · Pull Request #{{pullRequestId}} · {{repositoryName}}',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: '{{pullRequestName}} by {{botName}}[bot]',
+			type: 'pullRequest',
+			typeName: 'Pull request',
+			provider: 'github',
+		}
+	},
+	profile: {
+		variables: {
+			userName: () => faker.internet.userName(),
+			fullName: () => faker.person.fullName(),
+		},
+		create: {
+			url: '/{{userName}}',
+			title: '{{userName}} ({{fullName}})',
+		},
+		check: {
+			name: 'profile',
+			title: '{{userName}} ({{fullName}})',
+			type: 'profile',
+			typeName: 'Profile',
+			provider: 'github',
+		}
+	},
+	issue: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+			issueId: () => faker.string.numeric(5),
+		},
+		create: {
+			url: '/{{repositoryName}}/issues/{{issueId}}',
+			title: '{{issueName}} · Issue #{{issueId}} · {{repositoryName}}',
+		},
+		check: {
+			name: 'Issue #{{issueId}} {{repositoryName}}',
+			title: '{{issueName}}',
+			type: 'issue',
+			typeName: 'Issue',
+			provider: 'github',
+		}
+	},
+	filterSearch: {
+		variables: {
+			search: () => faker.lorem.word({ length: { min: 2, max: 5 } }),
+		},
+		create: {
+			url: '/search?q={{search}}',
+			title: '{{search}}',
+		},
+		check: {
+			name: 'Search {{search}}',
+			title: '{{search}}',
+			type: 'filter',
+			typeName: 'Search',
+			provider: 'github',
+		}
+	},
+	filterPullRequests: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+		},
+		create: {
+			url: '/{{repositoryName}}/pulls',
+			title: 'Pull requests · {{repositoryName}}',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: 'Pull requests',
+			type: 'filter',
+			typeName: 'Pull requests',
+			provider: 'github',
+		}
+	},
+	filterIssues: {
+		variables: {
+			repositoryName: () => createRepositoryTemplate()[0],
+		},
+		create: {
+			url: '/{{repositoryName}}/issues',
+			title: 'Issues · {{repositoryName}}',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: 'Issues',
+			type: 'filter',
+			typeName: 'Issues',
+			provider: 'github',
+		}
+	},
+	blobSearch: {
+		variables: {
+			search: () => faker.lorem.word({ length: { min: 2, max: 5 } }),
+			repositoryName: () => createRepositoryTemplate()[0],
+		},
+		create: {
+			url: '/{{repositoryName}}/search?q={{search}}',
+			title: '{{search}}',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: '{{search}}',
+			type: 'blob',
+			typeName: 'Blob search',
+			provider: 'github',
+		}
+	},
+	blob: {
+		variables: {
+			branch: () => `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`,
+			repositoryName: () => createRepositoryTemplate()[0],
+			project: () => createRepositoryTemplate()[2],
+			fileName: () => faker.system.fileName(),
+		},
+		create: {
+			url: '/{{repositoryName}}/blob/{{branch}}/{{fileName}}',
+			title: '{{project}}/{{fileName}} at {{branch}} · {{repositoryName}}',
+		},
+		check: {
+			name: '{{repositoryName}}',
+			title: '{{fileName}} at {{branch}}',
+			type: 'blob',
+			typeName: 'Blob',
+			provider: 'github',
+		}
+	}
+}
 
 describe('utils/history/vcs/github', () => {
-	test('unknown', () => {
-		const title = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/fake-path/${faker.lorem.word({ length: { min: 2, max: 5 } })}`),
-			title: title,
-		})
-
-		const result = checkHistoryItem(historyItem, unknown)
-
-		expect(result.name).toBe('')
-		expect(result.title).toBe(title)
-		expect(result.type).toBe('unknown')
-		expect(result.typeName).toBe('Unknown')
-		expect(result.provider).toBe('github')
-	})
-
-	test('tree', () => {
-		const branch = `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`
-		const [repositoryName] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/tree/${branch}`),
-			title: `${repositoryName} at ${branch}`,
-		})
-
-		const result = checkHistoryItem(historyItem, tree)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(branch)
-		expect(result.type).toBe('tree')
-		expect(result.typeName).toBe('Tree')
-		expect(result.provider).toBe('github')
-	})
-
-	test('topics', () => {
-		const topic = faker.git.branch()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/topics/${topic}`),
-			title: `${topic} · GitHub Topics`,
-		})
-
-		const result = checkHistoryItem(historyItem, topics)
-
-		expect(result.name).toBe('')
-		expect(result.title).toBe(topic)
-		expect(result.type).toBe('topics')
-		expect(result.typeName).toBe('Topics')
-		expect(result.provider).toBe('github')
-	})
-
-	test('settings', () => {
-		const path = faker.lorem.word({ length: { min: 2, max: 5 } })
-		const title = `${path.toUpperCase()} settings`
-		const historyItem = createFakeHistoryItem({
-			id: '{{string.nanoid}}',
-			url: `{{internet.url}}/settings/${path}`,
-			title: title,
-		})
-
-		const result = checkHistoryItem(historyItem, settings)
-
-		expect(result.name).toBe(`settings/${path}`)
-		expect(result.title).toBe(title)
-		expect(result.type).toBe('settings')
-		expect(result.typeName).toBe('Settings')
-		expect(result.provider).toBe('github')
-	})
-
-	test('repository', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}`),
-			title: repositoryName,
-		})
-
-		const result = checkHistoryItem(historyItem, repository)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(repositoryName)
-		expect(result.type).toBe('repository')
-		expect(result.typeName).toBe('Repository')
-		expect(result.provider).toBe('github')
-	})
-
-	test('pullRequest', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const pullRequestId = faker.number.int({ min: 1, max: 999999 })
-		const pullRequestName = faker.lorem.sentence()
-		const botName = faker.person.firstName()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/pull/${pullRequestId}`),
-			title: `${pullRequestName} by ${botName}[bot] · Pull Request #${pullRequestId} · ${repositoryName}`,
-		})
-
-		const result = checkHistoryItem(historyItem, pullRequest)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(`${pullRequestName} by ${botName}[bot]`)
-		expect(result.type).toBe('pullRequest')
-		expect(result.typeName).toBe('Pull request')
-		expect(result.provider).toBe('github')
-	})
-
-	test('profile', () => {
-		const userName = faker.internet.userName()
-		const fullName = faker.person.fullName()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${userName}`),
-			title: `${userName} (${fullName})`,
-		})
-
-		const result = checkHistoryItem(historyItem, profile)
-
-		expect(result.name).toBe('profile')
-		expect(result.title).toBe(`${userName} (${fullName})`)
-		expect(result.type).toBe('profile')
-		expect(result.typeName).toBe('Profile')
-		expect(result.provider).toBe('github')
-	})
-
-	test('issue', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const issueId = faker.number.int({ min: 1, max: 999999 })
-		const issueName = faker.lorem.sentence()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/issues/${issueId}`),
-			title: `${issueName} · Issue #${issueId} · ${repositoryName}`,
-		})
-
-		const result = checkHistoryItem(historyItem, issue)
-
-		expect(result.name).toBe(`Issue #${issueId} ${repositoryName}`)
-		expect(result.title).toBe(issueName)
-		expect(result.type).toBe('issue')
-		expect(result.typeName).toBe('Issue')
-		expect(result.provider).toBe('github')
-	})
-
-	test('filterSearch', () => {
-		const fakeSearch = faker.lorem.word({ length: { min: 2, max: 5 } })
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/search?q=${fakeSearch}`),
-			title: `${fakeSearch}`,
-		})
-
-		const result = checkHistoryItem(historyItem, filterSearch)
-
-		expect(result.name).toBe(`Search ${fakeSearch}`)
-		expect(result.title).toBe(fakeSearch)
-		expect(result.type).toBe('filter')
-		expect(result.typeName).toBe('Search')
-		expect(result.provider).toBe('github')
-	})
-
-	test('filterPullRequests', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/pulls`),
-			title: `Pull requests · ${repositoryName}`,
-		})
-
-		const result = checkHistoryItem(historyItem, filterPullRequests)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe('Pull requests')
-		expect(result.type).toBe('filter')
-		expect(result.typeName).toBe('Pull requests')
-		expect(result.provider).toBe('github')
-	})
-
-	test('filterIssues', () => {
-		const [repositoryName] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/issues`),
-			title: `Issues · ${repositoryName}`,
-		})
-
-		const result = checkHistoryItem(historyItem, filterIssues)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe('Issues')
-		expect(result.type).toBe('filter')
-		expect(result.typeName).toBe('Issues')
-		expect(result.provider).toBe('github')
-	})
-
-	test('blobSearch', () => {
-		const search = faker.lorem.word({ length: { min: 2, max: 5 } })
-		const [repositoryName] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/search?q=${search}`),
-			title: `${search}`,
-		})
-
-		const result = checkHistoryItem(historyItem, blobSearch)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(search)
-		expect(result.type).toBe('blob')
-		expect(result.typeName).toBe('Blob search')
-		expect(result.provider).toBe('github')
-	})
-
-	test('blob', () => {
-		const branch = `dependabot/npm_and_yarn/@faker-js/faker/${faker.git.branch()}-1.1.1`
-		const [repositoryName,, project] = createRepositoryTemplate()
-		const historyItem = createFakeHistoryItem({
-			url: createUrlTemplate(`/${repositoryName}/blob/${branch}/README.md`),
-			title: `${project}/README.md at ${branch} · ${repositoryName}`,
-		})
-
-		const result = checkHistoryItem(historyItem, blob)
-
-		expect(result.name).toBe(repositoryName)
-		expect(result.title).toBe(`README.md at ${branch}`)
-		expect(result.type).toBe('blob')
-		expect(result.typeName).toBe('Blob')
-		expect(result.provider).toBe('github')
-	})
+	checkProcessor(configs, 'unknown', unknown)
+	checkProcessor(configs, 'tree', tree)
+	checkProcessor(configs, 'topics', topics)
+	checkProcessor(configs, 'settings', settings)
+	checkProcessor(configs, 'repository', repository)
+	checkProcessor(configs, 'pullRequest', pullRequest)
+	checkProcessor(configs, 'profile', profile)
+	checkProcessor(configs, 'issue', issue)
+	checkProcessor(configs, 'filterSearch', filterSearch)
+	checkProcessor(configs, 'filterPullRequests', filterPullRequests)
+	checkProcessor(configs, 'filterIssues', filterIssues)
+	checkProcessor(configs, 'blobSearch', blobSearch)
+	checkProcessor(configs, 'blob', blob)
 })
