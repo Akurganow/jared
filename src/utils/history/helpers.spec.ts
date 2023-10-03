@@ -1,14 +1,16 @@
 import { faker } from '@faker-js/faker'
 import {
-	sortByVisitCount,
-	sortByLastVisitTime,
-	getUrl,
-	getSplitTitle,
-	getConfigTypes,
-	filterItems,
-	filterDisabledItems,
 	filterBySameId,
+	filterDisabledItems,
+	filterItems,
+	getConfigTypes,
+	getSplitTitle,
+	getUrl,
 	movePinnedItemBetweenArrays,
+	sortByLastVisitTime,
+	sortByTypedCount,
+	sortByVisitCount,
+	isSortedBy,
 } from 'utils/history/helpers'
 import { ITSProviderType, ProcessConfigItem, VCSProviderType } from 'types/history'
 
@@ -28,15 +30,31 @@ const getFakeHistory = (count: number = 100) => faker.helpers.multiple(
 	{ count },
 )
 
-function isSortedBy<T extends object>(array: T[], key: keyof T) {
-	return array.every((item, index) => {
-		if (index === 0) return true
-
-		return item[key] <= array[index - 1][key]
-	})
-}
-
 describe('utils/history/helpers', () => {
+	test('isSortedBy', () => {
+		const visitCountItemsDesc = [{ visitCount: 3 }, { visitCount: 2 }, { visitCount: 1 }]
+		const lastVisitTimeItemsDesc = [{ lastVisitTime: 3 }, { lastVisitTime: 2 }, { lastVisitTime: 1 }]
+		const typedCountItemsDesc = [{ typedCount: 3 }, { typedCount: 2 }, { typedCount: 1 }]
+		const visitCountItemsAsc = [{ visitCount: 1 }, { visitCount: 2 }, { visitCount: 3 }]
+		const lastVisitTimeItemsAsc = [{ lastVisitTime: 1 }, { lastVisitTime: 2 }, { lastVisitTime: 3 }]
+		const typedCountItemsAsc = [{ typedCount: 1 }, { typedCount: 2 }, { typedCount: 3 }]
+		const visitCountItemsUnsorted = [{ visitCount: 1 }, { visitCount: 3 }, { visitCount: 2 }]
+		const lastVisitTimeItemsUnsorted = [{ lastVisitTime: 1 }, { lastVisitTime: 3 }, { lastVisitTime: 2 }]
+		const typedCountItemsUnsorted = [{ typedCount: 1 }, { typedCount: 3 }, { typedCount: 2 }]
+
+		expect(isSortedBy(visitCountItemsDesc, 'visitCount')).toBeTruthy()
+		expect(isSortedBy(lastVisitTimeItemsDesc, 'lastVisitTime')).toBeTruthy()
+		expect(isSortedBy(typedCountItemsDesc, 'typedCount')).toBeTruthy()
+
+		expect(isSortedBy(visitCountItemsAsc, 'visitCount', 'asc')).toBeTruthy()
+		expect(isSortedBy(lastVisitTimeItemsAsc, 'lastVisitTime', 'asc')).toBeTruthy()
+		expect(isSortedBy(typedCountItemsAsc, 'typedCount', 'asc')).toBeTruthy()
+
+		expect(isSortedBy(visitCountItemsUnsorted, 'visitCount')).toBeFalsy()
+		expect(isSortedBy(lastVisitTimeItemsUnsorted, 'lastVisitTime')).toBeFalsy()
+		expect(isSortedBy(typedCountItemsUnsorted, 'typedCount')).toBeFalsy()
+	})
+
 	test('getUrl', () => {
 		const { internet } = faker
 		const protocol = internet.protocol()
@@ -143,5 +161,13 @@ describe('utils/history/helpers', () => {
 		const sorted = items.sort(sortByLastVisitTime)
 
 		expect(isSortedBy(sorted, 'lastVisitTime')).toBeTruthy()
+	})
+
+	test('sortByTypedCount', () => {
+		const items = getFakeHistory()
+
+		const sorted = items.sort(sortByTypedCount)
+
+		expect(isSortedBy(sorted, 'typedCount')).toBeTruthy()
 	})
 })

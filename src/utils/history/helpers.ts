@@ -1,10 +1,6 @@
 import memoize from 'lodash/memoize'
 import findIndex from 'lodash/findIndex'
-import type {
-	ITSProviderType,
-	ProcessConfig,
-	VCSProviderType,
-} from 'types/history'
+import type { ITSProviderType, ProcessConfig, VCSProviderType, } from 'types/history'
 
 function rawGetUrl(itemUrl: string): [URL, string[]] {
 	const url = new URL(itemUrl)
@@ -30,8 +26,26 @@ export function getConfigTypes<T = unknown, R = unknown>(config: ProcessConfig<T
 	return config.map(([, , type]) => type)
 }
 
-function sortBy<T extends { lastVisitTime?: number, visitCount?: number }>(a: T, b: T, key: 'lastVisitTime' | 'visitCount') {
-	return (b[key] || 0) - (a[key] || 0)
+function sortBy<T extends { [k in string]: unknown }>(a: T, b: T, key: keyof T, order: 'asc' | 'desc' = 'desc') {
+	if (a[key] === b[key]) return 0
+
+	const aValue = a[key]
+	const bValue = b[key]
+
+	if (typeof aValue !== typeof bValue) throw new Error(`Types are not equal (a: ${typeof aValue}, b: ${typeof bValue})`)
+
+	switch (typeof aValue) {
+	case 'string':
+		return order === 'asc'
+			? (aValue as string).localeCompare(bValue as string)
+			: (bValue as string).localeCompare(aValue as string)
+	case 'number':
+		return order === 'asc'
+			? (aValue as number) - (bValue as number)
+			: (bValue as number) - (aValue as number)
+	default:
+		return 0
+	}
 }
 
 export function sortByVisitCount<T extends { visitCount?: number }>(a: T, b: T) {
@@ -40,6 +54,10 @@ export function sortByVisitCount<T extends { visitCount?: number }>(a: T, b: T) 
 
 export function sortByLastVisitTime<T extends { lastVisitTime?: number }>(a: T, b: T) {
 	return sortBy(a, b, 'lastVisitTime')
+}
+
+export function sortByTypedCount<T extends { typedCount?: number }>(a: T, b: T) {
+	return sortBy(a, b, 'typedCount')
 }
 
 export function filterItems<T extends { title: string }>(pinned: T[]) {
@@ -74,4 +92,16 @@ export function movePinnedItemBetweenArrays<T extends { id: string }>(arrFrom: T
 			[...arrTo, { ...item, pinned }],
 		]
 		: [arrFrom, arrTo]
+}
+
+export function isSortedBy<T extends object>(array: T[], key: keyof T, order: 'asc' | 'desc' = 'desc') {
+	return array.every((item, index) => {
+		if (index === 0) return true
+
+		if (order === 'asc') {
+			return item[key] >= array[index - 1][key]
+		} else {
+			return item[key] <= array[index - 1][key]
+		}
+	})
 }
