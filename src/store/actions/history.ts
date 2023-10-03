@@ -4,7 +4,7 @@ import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 import { createHistoryItemProcessor } from 'utils/history'
 import { getITSQueries, getVCSQueries } from 'utils/history/configs'
-import { filterBySameId, sortByLastVisitTime } from 'utils/history/helpers'
+import { filterBySameId, sortByLastVisitTime } from 'utils/array'
 import type { HistoryItem, HistoryQuery, ITSHistoryItem, VCSHistoryItem } from 'types/history'
 import type { RootState } from 'store/types'
 

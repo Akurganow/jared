@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
-import { filterItems, filterDisabledItems, sortByVisitCount } from 'utils/history/helpers'
+import { sortByVisitCount } from 'utils/array'
+import { filterItems, filterDisabledItems } from 'utils/history/helpers'
 import { RootState } from 'store/types'
 import { selectedDisabledTypes, selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
