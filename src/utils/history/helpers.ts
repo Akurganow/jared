@@ -1,9 +1,8 @@
 import memoize from 'lodash/memoize'
+import findIndex from 'lodash/findIndex'
 import type {
-	HistoryItem,
-	ITSHistoryItem,
 	ITSProviderType,
-	ProcessConfig, VCSHistoryItem,
+	ProcessConfig,
 	VCSProviderType,
 } from 'types/history'
 
@@ -31,26 +30,26 @@ export function getConfigTypes<T = unknown, R = unknown>(config: ProcessConfig<T
 	return config.map(([, , type]) => type)
 }
 
-function sortBy(a: chrome.history.HistoryItem, b: chrome.history.HistoryItem, key: 'lastVisitTime' | 'visitCount') {
+function sortBy<T extends { lastVisitTime?: number, visitCount?: number }>(a: T, b: T, key: 'lastVisitTime' | 'visitCount') {
 	return (b[key] || 0) - (a[key] || 0)
 }
 
-export function sortByVisitCount(a: chrome.history.HistoryItem, b: chrome.history.HistoryItem) {
+export function sortByVisitCount<T extends { visitCount?: number }>(a: T, b: T) {
 	return sortBy(a, b, 'visitCount')
 }
 
-export function sortByLastVisitTime(a: chrome.history.HistoryItem, b: chrome.history.HistoryItem) {
+export function sortByLastVisitTime<T extends { lastVisitTime?: number }>(a: T, b: T) {
 	return sortBy(a, b, 'lastVisitTime')
 }
 
-export function filterItems(pinned: HistoryItem[]) {
-	return (item: HistoryItem, index: number, array: HistoryItem[]) =>
+export function filterItems<T extends { title: string }>(pinned: T[]) {
+	return (item: T, index: number, array: T[]) =>
 		array.findIndex(i => i.title === item.title) === index
 		&& !pinned.find(pinnedItem => pinnedItem.title === item.title)
 }
 
-export function filterDisabledItems(disabled: Record<VCSProviderType | ITSProviderType, string[]>) {
-	return (item: VCSHistoryItem | ITSHistoryItem) => {
+export function filterDisabledItems<T extends { typeName: string, provider: ITSProviderType | VCSProviderType | 'unknown' }>(disabled: Record<ITSProviderType | VCSProviderType, string[]>) {
+	return (item: T) => {
 		const { typeName, provider } = item
 
 		if (!provider || provider === 'unknown') return true
@@ -59,7 +58,14 @@ export function filterDisabledItems(disabled: Record<VCSProviderType | ITSProvid
 	}
 }
 
-export function movePinnedItemBetweenArrays<T extends HistoryItem>(arrFrom: T[], arrTo: T[], id: string, pinned: boolean) {
+export function filterBySameId<T extends { id: string }>(value: T, index: number, array: T[]) {
+	return index === findIndex(
+		array,
+		v => v.id === value.id
+	)
+}
+
+export function movePinnedItemBetweenArrays<T extends { id: string }>(arrFrom: T[], arrTo: T[], id: string, pinned: boolean) {
 	const item = arrFrom.find(item => item.id === id)
 
 	return item

@@ -4,7 +4,7 @@ import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 import { createHistoryItemProcessor } from 'utils/history'
 import { getITSQueries, getVCSQueries } from 'utils/history/configs'
-import { sortByVisitCount } from 'utils/history/helpers'
+import { filterBySameId, sortByLastVisitTime } from 'utils/history/helpers'
 import type { HistoryItem, HistoryQuery, ITSHistoryItem, VCSHistoryItem } from 'types/history'
 import type { RootState } from 'store/types'
 
@@ -22,7 +22,7 @@ const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 
 		for (const key of queries) {
 			const query: chrome.history.HistoryQuery = {
-				maxResults: key.maxResults || maxResults.value,
+				maxResults: (key.maxResults || maxResults.value) * 2, // * 2 to filter out duplicates
 				text: key.text,
 				startTime: oneWeekAgo,
 			}
@@ -40,10 +40,8 @@ const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 		}
 
 		return items
-			.filter((value, index, array) =>
-				array.indexOf(value) === index
-			)
-			.sort(sortByVisitCount)
+			.filter(filterBySameId)
+			.sort(sortByLastVisitTime)
 	}
 )
 export const updateVCS = createAsync<void, void>(

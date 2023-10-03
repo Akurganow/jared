@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { filterItems, filterDisabledItems, sortByLastVisitTime, sortByVisitCount } from 'utils/history/helpers'
+import { filterItems, filterDisabledItems, sortByLastVisitTime } from 'utils/history/helpers'
 import { RootState } from 'store/types'
 import { selectedDisabledTypes, selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
@@ -58,7 +58,7 @@ export const selectedITS = createSelector(
 		const filtered = items
 			.filter(filterItems(pinned))
 			.filter(filterDisabledItems(disabled))
-			.sort(sortByVisitCount)
+			.sort(sortByLastVisitTime)
 
 		return [...pinned, ...filtered].slice(0, maxResults)
 	}
