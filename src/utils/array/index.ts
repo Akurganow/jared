@@ -1,6 +1,6 @@
 import findIndex from 'lodash/findIndex'
 
-function sortBy<T extends { [k in string]: unknown }>(a: T, b: T, key: keyof T, order: 'asc' | 'desc' = 'desc') {
+function sortBy<T extends { [k in string]: unknown }>(a: T, b: T, key: keyof T, order: 'asc' | 'desc' = 'asc') {
 	if (a[key] === b[key]) return 0
 
 	const aValue = a[key]
@@ -34,14 +34,18 @@ export function sortByTypedCount<T extends { typedCount?: number }>(a: T, b: T) 
 	return sortBy(a, b, 'typedCount')
 }
 
-export function filterBySameId<T extends { id: string }>(value: T, index: number, array: T[]) {
+function filterBySameKey<T extends { [k in string]: unknown }>(value: T, index: number, array: T[], key: keyof T) {
 	return index === findIndex(
 		array,
-		v => v.id === value.id
+		v => v[key] === value[key]
 	)
 }
 
-export function isSortedBy<T extends object>(array: T[], key: keyof T, order: 'asc' | 'desc' = 'desc') {
+export function filterBySameId<T extends { id: string }>(value: T, index: number, array: T[]) {
+	return filterBySameKey(value, index, array, 'id')
+}
+
+export function isSortedBy<T extends object>(array: T[], key: keyof T, order: 'asc' | 'desc' = 'asc') {
 	return array.every((item, index) => {
 		if (index === 0) return true
 

@@ -2,7 +2,7 @@ node_modules/
 dist/
 packages/
 .idea/
-/.jest/
+.jest/
 /coverage/
 /test-results/
 /playwright-report/

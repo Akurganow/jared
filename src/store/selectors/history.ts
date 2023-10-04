@@ -45,7 +45,7 @@ export const selectedVCS = createSelector(
 			.filter(filterDisabledItems(disabled))
 			.sort(sortByVisitCount)
 
-		return [...pinned, ...filtered].slice(0, maxResults)
+		return [...pinned, ...filtered].slice(0, maxResults - 1)
 	}
 )
 
@@ -61,7 +61,7 @@ export const selectedITS = createSelector(
 			.filter(filterDisabledItems(disabled))
 			.sort(sortByVisitCount)
 
-		return [...pinned, ...filtered].slice(0, maxResults)
+		return [...pinned, ...filtered].slice(0, maxResults - 1)
 	}
 )
 export const selectedUserContentItems = createSelector(
@@ -85,6 +85,6 @@ export const selectedUserContentItems = createSelector(
 					&& array.findIndex(i => i.title === item.title) === index
 			})
 
-		return [...pinned, ...filtered].slice(0, maxResults)
+		return [...pinned, ...filtered].slice(0, maxResults - 1)
 	}
 )

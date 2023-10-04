@@ -1,16 +1,14 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import {
-	pinItem,
-	unpinItem,
+	pinItem, unpinItem,
 	updateITSHistory, updateITSPinnedHistory,
 	updateUserHistory, updateUserPinnedHistory,
-	updateVCSHistory,
-	updateVCSPinnedHistory
+	updateVCSHistory, updateVCSPinnedHistory
 } from 'store/actions/history'
-import { initialState } from 'store/constants/history'
 import { movePinnedItemBetweenArrays } from 'utils/history/helpers'
+import type { HistoryState } from 'types/history'
 
-const reducer = reducerWithInitialState(initialState)
+const createReducer = (initialState: HistoryState) => reducerWithInitialState(initialState)
 	.case(updateUserHistory, (state, items) => ({
 		...state,
 		main: items,
@@ -152,4 +150,4 @@ const reducer = reducerWithInitialState(initialState)
 		}
 	})
 
-export default reducer
+export default createReducer

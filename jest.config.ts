@@ -6,8 +6,15 @@
 import type { Config } from 'jest'
 
 const config: Config = {
+	rootDir: './src',
 	preset: 'ts-jest/presets/js-with-ts',
 	globals: {},
+
+	// The paths to modules that run some code to configure or set up the testing environment before each test
+	setupFiles: [
+		'./__setups__/chrome.ts'
+	],
+
 	// Automatically clear mock calls, instances, contexts and results before every test
 	clearMocks: true,
 
@@ -18,7 +25,8 @@ const config: Config = {
 	coverageDirectory: '<rootDir>/.jest/coverage',
 
 	collectCoverageFrom: [
-		'<rootDir>/src/**/*.{ts,tsx}',
+		'<rootDir>/src/store/*.{ts,tsx}',
+		'<rootDir>/src/utils/*.{ts,tsx}',
 		'!<rootDir>/node_modules/',
 	],
 
@@ -37,16 +45,16 @@ const config: Config = {
 	moduleNameMapper: {
 		'\\.svg$': 'jest-svg-transformer',
 		'\\.css$': 'jest-css-modules',
-		'^store/(.*)$': '<rootDir>/src/store/$1',
-		'^components/(.*)$': '<rootDir>/src/components/$1',
-		'^containers/(.*)$': '<rootDir>/src/containers/$1',
-		'^hooks/(.*)$': '<rootDir>/src/hooks/$1',
-		'^utils/(.*)$': '<rootDir>/src/utils/$1',
-		'^pages/(.*)$': '<rootDir>/src/pages/$1',
-		'^assets/(.*)$': '<rootDir>/src/assets/$1',
-		'^styles/(.*)$': '<rootDir>/src/styles/$1',
-		'^types/(.*)$': '<rootDir>/src/types/$1',
-		'^src/(.*)$': '<rootDir>/src/$1',
+		'^store/(.*)$': '<rootDir>/store/$1',
+		'^components/(.*)$': '<rootDir>/components/$1',
+		'^containers/(.*)$': '<rootDir>/containers/$1',
+		'^hooks/(.*)$': '<rootDir>/hooks/$1',
+		'^utils/(.*)$': '<rootDir>/utils/$1',
+		'^pages/(.*)$': '<rootDir>/pages/$1',
+		'^assets/(.*)$': '<rootDir>/assets/$1',
+		'^styles/(.*)$': '<rootDir>/styles/$1',
+		'^types/(.*)$': '<rootDir>/types/$1',
+		'^src/(.*)$': '<rootDir>/$1',
 	},
 
 	// The glob patterns Jest uses to detect test files
@@ -67,7 +75,7 @@ const config: Config = {
 	testEnvironment: 'jsdom',
 
 	// All imported modules in your tests should be mocked automatically
-	// automock: false,
+	// automock: true,
 
 	// Stop running tests after `n` failures
 	// bail: 0,
@@ -172,9 +180,6 @@ const config: Config = {
 
 	// Allows you to use a custom runner instead of Jest's default test runner
 	// runner: "jest-runner",
-
-	// The paths to modules that run some code to configure or set up the testing environment before each test
-	// setupFiles: [],
 
 	// A list of paths to modules that run some code to configure or set up the testing framework before each test
 	// setupFilesAfterEnv: [],

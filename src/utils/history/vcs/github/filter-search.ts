@@ -16,7 +16,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			provider: 'github',
 			type: 'filter',
 			typeName: 'Search',
-			name: `Search ${url.searchParams.get('q')}`.trim(),
+			name: `Search ${url?.searchParams.get('q')}`.trim(),
 			title: item.title || 'Search'
 		}
 	},

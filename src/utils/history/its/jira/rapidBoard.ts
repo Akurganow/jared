@@ -10,7 +10,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 	(item: chrome.history.HistoryItem) => {
 		const [url] = getUrl(item.url || '')
 		const title = getSplitTitle(item.title || '')
-		const boardId = url.searchParams.get('rapidView') || ''
+		const boardId = url?.searchParams.get('rapidView') || ''
 
 		return {
 			...item,

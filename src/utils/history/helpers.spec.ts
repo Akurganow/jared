@@ -34,10 +34,12 @@ describe('utils/history/helpers', () => {
 		const fakeUrl = `${protocol}://${hostname}/${pathname}`
 		const [url, path] = getUrl(fakeUrl)
 
-		expect(url.toString()).toBe(fakeUrl)
-		expect(url.protocol).toBe(`${protocol}:`)
-		expect(url.hostname).toBe(hostname)
-		expect(url.pathname).toBe(`/${pathname}`)
+		expect(url).toBeInstanceOf(URL)
+		expect(path).toBeInstanceOf(Array)
+		expect(url?.toString()).toBe(fakeUrl)
+		expect(url?.protocol).toBe(`${protocol}:`)
+		expect(url?.hostname).toBe(hostname)
+		expect(url?.pathname).toBe(`/${pathname}`)
 		expect(path).toHaveLength(2)
 	})
 

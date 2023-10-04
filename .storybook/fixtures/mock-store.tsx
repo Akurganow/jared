@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, createSlice } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { jest } from '@storybook/jest'
 import { rootReducer, initialState } from 'store/reducers'

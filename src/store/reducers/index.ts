@@ -31,17 +31,17 @@ export const initialState = {
 }
 
 export const rootReducer = combineReducers({
-	[dialogsStoreKey]: dialogsReducer,
+	[dialogsStoreKey]: dialogsReducer(dialogsInitialState),
 	[historyStoreKey]: persistReducer(
 		createPersistConfig(historyStoreKey, localStorage),
-		historyReducer,
+		historyReducer(historyInitialState),
 	),
 	[settingsStoreKey]: persistReducer(
 		createPersistConfig(settingsStoreKey, syncStorage),
-		settingsReducer,
+		settingsReducer(settingsInitialState),
 	),
 	[bookmarksStoreKey]: persistReducer(
 		createPersistConfig(bookmarksStoreKey, localStorage),
-		bookmarksReducer,
+		bookmarksReducer(bookmarksInitialState),
 	),
 })

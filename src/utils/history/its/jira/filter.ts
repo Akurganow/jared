@@ -10,7 +10,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 	(item: chrome.history.HistoryItem) => {
 		const [url] = getUrl(item.url || '')
 		const title = getSplitTitle(item.title || '')
-		const filterId = url.searchParams.get('filter') || ''
+		const filterId = url?.searchParams.get('filter') || ''
 
 		const filterName = title
 			? title[0].replace(/^\[(.+)].+/ig, '$1')

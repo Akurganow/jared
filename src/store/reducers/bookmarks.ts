@@ -1,5 +1,4 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
-import { initialState } from 'store/constants/bookmarks'
 import {
 	addBookmark,
 	clearEditingBookmark,
@@ -7,8 +6,9 @@ import {
 	removeBookmark,
 	setEditingBookmark
 } from 'store/actions/bookmarks'
+import type { BookmarksState } from 'types/bookmarks'
 
-const reducer = reducerWithInitialState(initialState)
+const createReducer = (initialState: BookmarksState) => reducerWithInitialState(initialState)
 	.case(addBookmark, (state, bookmark) => ({
 		...state,
 		bookmarks: [...state.bookmarks, bookmark],
@@ -44,4 +44,4 @@ const reducer = reducerWithInitialState(initialState)
 			bookmarks,
 		} })
 
-export default reducer
+export default createReducer

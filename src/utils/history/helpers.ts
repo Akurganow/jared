@@ -1,7 +1,12 @@
 import memoize from 'lodash/memoize'
 import type { ITSProviderType, ProcessConfig, VCSProviderType, } from 'types/history'
 
-function rawGetUrl(itemUrl: string): [URL, string[]] {
+function rawGetUrl(itemUrl: string): [URL | undefined, string[]] {
+	if (!itemUrl) return [
+		undefined,
+		[],
+	]
+
 	const url = new URL(itemUrl)
 	const path = url.pathname.split('/').filter(Boolean)
 

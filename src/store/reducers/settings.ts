@@ -2,11 +2,11 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import merge from 'lodash/merge'
 import uniq from 'lodash/uniq'
 import { setProcessingOptions, setSetting, setSettings, setThemeOptions } from 'store/actions/settings'
-import { initialState } from 'store/constants/settings'
+import type { SettingsState } from 'types/settings'
 // import { getThemesNames } from 'utils/themes'
 // import { rehydratePersistStore } from 'store/actions/persist-store'
 
-const reducer = reducerWithInitialState(initialState)
+const createReducer = (initialState: SettingsState) => reducerWithInitialState(initialState)
 	.case(setSetting, (state, { key, value }) => ({
 		...state,
 		[key]: {
@@ -55,4 +55,4 @@ const reducer = reducerWithInitialState(initialState)
 	// 	}
 	// }))
 
-export default reducer
+export default createReducer
