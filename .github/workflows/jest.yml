@@ -17,6 +17,8 @@ jobs:
       run: npm ci
     - name: Run Jest tests
       run: npx jest test
+    - name: Jest coverage report
+      uses: ArtiomTr/jest-coverage-report-action@v2.2.5
     - uses: actions/upload-artifact@v3
       if: always()
       with:
