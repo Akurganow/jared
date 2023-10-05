@@ -30,9 +30,9 @@ describe('utils/history/array', () => {
 		const lastVisitTimeItemsUnsorted = [{ lastVisitTime: 1 }, { lastVisitTime: 3 }, { lastVisitTime: 2 }]
 		const typedCountItemsUnsorted = [{ typedCount: 1 }, { typedCount: 3 }, { typedCount: 2 }]
 
-		expect(isSortedBy(visitCountItemsDesc, 'visitCount')).toBeTruthy()
-		expect(isSortedBy(lastVisitTimeItemsDesc, 'lastVisitTime')).toBeTruthy()
-		expect(isSortedBy(typedCountItemsDesc, 'typedCount')).toBeTruthy()
+		expect(isSortedBy(visitCountItemsDesc, 'visitCount', 'desc')).toBeTruthy()
+		expect(isSortedBy(lastVisitTimeItemsDesc, 'lastVisitTime', 'desc')).toBeTruthy()
+		expect(isSortedBy(typedCountItemsDesc, 'typedCount', 'desc')).toBeTruthy()
 
 		expect(isSortedBy(visitCountItemsAsc, 'visitCount', 'asc')).toBeTruthy()
 		expect(isSortedBy(lastVisitTimeItemsAsc, 'lastVisitTime', 'asc')).toBeTruthy()

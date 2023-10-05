@@ -1,5 +1,4 @@
 import { faker } from '@faker-js/faker'
-import MockHistory from 'utils/faker/history'
 import type { HistoryItem } from 'types/history'
 
 const getVariables = () => ({
@@ -56,8 +55,6 @@ export function createStateHistoryItem(text: string, pinned: boolean = false): H
 		name: historyItem.title,
 	}
 }
-
-console.log(MockHistory)
 
 export function createHistoryItem(text: string): Required<chrome.history.HistoryItem> {
 	const variables = getVariables()

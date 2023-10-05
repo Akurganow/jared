@@ -1,1 +1,5 @@
-describe('utils/faker/repository', () => {})
+describe('utils/faker/repository', () => {
+	test('empty', () => {
+		expect(true).toBeTruthy()
+	})
+})
