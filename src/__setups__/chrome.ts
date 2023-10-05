@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment, import/default,import/no-extraneous-dependencies */
 // @ts-ignore
 import chrome from 'jest-webextension-mock'
-import { faker } from '@faker-js/faker'
-import { createHistoryItem } from 'src/__mocks__/history'
+import MockHistory from 'utils/faker/history'
 
 const createEvent = () => ({
 	addListener: jest.fn(),
@@ -14,10 +13,7 @@ const createEvent = () => ({
 // https://developer.chrome.com/docs/extensions/reference/history/
 const history = {
 	// @ts-ignore
-	search: async (query: chrome.history.HistoryQuery) => faker.helpers.multiple(
-		() => createHistoryItem(query.text),
-		{ count: (query.maxResults || 10) / 10 }
-	),
+	search: async (query: chrome.history.HistoryQuery) => new MockHistory(query).getHistory(),
 	getVisits: jest.fn(),
 	addUrl: jest.fn(),
 	deleteUrl: jest.fn(),

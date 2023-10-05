@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { sortByVisitCount } from 'utils/array'
+import { sortByLastVisitTime, sortByVisitCount } from 'utils/array'
 import { filterItems, filterDisabledItems } from 'utils/history/helpers'
 import { RootState } from 'store/types'
 import { selectedDisabledTypes, selectedSettings } from 'store/selectors/settings'
@@ -84,6 +84,7 @@ export const selectedUserContentItems = createSelector(
 					&& item.title
 					&& array.findIndex(i => i.title === item.title) === index
 			})
+			.sort(sortByLastVisitTime)
 
 		return [...pinned, ...filtered].slice(0, maxResults - 1)
 	}

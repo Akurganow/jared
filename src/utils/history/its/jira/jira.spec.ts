@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { checkProcessor } from 'utils/history/history.fixtures'
+import { checkProcessor } from 'utils/history/history.mock'
 import dashboard from 'utils/history/its/jira/dashboard'
 import filter from 'utils/history/its/jira/filter'
 import issue from 'utils/history/its/jira/issue'
@@ -8,7 +8,7 @@ import project from 'utils/history/its/jira/project'
 import rapidBoard from 'utils/history/its/jira/rapidBoard'
 import unknown from 'utils/history/its/jira/unknown'
 import type { ITSHistoryItem } from 'types/history'
-import type { TemplateConfig } from 'utils/history/history.fixtures'
+import type { TemplateConfig } from 'utils/history/history.mock'
 
 const configs: TemplateConfig<ITSHistoryItem> = {
 	unknown: {

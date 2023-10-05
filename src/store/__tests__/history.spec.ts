@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker'
-import { pinItem, unpinItem, updateHistory } from 'store/actions/history'
+import { pinItem, unpinItem, updateHistory, updateITS } from 'store/actions/history'
 import { initialState } from 'store/constants/history'
 import createReducer from 'store/reducers/history'
-import { selectedUserContentItems } from 'store/selectors/history'
+import { selectedITS, selectedUserContentItems } from 'store/selectors/history'
 import { configureMockStore } from 'store/__tests__/mock-store'
 import { createStateHistoryItem } from 'src/__mocks__/history'
 
@@ -63,6 +63,9 @@ describe('store/history', () => {
 
 			state.main.push(historyItem)
 
+			expect(getIds(state.main)).toContain(historyItem.id)
+			expect(getIds(state.pinned.main)).not.toContain(historyItem.id)
+
 			const passedReducer = reducer(state, pinItem(historyItem.id))
 
 			expect(getIds(passedReducer.main)).not.toContain(historyItem.id)
@@ -74,6 +77,9 @@ describe('store/history', () => {
 			const historyItem = createStateHistoryItem('google', true)
 
 			state.pinned.main.push(historyItem)
+
+			expect(getIds(state.main)).not.toContain(historyItem.id)
+			expect(getIds(state.pinned.main)).toContain(historyItem.id)
 
 			const passedReducer = reducer(state, unpinItem(historyItem.id))
 
@@ -92,6 +98,20 @@ describe('store/history', () => {
 			const selected = selectedUserContentItems(getState())
 
 			expect(selected).toEqual([historyItem])
+		})
+
+		test('selectedITS', () => {
+			const { store: { dispatch, getState } } = createInitial()
+
+			console.log('getState:1', getState().history)
+
+			dispatch(updateITS())
+
+			const selected = selectedITS(getState())
+
+			console.log('getState:2', getState().history)
+
+			expect(selected).toHaveLength(50)
 		})
 	})
 })

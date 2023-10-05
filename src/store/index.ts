@@ -23,11 +23,13 @@ const store = configureStore({
 })
 const persistor = persistStore(store as unknown as Store)
 
-async function updateStore(store: Store) {
+persistor.subscribe(() => {
 	const dispatch: ThunkDispatch<RootState, never, AnyAction> = store.dispatch
-	await dispatch(updateHistory())
-}
+	const { settings } = store.getState()
 
-updateStore(store)
+	if (settings._persist.rehydrated) {
+		dispatch(updateHistory())
+	}
+})
 
 export { store, persistor }

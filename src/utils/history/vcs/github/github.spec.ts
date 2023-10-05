@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { createRepositoryTemplate, checkProcessor } from 'utils/history/history.fixtures'
+import { createRepositoryTemplate, checkProcessor } from 'utils/history/history.mock'
 import unknown from 'utils/history/vcs/github/unknown'
 import tree from 'utils/history/vcs/github/tree'
 import topics from 'utils/history/vcs/github/topics'
@@ -14,7 +14,7 @@ import filterIssues from 'utils/history/vcs/github/filter-issues'
 import blobSearch from 'utils/history/vcs/github/blob-search'
 import blob from 'utils/history/vcs/github/blob'
 import type { VCSHistoryItem } from 'types/history'
-import type { TemplateConfig } from 'utils/history/history.fixtures'
+import type { TemplateConfig } from 'utils/history/history.mock'
 
 const configs: TemplateConfig<VCSHistoryItem> = {
 	unknown: {

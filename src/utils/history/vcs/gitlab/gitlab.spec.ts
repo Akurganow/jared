@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 import capitalize from 'lodash/capitalize'
-import { createRepositoryTemplate, checkProcessor } from 'utils/history/history.fixtures'
+import { createRepositoryTemplate, checkProcessor } from 'utils/history/history.mock'
 import unknown from 'utils/history/vcs/gitlab/unknown'
 import tree from 'utils/history/vcs/gitlab/tree'
 import repository from 'utils/history/vcs/gitlab/repository'
@@ -11,7 +11,7 @@ import jobs from 'utils/history/vcs/gitlab/jobs'
 import filterMergeRequests from 'utils/history/vcs/gitlab/filter-mergeRequests'
 import commit from 'utils/history/vcs/gitlab/commit'
 import { VCSHistoryItem } from 'types/history'
-import type { TemplateConfig } from 'utils/history/history.fixtures'
+import type { TemplateConfig } from 'utils/history/history.mock'
 
 const configs: TemplateConfig<VCSHistoryItem> = {
 	unknown: {

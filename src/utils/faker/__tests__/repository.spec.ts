@@ -1,0 +1,1 @@
+describe('utils/faker/repository', () => {})

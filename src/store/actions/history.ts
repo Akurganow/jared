@@ -35,6 +35,7 @@ const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 				items.push(...results)
 			} else {
 				const results = (await chrome.history.search(query))
+
 				items.push(...results as HistoryItem[])
 			}
 		}
@@ -60,7 +61,6 @@ export const updateITS = createAsync<void, void>(
 		const { itsQuery } = selectedSettings(getState())
 		const queries = getITSQueries(itsQuery.value)
 		const its = await dispatch(getHistoryItems(queries)) as ITSHistoryItem[]
-
 		dispatch(updateITSHistory(its))
 		dispatch(updateITSPinnedHistory(its))
 	})
@@ -82,9 +82,11 @@ export const updateUserContent = createAsync<void, void>(
 export const updateHistory = createAsync<void, void>(
 	'updateHistory',
 	async (_, dispatch) => {
-		await dispatch(updateVCS())
-		await dispatch(updateITS())
-		await dispatch(updateUserContent())
+		await Promise.all([
+			dispatch(updateVCS()),
+			dispatch(updateITS()),
+			dispatch(updateUserContent()),
+		])
 	}
 )
 export const pinItem = createAction<HistoryItem['id']>('pinItem')
