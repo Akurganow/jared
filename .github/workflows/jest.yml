@@ -21,5 +21,5 @@ jobs:
       if: always()
       with:
         name: jest-report
-        path: src/,jest/coverage
+        path: src/.jest/coverage
         retention-days: 30
