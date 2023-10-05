@@ -1,9 +1,9 @@
-name: Playwright Tests
+name: Jest Tests
 on:
   push:
-    branches: [ r_* ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ r_* ]
+    branches: [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
@@ -15,13 +15,11 @@ jobs:
         node-version: 18
     - name: Install dependencies
       run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
+    - name: Run Jest tests
+      run: npx jest test
     - uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: playwright-report
-        path: playwright-report/
+        name: jest-report
+        path: src/,jest/coverage
         retention-days: 30
