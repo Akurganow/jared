@@ -10,7 +10,7 @@ const config: Config = {
 	preset: 'ts-jest/presets/js-with-ts',
 	globals: {
 		'ts-jest': {
-			tsConfig: 'tsconfig.jest.json'
+			tsconfig: 'tsconfig.jest.json'
 		}
 	},
 
