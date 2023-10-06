@@ -73,7 +73,9 @@ export default class MockHistory implements MockHistoryClass {
 		const foundKey = Object.keys(this.templates).find(key => text?.includes(key))
 
 		return text
-			? this.templates[foundKey as keyof typeof this.templates] ?? this.templates.default
+			? foundKey
+				? this.templates[foundKey as keyof typeof this.templates]
+				: this.templates.default
 			: this.templates.default
 	}
 
