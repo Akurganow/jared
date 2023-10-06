@@ -1,5 +1,12 @@
 {
 	"extends": "./tsconfig",
+	"ts-node": {
+		"transpileOnly": true,
+		"files": true,
+		"compilerOptions": {
+			"rootDir": "."
+		}
+	},
 	"include": [
 		"./**/*",
 		"./node_modules/jest-dom"
