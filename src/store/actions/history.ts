@@ -4,7 +4,7 @@ import { selectedSettings } from 'store/selectors/settings'
 import { storeKey } from 'store/constants/history'
 import { createHistoryItemProcessor } from 'utils/history'
 import { getITSQueries, getVCSQueries } from 'utils/history/configs'
-import { filterBySameId, sortByLastVisitTime } from 'utils/array'
+import { filterBySameId } from 'utils/array'
 import type { HistoryItem, HistoryQuery, ITSHistoryItem, VCSHistoryItem } from 'types/history'
 import type { RootState } from 'store/types'
 
@@ -20,29 +20,29 @@ const getHistoryItems = createAsync<HistoryQuery[], HistoryItemsTypes>(
 		const currentTime = new Date().getTime()
 		const oneWeekAgo = currentTime - 1000 * 60 * 60 * 24 * numDays.value
 
-		for (const key of queries) {
+		for (const q of queries) {
 			const query: chrome.history.HistoryQuery = {
-				maxResults: (key.maxResults || maxResults.value) * 2, // * 2 to filter out duplicates
-				text: key.text,
+				maxResults: (q.maxResults || maxResults.value) * 2, // * 2 to filter out
+				text: q.text,
 				startTime: oneWeekAgo,
 			}
 
-			if (key.type) {
-				const itemProcessor = createHistoryItemProcessor(key.type)
+			if (q.type) {
+				const itemProcessor = createHistoryItemProcessor(q.type)
 				const results = (await chrome.history.search(query))
+					.filter(item => item.url?.includes(q.text))
 					.map(itemProcessor)
 
 				items.push(...results)
 			} else {
 				const results = (await chrome.history.search(query))
+					.filter(item => item.url?.includes(q.text))
 
 				items.push(...results as HistoryItem[])
 			}
 		}
 
-		return items
-			.filter(filterBySameId)
-			.sort(sortByLastVisitTime)
+		return items.filter(filterBySameId)
 	}
 )
 export const updateVCS = createAsync<void, void>(

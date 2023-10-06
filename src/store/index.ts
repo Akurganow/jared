@@ -12,7 +12,7 @@ const store = configureStore({
 	reducer: rootReducer,
 	preloadedState: initialState,
 	middleware: [thunk],
-	enhancers: process.env.NODE_ENV === 'dev' ? [
+	enhancers: !thunk && process.env.NODE_ENV === 'development' ? [
 		devToolsEnhancer({
 			name: 'Jared',
 			realtime: true,

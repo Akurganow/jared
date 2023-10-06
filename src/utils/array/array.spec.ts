@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { filterBySameId, isSortedBy, sortByLastVisitTime, sortByTypedCount, sortByVisitCount } from 'utils/array'
+import { filterBySameId, isSortedBy, sortByLastVisitTime, sortByTypedCount, sortByVisitCount, getKeyValue } from 'utils/array'
 
 function getFake<T extends { [k in string]: () => unknown }>(
 	template: T,
@@ -74,5 +74,15 @@ describe('utils/history/array', () => {
 		const sorted = items.sort(sortByLastVisitTime)
 
 		expect(isSortedBy(sorted, 'lastVisitTime')).toBeTruthy()
+	})
+
+	test('getKeyValue', () => {
+		const items = getFake({ id: faker.string.nanoid })
+		const values = getKeyValue(items, 'id')
+		const ids = items.map(item => item.id)
+
+		expect(values).toBeInstanceOf(Array)
+		expect(values.length).toEqual(items.length)
+		expect(values).toEqual(ids)
 	})
 })
