@@ -12,23 +12,23 @@ const store = configureStore({
 	reducer: rootReducer,
 	preloadedState: initialState,
 	middleware: [thunk],
-	enhancers: [
+	enhancers: process.env.NODE_ENV === 'dev' ? [
 		devToolsEnhancer({
 			name: 'Jared',
 			realtime: true,
 			hostname: 'localhost',
 			port: 1024,
 		}),
-	],
+	] : undefined,
 })
 const persistor = persistStore(store as unknown as Store)
 
-persistor.subscribe(() => {
+persistor.subscribe(async () => {
 	const dispatch: ThunkDispatch<RootState, never, AnyAction> = store.dispatch
 	const { settings } = store.getState()
 
 	if (settings._persist.rehydrated) {
-		dispatch(updateHistory())
+		await dispatch(updateHistory())
 	}
 })
 

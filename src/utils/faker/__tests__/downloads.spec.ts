@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 import Downloads from 'utils/faker/downloads'
 
+// https://developer.chrome.com/docs/extensions/reference/downloads/
 describe('utils/faker/downloads', () => {
 	test('should be defined', () => {
 		const downloads = new Downloads()
