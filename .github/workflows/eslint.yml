@@ -1,0 +1,32 @@
+name: Jest Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  pull_request_target:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - id: dotenv
+      uses: xom9ikk/dotenv@v2
+      with:
+        mode: test
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc'
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+        restore-keys: ${{ runner.os }}-npm-
+    - name: Install dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm ci --ignore-scripts
+    - name: Run Eslint
+      run: npx eslint --ext .ts,.tsx ./src
