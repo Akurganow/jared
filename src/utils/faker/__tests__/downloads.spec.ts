@@ -274,5 +274,76 @@ describe('utils/faker/downloads', () => {
 		})
 	})
 
-	describe('fileSize', () => {})
+	describe('fileSize', () => {
+		test('fileSize should be defined', () => {
+			const item = new Downloads().getItem()
+			expect(item.fileSize).toBeDefined()
+		})
+		test('fileSize should be greater than 0', () => {
+			const item = new Downloads().getItem()
+			expect(item.fileSize).toBeGreaterThan(0)
+		})
+		test('fileSize should be equal to query.fileSize', () => {
+			const fileSize = faker.number.int({ min: 1, max: 100000000 })
+			const item = new Downloads({ fileSize }).getItem()
+			expect(item.fileSize).toEqual(fileSize)
+		})
+		test('fileSize should be greater than bytesReceived if state === "in_progress"', () => {
+			const item = new Downloads({ state: 'in_progress' }).getItem()
+			expect(item.fileSize).toBeGreaterThan(item.bytesReceived)
+		})
+	})
+
+	describe('bytesReceived', () => {
+		test('bytesReceived should be defined', () => {
+			const item = new Downloads().getItem()
+			expect(item.bytesReceived).toBeDefined()
+		})
+		test('bytesReceived should be greater than 0', () => {
+			const item = new Downloads().getItem()
+			expect(item.bytesReceived).toBeGreaterThan(0)
+		})
+		test('bytesReceived should be equal to query.bytesReceived', () => {
+			const bytesReceived = faker.number.int({ min: 1, max: 100000000 })
+			const item = new Downloads({ bytesReceived }).getItem()
+			expect(item.bytesReceived).toEqual(bytesReceived)
+		})
+		test('bytesReceived should be less than or equal to fileSize', () => {
+			const item = new Downloads().getItem()
+			expect(item.bytesReceived).toBeLessThanOrEqual(item.fileSize)
+		})
+		test('bytesReceived should be less than query.totalBytes', () => {
+			const totalBytes = faker.number.int({ min: 1, max: 100000000 })
+			const item = new Downloads({ totalBytes }).getItem()
+			expect(item.bytesReceived).toBeLessThanOrEqual(totalBytes)
+		})
+		test('bytesReceived should be less than or equal to fileSize if state === "complete"', () => {
+			const item = new Downloads({ state: 'complete' }).getItem()
+			expect(item.bytesReceived).toBeLessThanOrEqual(item.fileSize)
+		})
+		test('bytesReceived should be less than fileSize if state === "in_progress"', () => {
+			const item = new Downloads({ state: 'in_progress' }).getItem()
+			expect(item.bytesReceived).toBeLessThan(item.fileSize)
+		})
+	})
+
+	describe('totalBytes', () => {
+		test('totalBytes should be defined', () => {
+			const item = new Downloads().getItem()
+			expect(item.totalBytes).toBeDefined()
+		})
+		test('totalBytes should be greater than 0', () => {
+			const item = new Downloads().getItem()
+			expect(item.totalBytes).toBeGreaterThan(0)
+		})
+		test('totalBytes should be greater than or equal to fileSize', () => {
+			const item = new Downloads().getItem()
+			expect(item.totalBytes).toBeGreaterThanOrEqual(item.fileSize)
+		})
+		test('totalBytes should be equal to query.totalBytes', () => {
+			const totalBytes = faker.number.int({ min: 1, max: 100000000 })
+			const item = new Downloads({ totalBytes }).getItem()
+			expect(item.totalBytes).toEqual(totalBytes)
+		})
+	})
 })

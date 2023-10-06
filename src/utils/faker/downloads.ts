@@ -136,7 +136,10 @@ export default class MockDownloads implements MockDownloadsClass {
 			endTime,
 		} = this.getDates()
 
-		const fileSize = faker.number.int()
+		const fileSize = this.query.fileSize ?? faker.number.int({ min: 1, max: this.query.totalBytes })
+		const bytesReceived = state === 'complete'
+			? fileSize
+			: faker.number.int({ min: 1, max: fileSize })
 
 		return {
 			id: faker.number.int(),
@@ -149,8 +152,8 @@ export default class MockDownloads implements MockDownloadsClass {
 			filename,
 			fileSize,
 			danger: this.query.danger as chrome.downloads.DangerType ?? faker.helpers.arrayElement(dangerTypes),
-			bytesReceived: this.query.bytesReceived ?? state === 'complete' ? fileSize : faker.number.int({ max: fileSize }),
-			totalBytes: faker.number.int({ min: fileSize, max: fileSize * 2 }),
+			bytesReceived: this.query.bytesReceived ?? bytesReceived,
+			totalBytes: this.query.totalBytes ?? faker.number.int({ min: fileSize, max: fileSize * 2 }),
 			startTime,
 			estimatedEndTime: state === 'in_progress' ? estimatedEndTime : undefined,
 			endTime: state === 'complete' ? endTime : undefined,
