@@ -13,6 +13,7 @@ import unknown from 'utils/history/vcs/github/unknown'
 import profile from 'utils/history/vcs/github/profile'
 import type { ProcessConfig, VCSHistoryItem } from 'types/history'
 
+// TODO: split files into namespaces folders like: src/utils/history/vcs/github/actions/workflows.ts
 /*
  TODO: add missing handlers
  import commits from 'utils/history/vcs/github/commits'
@@ -22,18 +23,14 @@ import type { ProcessConfig, VCSHistoryItem } from 'types/history'
  import pkgs from 'utils/history/vcs/github/pkgs'
  import settings from 'utils/history/vcs/github/settings'
  import tabs from 'utils/history/vcs/github/tabs'
+ import runs from 'utils/history/vcs/github/runs'
+ import workflows from 'utils/history/vcs/github/workflows'
+ import runners from 'utils/history/vcs/github/runners'
+ import caches from 'utils/history/vcs/github/caches'
+ import projects from 'utils/history/vcs/github/projects'
  */
 
 export const githubProcessConfig: ProcessConfig<chrome.history.HistoryItem, VCSHistoryItem> = [
-	/*
-	commits,
-	releases,
-	notifications,
-	orgs,
-	pkgs,
-	settings,
-	tabs,
-	 */
 	profile,
 	issue,
 	settings,

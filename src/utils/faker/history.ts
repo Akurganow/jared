@@ -29,7 +29,23 @@ export default class MockHistory implements MockHistoryClass {
 	private variables: HistoryVariables
 	private history: MockHistoryItem[]
 
-	private templates = ['{{url}}/{{fakePath}}', '{{lorem.sentence}} - {{fakePath}}']
+	private templates = {
+		default: [
+			['{{url}}/{{fakePath}}', '{{lorem.sentence}} - {{fakePath}}']
+		],
+		google: [
+			['https://www.google.com/search?q={{search}}', '{{search}} - Google Search'],
+			['https://www.google.com/search?q={{search}}', '{{search}} - Google Search'],
+		],
+		reddit: [
+			['https://www.reddit.com/r/{{sub}}', '{{title}} : {{sub}}'],
+			['https://www.reddit.com/r/{{sub}}', '{{title}} : {{sub}}'],
+		],
+		'web.dev': [
+			['https://web.dev/{{sub}}', '{{title}} - {{sub}}'],
+			['https://web.dev/{{sub}}', '{{title}} - {{sub}}'],
+		],
+	}
 
 	constructor(query?: MockHistoryQuery) {
 		this.query = query
@@ -48,18 +64,29 @@ export default class MockHistory implements MockHistoryClass {
 			fakePath: `${faker.lorem.word()}/${faker.lorem.word()}/${faker.lorem.word()}`,
 			search: faker.lorem.sentence(),
 			sub: faker.lorem.word(),
+			title: faker.lorem.sentence(),
 		}
+	}
+
+	private getHistoryTemplates(): string[][] {
+		const text = this.query?.text
+		const foundKey = Object.keys(this.templates).find(key => text?.includes(key))
+
+		return text
+			? this.templates[foundKey as keyof typeof this.templates] ?? this.templates.default
+			: this.templates.default
 	}
 
 	private getTemplates(): string[] {
 		const repositoryTemplates = this.repository.isSupported
-			? this.repository.templates[Math.floor(Math.random() * this.repository.templates.length)]
+			? this.repository.templates
 			: null
 		const trackerTemplates = this.tracker.isSupported
-			? this.tracker.templates[Math.floor(Math.random() * this.tracker.templates.length)]
+			? this.tracker.templates
 			: null
+		const finalTemplates = repositoryTemplates || trackerTemplates || this.getHistoryTemplates()
 
-		return repositoryTemplates || trackerTemplates || this.templates
+		return faker.helpers.arrayElement(finalTemplates)
 	}
 
 	private getTitle(): string {
