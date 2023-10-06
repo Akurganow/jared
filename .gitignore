@@ -10,3 +10,4 @@ packages/
 /playwright-examples/
 /src/utils/api/
 /temp/
+.env.local
