@@ -347,4 +347,28 @@ describe('utils/faker/downloads', () => {
 			expect(item.totalBytes).toEqual(totalBytes)
 		})
 	})
+
+	describe('danger', () => {
+		test('danger should be defined', () => {
+			const item = new Downloads().getItem()
+			expect(item.danger).toBeDefined()
+		})
+		test('danger should be string', () => {
+			const item = new Downloads().getItem()
+			expect(typeof item.danger).toBe('string')
+		})
+		test('danger should be equal to query.danger', () => {
+			const danger = faker.helpers.arrayElement([
+				'file',
+				'may_be_dangerous',
+				'dangerous',
+				'uncommon',
+				'hosted',
+				'potentially_unwanted',
+				'safe',
+			])
+			const item = new Downloads({ danger }).getItem()
+			expect(item.danger).toEqual(danger)
+		})
+	})
 })
