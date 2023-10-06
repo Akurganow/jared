@@ -221,6 +221,36 @@ describe('utils/faker/downloads', () => {
 		})
 	})
 
+	describe('finalUrl', () => {
+		test('finalUrl should be defined', () => {
+			const item = new Downloads().getItem()
+			expect(item.finalUrl).toBeDefined()
+		})
+		test('finalUrl should be string', () => {
+			const item = new Downloads().getItem()
+			expect(typeof item.finalUrl).toBe('string')
+		})
+		test('finalUrl should be valid url', () => {
+			const item = new Downloads().getItem()
+			expect(item.finalUrl).toMatch(/^https?:\/\/[a-z0-9-]+(\.[a-z0-9-]+)+(:[0-9]+)?(\/.*)?$/i)
+		})
+	})
+
+	describe('referrer', () => {
+		test('referrer should be defined', () => {
+			const item = new Downloads().getItem()
+			expect(item.referrer).toBeDefined()
+		})
+		test('referrer should be string', () => {
+			const item = new Downloads().getItem()
+			expect(typeof item.referrer).toBe('string')
+		})
+		test('referrer should be valid url', () => {
+			const item = new Downloads().getItem()
+			expect(item.referrer).toMatch(/^https?:\/\/[a-z0-9-]+(\.[a-z0-9-]+)+(:[0-9]+)?(\/.*)?$/i)
+		})
+	})
+
 	describe('state = "in_progress"', () => {
 		test('state should be "in_progress"', () => {
 			const item = new Downloads({ state: 'in_progress' }).getItem()
