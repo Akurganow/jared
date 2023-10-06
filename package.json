@@ -24,6 +24,7 @@
     "@faker-js/faker": "^8.1.0",
     "@playwright/test": "^1.38.0",
     "@redux-devtools/cli": "^3.0.2",
+    "@storybook/addon-coverage": "^0.0.9",
     "@storybook/addon-essentials": "^7.4.5",
     "@storybook/addon-interactions": "^7.4.5",
     "@storybook/addon-links": "^7.4.5",

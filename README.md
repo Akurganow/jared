@@ -8,7 +8,7 @@ Supported providers:
 - Issue tracker
   - Jira
   - YouTrack
-- Version control system
+- Version control
   - GitHub
   - GitLab
 
