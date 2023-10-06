@@ -9,9 +9,9 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - id: dotenv
       uses: ./.github/actions/dotenv-action
-    - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
         node-version-file: '.nvmrc'
