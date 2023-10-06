@@ -12,6 +12,8 @@ jobs:
     - uses: actions/checkout@v3
     - id: dotenv
       uses: xom9ikk/dotenv@v2
+      with:
+        mode: test
     - uses: actions/setup-node@v3
       with:
         node-version-file: '.nvmrc'
