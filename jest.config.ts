@@ -8,10 +8,10 @@ import type { Config } from 'jest'
 const config: Config = {
 	rootDir: './src',
 	preset: 'ts-jest/presets/js-with-ts',
-	globals: {
-		'ts-jest': {
-			tsconfig: 'tsconfig.jest.json'
-		}
+	globals: {},
+
+	transform: {
+		'^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.jest.json' }],
 	},
 
 	// The paths to modules that run some code to configure or set up the testing environment before each test
