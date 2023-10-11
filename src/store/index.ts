@@ -12,14 +12,8 @@ const store = configureStore({
 	reducer: rootReducer,
 	preloadedState: initialState,
 	middleware: [thunk],
-	enhancers: !thunk && process.env.NODE_ENV === 'development' ? [
-		devToolsEnhancer({
-			name: 'Jared',
-			realtime: true,
-			hostname: 'localhost',
-			port: 1024,
-		}),
-	] : undefined,
+	devTools: process.env.NODE_ENV !== 'production',
+	enhancers: [devToolsEnhancer({ realtime: true, hostname: 'localhost', port: 1024 })],
 })
 const persistor = persistStore(store as unknown as Store)
 

@@ -1,7 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import merge from 'lodash/merge'
-import uniq from 'lodash/uniq'
-import { setProcessingOptions, setSetting, setSettings, setThemeOptions } from 'store/actions/settings'
+import { setProcessing, setSetting, setSettings, setThemeOptions } from 'store/actions/settings'
 import type { SettingsState } from 'types/settings'
 // import { getThemesNames } from 'utils/themes'
 // import { rehydratePersistStore } from 'store/actions/persist-store'
@@ -17,6 +16,13 @@ const createReducer = (initialState: SettingsState) => reducerWithInitialState(i
 	.case(setSettings, (state, settings) =>
 		merge({}, state, settings)
 	)
+	.case(setProcessing, (state, processing) => ({
+		...state,
+		processing: {
+			...state.processing,
+			...processing,
+		}
+	}))
 	.case(setThemeOptions, (state, options) => ({
 		...state,
 		theme: {
@@ -24,29 +30,6 @@ const createReducer = (initialState: SettingsState) => reducerWithInitialState(i
 			options,
 		}
 	}))
-	.case(setProcessingOptions, (state, { provider, option, disabled }) => {
-		let disabledOptions = state.processing.providers[provider].disabled
-
-		if (disabled) {
-			disabledOptions = [...disabledOptions, option]
-		} else {
-			disabledOptions = disabledOptions.filter((opt) => opt !== option)
-		}
-
-		return {
-			...state,
-			processing: {
-				...state.processing,
-				providers: {
-					...state.processing.providers,
-					[provider]: {
-						...state.processing.providers[provider],
-						disabled: uniq(disabledOptions)
-					}
-				}
-			}
-		}
-	})
 	// .case(rehydratePersistStore, state => ({
 	// 	...state,
 	// 	theme: {

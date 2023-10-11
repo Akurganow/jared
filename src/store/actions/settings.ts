@@ -7,6 +7,7 @@ export const setSetting =
 	createAction<{ key: keyof SettingsState, value: SettingsState[keyof SettingsState]['value'] }>('setSetting')
 export const setSettings =
 	createAction<Partial<SettingsState>>('setSettings')
+export const setProcessing = createAction<SettingsState['processing']>('setProcessing')
 
 export const setThemeOptions = createAction<SettingsState['theme']['options']>('setThemeOptions')
 

@@ -4,6 +4,7 @@ import st from './styles.module.css'
 import type { HTMLAttributes, ReactNode } from 'react'
 
 export interface Tab {
+	id: string
 	title: string | ReactNode
 	disabled?: boolean
 	children?: TabsProps['children']
@@ -11,10 +12,11 @@ export interface Tab {
 
 interface TabsProps extends HTMLAttributes<HTMLDivElement> {
 	items: Tab[]
+	onTabSwitched?: (id: string) => void
 	withoutPreflight?: boolean
 }
 
-export default function Tabs({ items, withoutPreflight, ...props }: TabsProps) {
+export default function Tabs({ items, onTabSwitched, withoutPreflight, ...props }: TabsProps) {
 	const contentRef = useRef<HTMLDivElement>(null)
 	const [
 		contentSize,
@@ -27,7 +29,8 @@ export default function Tabs({ items, withoutPreflight, ...props }: TabsProps) {
 
 	const handleTabSwitch = useCallback((index: number) => () => {
 		setActiveTab(index)
-	}, [])
+		onTabSwitched?.(items[index].id)
+	}, [items, onTabSwitched])
 
 	const getContentSize = useCallback(() => {
 		const content = contentRef.current

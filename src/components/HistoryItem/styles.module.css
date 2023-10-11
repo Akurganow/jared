@@ -45,10 +45,17 @@
 }
 
 .pinButton {
+	opacity: 0;
 	position: absolute;
 	top: 0;
 	right: 0;
 	z-index: 2;
+	transition: opacity 0.15s ease-in-out;
+}
+
+.item:hover .pinButton,
+.item:focus-visible .pinButton {
+	opacity: 1;
 }
 
 .changes {
