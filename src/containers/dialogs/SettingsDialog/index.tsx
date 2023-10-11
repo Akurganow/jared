@@ -76,7 +76,7 @@ export default function () {
 		},
 		{
 			title: 'Processing',
-			children: <ProcessingTab />,
+			children: <ProcessingTab onChange={handleSettingChange} />,
 			disabled: false,
 		}
 	]

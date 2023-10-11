@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
   "scripts": {
-    "start:dev": "npm run dev & npm run redux-devtools",
+    "start:dev": "npm run dev",
     "dev": "webextension-toolbox dev chrome",
     "build": "webextension-toolbox build chrome",
     "test": "jest",
@@ -86,6 +86,8 @@
     "webpack-merge": "^5.9.0"
   },
   "dependencies": {
+    "@plq/array-functions": "^1.2.0",
+    "@plq/faker": "^1.0.1",
     "@redux-devtools/extension": "^3.2.5",
     "@redux-devtools/remote": "^0.8.1",
     "@reduxjs/toolkit": "^1.9.5",

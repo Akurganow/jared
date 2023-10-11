@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment, import/default,import/no-extraneous-dependencies */
 // @ts-ignore
 import chrome from 'jest-webextension-mock'
-import MockHistory from 'utils/faker/history'
+import { History as MockHistory } from '@plq/faker'
 
 const createEvent = () => ({
 	addListener: jest.fn(),

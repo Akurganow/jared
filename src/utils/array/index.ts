@@ -1,57 +1,17 @@
-export function sortBy<T extends { [k in string]: string | number }>(a: T, b: T, key: keyof T, order: 'asc' | 'desc' = 'desc') {
-	if (a[key] === b[key]) return 0
-
-	const aValue = a[key]
-	const bValue = b[key]
-
-	if (typeof aValue !== typeof bValue) throw new Error(`Types are not equal (a: ${typeof aValue}, b: ${typeof bValue})`)
-
-	switch (typeof aValue) {
-	case 'string':
-		return order === 'asc'
-			? (aValue as string).localeCompare(bValue as string)
-			: (bValue as string).localeCompare(aValue as string)
-	case 'number':
-		return order === 'asc'
-			? (aValue as number) - (bValue as number)
-			: (bValue as number) - (aValue as number)
-	default:
-		return 0
-	}
-}
+import { compareValues, filterBySameKeyValue } from '@plq/array-functions'
 
 export function sortByVisitCount<T extends { visitCount?: number }>(a: T, b: T) {
-	return sortBy(a, b, 'visitCount')
+	return a?.visitCount && b?.visitCount && compareValues(a.visitCount, b.visitCount) || 0
 }
 
 export function sortByLastVisitTime<T extends { lastVisitTime?: number }>(a: T, b: T) {
-	return sortBy(a, b, 'lastVisitTime')
+	return a?.lastVisitTime && b?.lastVisitTime && compareValues(a.lastVisitTime, b.lastVisitTime) || 0
 }
 
 export function sortByTypedCount<T extends { typedCount?: number }>(a: T, b: T) {
-	return sortBy(a, b, 'typedCount')
-}
-
-export function filterBySameKeyValue<T extends { [k in string]: unknown }>(value: T, index: number, array: T[], key: keyof T) {
-	return index === array.findIndex(v => v[key] === value[key])
+	return a?.typedCount && b?.typedCount && compareValues(a.typedCount, b.typedCount) || 0
 }
 
 export function filterBySameId<T extends { id: string }>(value: T, index: number, array: T[]) {
 	return filterBySameKeyValue(value, index, array, 'id')
-}
-
-export function isSortedBy<T extends object>(array: T[], key: keyof T, order: 'asc' | 'desc' = 'desc') {
-	return array.every((item, index) => {
-		if (index === 0) return true
-
-		if (order === 'asc') {
-			return item[key] >= array[index - 1][key]
-		} else {
-			return item[key] <= array[index - 1][key]
-		}
-	})
-}
-
-export function getKeyValue<T extends object>(arr: T[], key: keyof T): T[keyof T][] {
-	return arr.map(item => item[key])
 }
