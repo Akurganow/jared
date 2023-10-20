@@ -14,6 +14,9 @@ const config: Config = {
 		'^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.jest.json' }],
 	},
 
+	// An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
+	// transformIgnorePatterns: ['\\.pnp\\.[^\\/]+$'],
+
 	// The paths to modules that run some code to configure or set up the testing environment before each test
 	setupFiles: [
 		'./__setups__/chrome.ts'
@@ -213,11 +216,6 @@ const config: Config = {
 	// A map from regular expressions to paths to transformers
 	// transform: undefined,
 
-	// An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-	// transformIgnorePatterns: [
-	//   "/node_modules/",
-	//   "\\.pnp\\.[^\\/]+$"
-	// ],
 
 	// An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
 	// unmockedModulePathPatterns: undefined,

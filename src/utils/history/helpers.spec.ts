@@ -82,7 +82,7 @@ describe('utils/history/helpers', () => {
 		const pinned = items.slice(0, 10)
 		const filtered = items.filter(filterItems(pinned))
 		const movedId = filtered[0].id
-		const [arrFrom, arrTo ] = movePinnedItemBetweenArrays(filtered, pinned, movedId, true)
+		const [arrFrom, arrTo ] = movePinnedItemBetweenArrays(filtered, pinned, movedId)
 
 		expect(arrFrom).toHaveLength(filtered.length - 1)
 		expect(arrTo).toHaveLength(pinned.length + 1)

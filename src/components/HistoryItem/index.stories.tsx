@@ -1,7 +1,6 @@
 import { expect } from '@storybook/jest'
 import { within } from '@storybook/testing-library'
 import HistoryItem from 'components/HistoryItem'
-import { store, Mockstore } from 'storybook/fixtures/mock-store'
 import type { ComponentProps } from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
@@ -15,16 +14,17 @@ const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 	},
 	parameters: {
 		layout: 'centered',
+		actions: {
+			argTypesRegex: '^(on|switch).*',
+		},
 	},
 	tags: ['autodocs', 'ui', 'history'],
 	component: HistoryItem,
 	decorators: [
 		(story) =>
-			<Mockstore>
-				<div style={{ width: '15rem' }}>
-					{story()}
-				</div>
-			</Mockstore>,
+			<div style={{ width: '15rem' }}>
+				{story()}
+			</div>,
 	],
 	play: async ({ canvasElement , args }) => {
 		const canvas = within(canvasElement)
@@ -39,13 +39,6 @@ const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 		await expect(item).toContainElement(canvas.getByTestId('HistoryItem:PinButton'))
 		await expect(item).toHaveTextContent(`${args.name}${args.title}`)
 		await expect(pinButton).toBeInTheDocument()
-
-		pinButton.click()
-
-		await expect(store.dispatch).toBeCalledWith({
-			payload: args.id,
-			type: `history/${args.pinned ? 'unpinItem' : 'pinItem'}`,
-		})
 	},
 }
 

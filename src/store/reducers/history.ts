@@ -98,7 +98,7 @@ const createReducer = (initialState: HistoryState) => reducerWithInitialState(in
 
 		switch (true) {
 		case Boolean(isVCS): {
-			const [vcs, vcsPinned] = movePinnedItemBetweenArrays(state.vcs, state.pinned.vcs, id, true)
+			const [vcs, vcsPinned] = movePinnedItemBetweenArrays(state.vcs, state.pinned.vcs, id)
 			return {
 				...state,
 				vcs,
@@ -109,7 +109,7 @@ const createReducer = (initialState: HistoryState) => reducerWithInitialState(in
 			}
 		}
 		case Boolean(isITS): {
-			const [its, itsPinned] = movePinnedItemBetweenArrays(state.its, state.pinned.its, id, true)
+			const [its, itsPinned] = movePinnedItemBetweenArrays(state.its, state.pinned.its, id)
 			return {
 				...state,
 				its,
@@ -120,7 +120,7 @@ const createReducer = (initialState: HistoryState) => reducerWithInitialState(in
 			}
 		}
 		default: {
-			const [main, mainPinned] = movePinnedItemBetweenArrays(state.main, state.pinned.main, id, true)
+			const [main, mainPinned] = movePinnedItemBetweenArrays(state.main, state.pinned.main, id)
 			return {
 				...state,
 				main,
@@ -133,9 +133,9 @@ const createReducer = (initialState: HistoryState) => reducerWithInitialState(in
 		}
 	})
 	.case(unpinItem, (state, id) => {
-		const [mainPinned, main] = movePinnedItemBetweenArrays(state.pinned.main, state.main, id, false)
-		const [vcsPinned, vcs] = movePinnedItemBetweenArrays(state.pinned.vcs, state.vcs, id, false)
-		const [itsPinned, its] = movePinnedItemBetweenArrays(state.pinned.its, state.its, id, false)
+		const [mainPinned, main] = movePinnedItemBetweenArrays(state.pinned.main, state.main, id)
+		const [vcsPinned, vcs] = movePinnedItemBetweenArrays(state.pinned.vcs, state.vcs, id)
+		const [itsPinned, its] = movePinnedItemBetweenArrays(state.pinned.its, state.its, id)
 
 		return {
 			...state,

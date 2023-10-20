@@ -27,7 +27,7 @@ function generateHistoryItem<T extends (VCSHistoryItem | ITSHistoryItem)>(
 	generators?: Partial<Record<keyof T, () => T[keyof T]>>,
 ): () => T {
 	return () => ({
-		id: generators?.id?.() || faker.string.uuid(),
+		id: generators?.id?.() || faker.string.nanoid(4),
 		title: generators?.title?.() || faker.lorem.sentence(),
 		url: generators?.url?.() || faker.internet.url(),
 		lastVisitTime: generators?.lastVisitTime?.() || faker.date.recent().getTime(),
@@ -37,7 +37,6 @@ function generateHistoryItem<T extends (VCSHistoryItem | ITSHistoryItem)>(
 		type: generators?.type?.() || faker.helpers.arrayElement(types),
 		typeName: generators?.typeName?.() || faker.lorem.word(),
 		provider: generators?.provider?.() || faker.helpers.arrayElement(providers),
-		pinned: generators?.pinned?.() || faker.datatype.boolean(),
 	} as unknown as T)
 }
 

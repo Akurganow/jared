@@ -14,6 +14,9 @@ const meta: Meta<ComponentProps<typeof HistoryItemList>> = {
 	},
 	parameters: {
 		layout: 'centered',
+		actions: {
+			argTypesRegex: '^(on|switch).*',
+		},
 	},
 	tags: ['autodocs', 'ui', 'history'],
 	component: HistoryItemList,
@@ -30,7 +33,7 @@ const meta: Meta<ComponentProps<typeof HistoryItemList>> = {
 		const items = canvas.getAllByTestId('HistoryItem')
 		const list = canvas.getByTestId('HistoryItemList')
 
-		await expect(items).toHaveLength(args.items.length)
+		await expect(items).toHaveLength(args.items.length + args.pinned.length)
 		await expect(list).toHaveAttribute('class', expect.stringContaining('container'))
 		await expect(list).toHaveAttribute('class', expect.stringContaining(args.className as string))
 	}
@@ -38,16 +41,19 @@ const meta: Meta<ComponentProps<typeof HistoryItemList>> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const pinnedItemsCount = 2
 export const VCS: Story = {
 	args: {
-		items: vcsMock,
+		items: vcsMock.slice(pinnedItemsCount),
+		pinned: vcsMock.slice(0, pinnedItemsCount),
 		className: 'test',
 	}
 }
 
 export const ITS: Story = {
 	args: {
-		items: itsMock,
+		pinned: itsMock.slice(0, pinnedItemsCount),
+		items: itsMock.slice(pinnedItemsCount),
 		className: 'test',
 	}
 }
