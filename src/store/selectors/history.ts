@@ -64,6 +64,9 @@ export const selectedITS = createSelector(
 		return [...pinned, ...filtered].slice(0, maxResults - 1)
 	}
 )
+export const selectedTypedHistory = (type: 'vcs' | 'its') => type === 'vcs'
+	? selectedVCS
+	: selectedITS
 export const selectedUserContentItems = createSelector(
 	rawSelectedMainItems,
 	selectedPinnedUserContentItems,

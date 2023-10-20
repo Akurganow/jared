@@ -1,18 +1,22 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react'
-import cn from 'classnames'
+import Sidebar from 'containers/Sidebar'
 import st from './styles.module.css'
 
 interface MainProps
 	extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 }
 
-export default function ({ children, className, ...props }: MainProps) {
+export default function ({ children, ...props }: MainProps) {
 	return (
 		<main
-			className={cn(st.main, className)}
+			className={st.main}
 			{...props}
 		>
-			{children}
+			<Sidebar />
+
+			<div className={st.content}>
+				{children}
+			</div>
 		</main>
 	)
 }

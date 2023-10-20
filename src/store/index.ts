@@ -1,11 +1,10 @@
 import { AnyAction, Store } from 'redux'
-import { configureStore, ThunkDispatch } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 import { devToolsEnhancer } from '@redux-devtools/remote'
 import thunkMiddleware, { ThunkMiddleware } from 'redux-thunk'
 import { persistStore } from 'redux-persist'
 import { rootReducer, initialState } from 'store/reducers'
 import { RootState } from 'store/types'
-import { updateHistory } from 'store/actions/history'
 
 const thunk: ThunkMiddleware<RootState, AnyAction> = thunkMiddleware
 const store = configureStore({
@@ -17,13 +16,13 @@ const store = configureStore({
 })
 const persistor = persistStore(store as unknown as Store)
 
-persistor.subscribe(async () => {
-	const dispatch: ThunkDispatch<RootState, never, AnyAction> = store.dispatch
-	const { settings } = store.getState()
-
-	if (settings._persist.rehydrated) {
-		await dispatch(updateHistory())
-	}
-})
+// persistor.subscribe(async () => {
+// 	const dispatch: ThunkDispatch<RootState, never, AnyAction> = store.dispatch
+// 	const { settings } = store.getState()
+//
+// 	if (settings._persist.rehydrated) {
+// 		await dispatch(updateHistory())
+// 	}
+// })
 
 export { store, persistor }

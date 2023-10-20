@@ -55,6 +55,14 @@ export const initialState: SettingsState = {
 		name: 'Theme',
 		hint: 'Select a theme',
 	},
+	layout: {
+		type: 'custom',
+		name: 'Layout',
+		value: {
+			name: 'full',
+			config: ['vcs', 'user', 'its'],
+		}
+	},
 	processing: {
 		type: 'custom',
 		name: 'Processing',

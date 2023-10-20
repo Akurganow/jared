@@ -1,7 +1,5 @@
 import cn from 'classnames'
-import { useDispatch } from 'react-redux'
 import PinButton from 'components/PinButton'
-import { pinItem, unpinItem } from 'store/actions/history'
 import st from './styles.module.css'
 import type { MouseEvent } from 'react'
 import type { HistoryItem, ITSProviderType, ITSType, VCSProviderType, VCSType } from 'types/history'
@@ -9,6 +7,8 @@ import type { HistoryItem, ITSProviderType, ITSType, VCSProviderType, VCSType } 
 interface HistoryItemProps extends HistoryItem {
 	type: VCSType | ITSType
 	provider: 'unknown' | VCSProviderType | ITSProviderType
+	switchPin: (id: string, pinned: boolean) => void
+	pinned: boolean
 }
 
 type TypeTokens = 'unknown' | 'item' | 'filter' | 'person' | 'preferences' | 'file'
@@ -31,14 +31,12 @@ const typesMap: Record<VCSType | ITSType, TypeTokens> = {
 	project: 'preferences',
 }
 
-export default function HistoryItem({ id, title, name, url, type, pinned }: HistoryItemProps) {
-	const dispatch = useDispatch()
+export default function HistoryItem({ id, title, name, url, type, pinned, switchPin }: HistoryItemProps) {
 	const handlePinClick = (event: MouseEvent) => {
 		event.preventDefault()
 		event.stopPropagation()
 
-		const action = pinned ? unpinItem(id) : pinItem(id)
-		dispatch(action)
+		switchPin(id, pinned)
 	}
 	const currentType = typesMap[type]
 

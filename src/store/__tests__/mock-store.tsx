@@ -6,6 +6,7 @@ import * as dialogs from 'store/constants/dialogs'
 import * as history from 'store/constants/history'
 import * as settings from 'store/constants/settings'
 import * as bookmarks from 'store/constants/bookmarks'
+import * as sections from 'store/constants/sections'
 import type { JSX } from 'react'
 import type { RootState } from 'store/types'
 import type { AnyAction } from 'redux'
@@ -15,19 +16,23 @@ function mergeInitialState(initialState: object, newState: object) {
 }
 
 export const defaultInitialState: ReturnType<typeof rootReducer> = {
-	dialogs: dialogs.initialState,
-	history: {
+	[dialogs.storeKey]: dialogs.initialState,
+	[history.storeKey]: {
 		...history.initialState,
 		_persist: { version: -1, rehydrated: true }
 	},
-	settings: {
+	[settings.storeKey]: {
 		...settings.initialState,
 		_persist: { version: -1, rehydrated: true }
 	},
-	bookmarks: {
+	[bookmarks.storeKey]: {
 		...bookmarks.initialState,
 		_persist: { version: -1, rehydrated: true }
 	},
+	[sections.storeKey]: {
+		...sections.initialState,
+		_persist: { version: -1, rehydrated: true }
+	}
 }
 
 export const configureMockStore = (initialState = {}) => {

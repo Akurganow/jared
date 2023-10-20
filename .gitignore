@@ -9,6 +9,5 @@ packages/
 /playwright/.cache/
 /playwright-examples/
 /storybook-static/
-/src/utils/api/
 /temp/
 .env.local

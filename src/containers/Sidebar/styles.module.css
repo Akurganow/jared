@@ -6,8 +6,9 @@
 	width: 2rem;
 	height: 100vh;
 	display: flex;
-	align-items: flex-start;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
 	padding: 0.5rem 0;
 	box-sizing: border-box;
 	background-color: var(--area-sidebar-background);
@@ -25,7 +26,13 @@
 	color: var(--color-icon);
 }
 
-.item:hover {
+.item + .item {
+	margin-top: 0.5rem;
+}
+
+.item:hover,
+.item:focus,
+.item.active {
 	color: var(--color-iconHover);
 }
 .icon {

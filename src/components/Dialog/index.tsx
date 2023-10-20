@@ -23,7 +23,8 @@ export default function Dialog({
 	isOpen = false,
 	onCloseComplete,
 	className,
-	children
+	children,
+	...props
 }: DialogProps) {
 	const dispatch = useDispatch()
 	const container = document.getElementById('dialog')
@@ -38,6 +39,7 @@ export default function Dialog({
 			dialog.current?.showModal()
 		} else {
 			dialog.current?.close()
+			onCloseComplete?.()
 		}
 	}, [isOpenCurrent])
 
@@ -55,7 +57,12 @@ export default function Dialog({
 	}
 
 	const element = (
-		<dialog ref={dialog} className={cn(st.dialog, className)} onMouseDown={handleMouseDownDialog}>
+		<dialog
+			ref={dialog}
+			className={cn(st.dialog, className)}
+			onMouseDown={handleMouseDownDialog}
+			{...props}
+		>
 			{children}
 		</dialog>
 	)

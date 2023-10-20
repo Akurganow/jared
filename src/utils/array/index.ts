@@ -15,3 +15,6 @@ export function sortByTypedCount<T extends { typedCount?: number }>(a: T, b: T) 
 export function filterBySameId<T extends { id: string }>(value: T, index: number, array: T[]) {
 	return filterBySameKeyValue(value, index, array, 'id')
 }
+export function filterBySameTitle<T extends { title: string }>(value: T, index: number, array: T[]) {
+	return filterBySameKeyValue(value, index, array, 'title')
+}

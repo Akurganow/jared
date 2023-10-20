@@ -66,6 +66,10 @@ export const selectedProcessingSettings = createSelector(
 	selectedSettings,
 	settings => settings.processing,
 )
+export const selectedLayoutSettings = createSelector(
+	selectedSettings,
+	settings => settings.layout,
+)
 export const selectedDisabledTypes = createSelector(
 	selectedProcessingSettings,
 	processing => {

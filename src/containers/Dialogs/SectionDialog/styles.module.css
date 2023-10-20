@@ -1,0 +1,77 @@
+.container {
+    --section-field-name-size: 10rem;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+    grid-row-gap: 0.25rem;
+    margin: 0.5rem 0 0.5rem;
+    padding-inline: 0.5rem;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: var(--section-field-name-size) 1fr 2rem;
+    grid-template-rows: max-content;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-inline: 0.5rem;
+}
+
+.item + .item {
+    margin-top: 0.25rem;
+}
+
+.subTitle {
+    color: var(--color-secondaryForeground);
+    border-block-end: 1px solid var(--color-primaryBorder);
+    margin-block-end: 0.5rem;
+    padding: 0.25rem 0.5rem;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+.action {
+    background-color: transparent;
+    border: none;
+    color: var(--color-icon);
+    cursor: pointer;
+}
+
+.action:hover,
+.action:focus {
+    color: var(--color-iconHover);
+}
+
+.name, .value {
+    display: flex;
+    align-items: center;
+    padding-inline: 0.5rem;
+}
+
+.name {
+    justify-content: flex-end;
+    padding-block: 0.3rem;
+}
+
+.value {
+    justify-content: flex-start;
+}
+
+.name input,
+.name select,
+.name textarea,
+.value input,
+.value select,
+.value textarea {
+    width: 100%;
+    border: 1px solid var(--area-form-border); /* border color from Darcula Solid */
+    background-color: var(--area-form-background); /* background color from Darcula Solid */
+    padding: 5px;
+    font-size: var(--basic-fontSize);
+    color: var(--area-form-foreground);
+}

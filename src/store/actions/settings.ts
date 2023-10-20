@@ -8,6 +8,7 @@ export const setSetting =
 export const setSettings =
 	createAction<Partial<SettingsState>>('setSettings')
 export const setProcessing = createAction<SettingsState['processing']>('setProcessing')
+export const setLayout = createAction<SettingsState['layout']>('setLayout')
 
 export const setThemeOptions = createAction<SettingsState['theme']['options']>('setThemeOptions')
 

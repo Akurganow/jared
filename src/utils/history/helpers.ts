@@ -46,13 +46,13 @@ export function filterDisabledItems<T extends { typeName: string, provider: ITSP
 	}
 }
 
-export function movePinnedItemBetweenArrays<T extends { id: string }>(arrFrom: T[], arrTo: T[], id: string, pinned: boolean) {
+export function movePinnedItemBetweenArrays<T extends { id: string }>(arrFrom: T[], arrTo: T[], id: string) {
 	const item = arrFrom.find(item => item.id === id)
 
 	return item
 		? [
-			arrFrom.filter(item => item.id !== id),
-			[...arrTo, { ...item, pinned }],
+			arrFrom.filter(i => i.id !== id),
+			[...arrTo, { ...item }],
 		]
 		: [arrFrom, arrTo]
 }

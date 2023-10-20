@@ -1,0 +1,22 @@
+.container {
+	width: 100%;
+	justify-content: space-around;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	gap: 0.5rem;
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+}
+
+.image {}
+
+.label {
+	width: 100%;
+	text-align: center;
+}
+.input {}

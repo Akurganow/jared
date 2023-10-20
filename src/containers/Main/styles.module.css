@@ -1,18 +1,22 @@
 .main {
 	--main-width: 100vw;
 	--main-sidebar-width: 2rem;
-	--main-sidecolumn-width: 27vw;
-	--main-centercolumn-width: calc((100vw - var(--main-sidecolumn-width) * 2) - var(--main-sidebar-width) - var(--basic-layout-gap) * 3);
-	/* viewport width - width of side columns - sidebar width - sum of gaps (3) */
+	--main-content-width: calc(var(--main-width) - var(--main-sidebar-width));
 
 	width: var(--main-width);
 	height: 100vh;
 	display: grid;
-	grid-template-columns: var(--main-sidebar-width) var(--main-sidecolumn-width) var(--main-centercolumn-width) var(--main-sidecolumn-width);
-	grid-template-rows: 1fr max-content;
-	grid-template-areas:
-		"sidebar left-column content right-column"
-		"sidebar left-column bookmarks right-column";
-	grid-gap: var(--basic-layout-gap);
+	grid-template-columns: var(--main-sidebar-width) var(--main-content-width);
+	grid-template-rows: 1fr;
+	grid-template-areas: "sidebar content";
+	overflow: hidden;
+}
+
+.content {
+	grid-area: content;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
 	overflow: hidden;
 }

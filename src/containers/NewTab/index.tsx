@@ -1,14 +1,9 @@
 import { useSelector } from 'react-redux'
-import Main from 'containers/Main'
-import Sidebar from 'containers/Sidebar'
-import VCS from 'containers/VCS'
-import ITS from 'containers/ITS'
-import UserContent from 'containers/UserContent'
-import SettingsDialog from 'src/containers/dialogs/SettingsDialog'
-import BookmarkDialog from 'src/containers/dialogs/BookmarkDialog'
-import Bookmarks from 'containers/Bookmarks'
 import { getThemeStylesheet } from 'utils/themes'
 import { selectedSettingValue } from 'store/selectors/settings'
+import Section from 'containers/Sections/Section'
+import Main from 'containers/Main'
+import Dialogs from 'src/containers/Dialogs'
 
 export default function () {
 	const theme = useSelector(selectedSettingValue('theme')) as unknown as string
@@ -17,16 +12,12 @@ export default function () {
 	return (
 		<>
 			{themeStylesheet && <style>{themeStylesheet}</style>}
+
 			<Main>
-				<Sidebar />
-				<ITS />
-				<UserContent />
-				<Bookmarks />
-				<VCS />
+				<Section id="1" />
 			</Main>
 
-			<SettingsDialog />
-			<BookmarkDialog />
+			<Dialogs />
 		</>
 	)
 }

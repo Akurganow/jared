@@ -1,5 +1,8 @@
 import type { ITSProviderType, ProcessorConfigType, VCSProviderType } from 'types/history'
 
+export type LayoutType = 'full' | 'compact'
+export type LayoutSection = 'vcs' | 'its' | 'user'
+
 export type SettingsTypeCommon = {
 	name: string
 	hint: string
@@ -33,6 +36,14 @@ export interface SettingsState {
 	vcsQuery: SettingTypeString
 	itsQuery: SettingTypeString
 	theme: SettingTypeOption
+	layout: {
+		type: 'custom'
+		name: 'Layout'
+		value: {
+			name: LayoutType
+			config: LayoutSection[]
+		}
+	}
 	processing: {
 		type: 'custom',
 		name: 'Processing',

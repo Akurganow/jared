@@ -1,6 +1,6 @@
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import merge from 'lodash/merge'
-import { setProcessing, setSetting, setSettings, setThemeOptions } from 'store/actions/settings'
+import { setLayout, setProcessing, setSetting, setSettings, setThemeOptions } from 'store/actions/settings'
 import type { SettingsState } from 'types/settings'
 // import { getThemesNames } from 'utils/themes'
 // import { rehydratePersistStore } from 'store/actions/persist-store'
@@ -21,6 +21,13 @@ const createReducer = (initialState: SettingsState) => reducerWithInitialState(i
 		processing: {
 			...state.processing,
 			...processing,
+		}
+	}))
+	.case(setLayout, (state, layout) => ({
+		...state,
+		layout: {
+			...state.layout,
+			...layout,
 		}
 	}))
 	.case(setThemeOptions, (state, options) => ({
