@@ -68,6 +68,8 @@ export type ITSSectionSettings = HistorySectionSettingsBase & {
 export interface HistorySectionSettings extends HistorySectionSettingsBase {}
 export interface BookmarksSectionSettings extends SectionSettingsBase {
 	saveToBrowser: SectionSettingsType<boolean>
+	browserKey: SectionSettingsType<string>
+	browserId: SectionSettingsType<string>
 }
 
 export interface SectionItemBase {
@@ -101,6 +103,7 @@ export interface SectionItemBookmarks extends SectionItemBase {
 	type: 'bookmarks'
 	settings: BookmarksSectionSettings
 	items: chrome.bookmarks.BookmarkTreeNode[]
+	editingItem?: chrome.bookmarks.BookmarkTreeNode | null
 }
 
 export type SectionItem = SectionItemContainer | SectionItemVCS | SectionItemITS | SectionItemHistory | SectionItemBookmarks

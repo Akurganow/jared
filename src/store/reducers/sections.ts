@@ -9,7 +9,7 @@ import {
 	updateSectionItem,
 	updateSectionType,
 	setSectionItems,
-	switchSectionItemPin, updatePinnedItems,
+	switchSectionItemPin, updatePinnedItems, setEditingItem,
 } from 'store/actions/sections'
 import { DEFAULT_CONTAINER_SECTION_SETTINGS, defaultSectionSettings } from 'store/constants/sections'
 import { createNewSection } from 'utils/sections'
@@ -194,5 +194,15 @@ const createReducer = (initialState: SectionsState) => reducerWithInitialState(i
 			),
 		}
 	})
+	.case(setEditingItem, (state, bookmark) => ({
+		...state,
+		items: state.items.map(section => section.type === 'bookmarks'
+			? {
+				...section,
+				editingItem: bookmark,
+			} as typeof section
+			: section,
+		),
+	}))
 
 export default createReducer

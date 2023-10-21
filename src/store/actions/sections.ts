@@ -40,3 +40,5 @@ export const updatePinnedItems = createAction<{
 	id: SectionItem['id']
 	items:  VCSHistoryItem[] | ITSHistoryItem[] | chrome.history.HistoryItem[]
 }>('updatePinnedItems')
+
+export const setEditingItem = createAction<chrome.bookmarks.BookmarkTreeNode | null>('setEditingBookmark')

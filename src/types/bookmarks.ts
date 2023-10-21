@@ -1,8 +1,5 @@
-export type Bookmark = {
-	id: string
-	title: string
-	url: string
-}
+export interface Bookmark extends chrome.bookmarks.BookmarkTreeNode {}
+
 export type BookmarksState = {
 	bookmarks: Bookmark[]
 	editingBookmark: Bookmark | null

@@ -7,7 +7,7 @@ interface HTMLButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLBut
 	text?: string
 }
 
-const Button = ({ children, className, variant = 'default', text, ...props }: HTMLButtonProps) => {
+const Button = ({ children, className, variant = 'default', text, type = 'button', ...props }: HTMLButtonProps) => {
 	const classNames = cn(
 		st.button,
 		className,
@@ -15,6 +15,7 @@ const Button = ({ children, className, variant = 'default', text, ...props }: HT
 	)
 
 	return <button
+		type={type}
 		data-testid="Button"
 		className={classNames}
 		{...props}

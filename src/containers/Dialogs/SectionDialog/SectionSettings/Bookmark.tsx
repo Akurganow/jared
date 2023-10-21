@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 import BooleanField from 'containers/Dialogs/SectionDialog/SettingsTypes/Boolean'
-// import { useDispatch } from 'react-redux'
+import StringField from 'containers/Dialogs/SectionDialog/SettingsTypes/String'
 import st from '../styles.module.css'
-import type { SectionItemBookmarks, SectionSettingsProps } from 'types/sections'
 import type { ChangeEvent } from 'react'
+import type { SectionItemBookmarks, SectionSettingsProps } from 'types/sections'
 
 export type SectionSettings = SectionItemBookmarks['settings']
 export type SectionSettingKey = keyof SectionSettings
@@ -26,19 +26,22 @@ export default function BookmarkSectionSettings({ item, onChange }: SectionSetti
 	}, [item, settings])
 
 	const handleChange = useCallback((event: ChangeEvent<HTMLFormElement>) => {
-		const value = event.target.checked as SectionSettingValue
+		const checked = event.target.checked as SectionSettingValue
+		const value = event.target.value as SectionSettingValue
 		const name = event.target.name as SectionSettingKey
-		const newItem = createUpdatedItem(name, value)
 
-		onChange(newItem)
-	}, [])
+		if (event.target.type === 'checkbox') {
+			onChange(createUpdatedItem(name, checked))
+		} else {
+			onChange(createUpdatedItem(name, value))
+		}
+	}, [createUpdatedItem, onChange])
 
-	return (
-		<form
-			className={st.container}
-			onChange={handleChange}
-		>
-			<BooleanField name="saveToBrowser" setting={settings.saveToBrowser} />
-		</form>
-	)
+	return <form
+		className={st.container}
+		onChange={handleChange}
+	>
+		<BooleanField name="saveToBrowser" setting={settings.saveToBrowser} />
+		<StringField name="browserKey" setting={settings.browserKey} />
+	</form>
 }

@@ -15,7 +15,7 @@ export default function ({ id, title, url, onRemoveClick, onEditClick }: Bookmar
 		className={cn(st.bookmark)}
 		href={url}
 	>
-		<Favicon href={url} size={16} className={cn(st.favicon)} />
+		{url && <Favicon href={url} size={16} className={cn(st.favicon)}/>}
 		{title}
 		<div className={cn(st.actions)}>
 			<button

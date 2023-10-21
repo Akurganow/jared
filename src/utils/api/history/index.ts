@@ -1,8 +1,5 @@
 import { ITSHistoryItem, ProcessConfig, VCSHistoryItem } from 'types/history'
-
-type Browser = typeof browser | typeof chrome
-type HistoryItem = chrome.history.HistoryItem
-type Queries = chrome.history.HistoryQuery | chrome.history.HistoryQuery[]
+import { Browser, HistoryItem, HistoryQuery } from '../types'
 
 export default class History {
 	private readonly browser: Browser = window.browser ? window.browser : window.chrome
@@ -13,7 +10,7 @@ export default class History {
 		return await this.browser.history.search(query)
 	}
 
-	public async getItems(queries: Queries) {
+	public async getItems(queries: HistoryQuery) {
 		let results: HistoryItem[]
 
 		if (Array.isArray(queries)) {
@@ -25,7 +22,7 @@ export default class History {
 		return results
 	}
 
-	public async getProcessedItems<T extends VCSHistoryItem | ITSHistoryItem>(queries: Queries, config: ProcessConfig<HistoryItem, T>) {
+	public async getProcessedItems<T extends VCSHistoryItem | ITSHistoryItem>(queries: HistoryQuery, config: ProcessConfig<HistoryItem, T>) {
 		let results: HistoryItem[]
 
 		if (Array.isArray(queries)) {

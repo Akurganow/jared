@@ -85,6 +85,14 @@ export const DEFAULT_BOOKMARKS_SECTION_SETTINGS: BookmarksSectionSettings = {
 		type: 'boolean',
 		value: true,
 	},
+	browserKey: {
+		type: 'string',
+		value: 'Jared',
+	},
+	browserId: {
+		type: 'string',
+		value: '',
+	}
 }
 
 export const defaultSectionSettings = {

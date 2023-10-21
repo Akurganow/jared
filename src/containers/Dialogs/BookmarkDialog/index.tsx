@@ -1,11 +1,9 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { FormEvent, useCallback } from 'react'
-import { nanoid } from 'nanoid'
+import { useDispatch } from 'react-redux'
+import { FormEvent, useCallback, useMemo } from 'react'
 import Dialog, { DialogHeader, DialogBody, DialogFooter } from 'components/Dialog'
 import Button from 'components/Button'
 import { closeDialog } from 'store/actions/dialogs'
-import { addBookmark, clearEditingBookmark, editBookmark } from 'store/actions/bookmarks'
-import { selectedEditingBookmark } from 'store/selectors/bookmarks'
+import { setEditingItem } from 'store/actions/sections'
 import st from './styles.module.css'
 
 function getValues(form: HTMLFormElement, keys: string[]) {
@@ -20,9 +18,17 @@ function getValues(form: HTMLFormElement, keys: string[]) {
 	})
 }
 
-export default function () {
+interface BookmarkDialogProps {
+	name: string
+	item?: chrome.bookmarks.BookmarkTreeNode | null
+	onAddBookmark: (bookmark: Omit<chrome.bookmarks.BookmarkTreeNode, 'id' | 'parentId'>) => void
+	onEditBookmark: (bookmark: Omit<chrome.bookmarks.BookmarkTreeNode, 'parentId'>) => void
+}
+
+export default function ({ name, item, onAddBookmark, onEditBookmark }: BookmarkDialogProps) {
 	const dispatch = useDispatch()
-	const editingBookmark = useSelector(selectedEditingBookmark)
+	const dialogName = useMemo(() => 'bookmark-'+name, [name])
+	const formId = useMemo(() => 'bookmark-form-'+name, [name])
 
 	const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
@@ -30,31 +36,30 @@ export default function () {
 		const form = event.target as HTMLFormElement
 		const [ title, url] = getValues(form, ['title', 'url'])
 
-		if (editingBookmark) {
-			dispatch(editBookmark({ id: editingBookmark.id, title, url }))
+		if (item) {
+			onEditBookmark({ id: item.id, title, url })
 		} else {
-			const id = nanoid()
-			dispatch(addBookmark({ id, title, url }))
+			onAddBookmark({ title, url })
 		}
-		dispatch(closeDialog('bookmark'))
-		dispatch(clearEditingBookmark())
-	}, [editingBookmark, dispatch])
+		dispatch(closeDialog(dialogName))
+		dispatch(setEditingItem(null))
+	}, [item, dispatch, dialogName, onEditBookmark, onAddBookmark])
 
 	const handleClose = useCallback(() => {
-		dispatch(closeDialog('bookmark'))
-	}, [dispatch])
+		dispatch(closeDialog(dialogName))
+	}, [dialogName, dispatch])
 
-	return <Dialog name="bookmark">
+	return <Dialog name={dialogName}>
 		<DialogHeader>Bookmark</DialogHeader>
 		<DialogBody>
-			<form id="bookmark-form" className={st.container} onSubmit={handleSubmit}>
+			<form id={formId} className={st.container} onSubmit={handleSubmit}>
 				<div className={st.name}>Title:</div>
 				<div className={st.value}>
 					<input
 						type="text"
 						name="title"
 						required
-						defaultValue={editingBookmark?.title}
+						defaultValue={item?.title || ''}
 					/>
 				</div>
 
@@ -64,7 +69,7 @@ export default function () {
 						type="url"
 						name="url"
 						required
-						defaultValue={editingBookmark?.url}
+						defaultValue={item?.url || ''}
 					/>
 				</div>
 			</form>
@@ -72,9 +77,9 @@ export default function () {
 		<DialogFooter>
 			<Button
 				type="submit"
-				form="bookmark-form"
+				form={formId}
 			>
-				{editingBookmark ? 'Save' : 'Add'}
+				{item ? 'Save' : 'Add'}
 			</Button>
 			<Button onClick={handleClose}>
 				Close

@@ -5,7 +5,6 @@ import { rootReducer } from 'store/reducers'
 import * as dialogs from 'store/constants/dialogs'
 import * as history from 'store/constants/history'
 import * as settings from 'store/constants/settings'
-import * as bookmarks from 'store/constants/bookmarks'
 import * as sections from 'store/constants/sections'
 import type { JSX } from 'react'
 import type { RootState } from 'store/types'
@@ -23,10 +22,6 @@ export const defaultInitialState: ReturnType<typeof rootReducer> = {
 	},
 	[settings.storeKey]: {
 		...settings.initialState,
-		_persist: { version: -1, rehydrated: true }
-	},
-	[bookmarks.storeKey]: {
-		...bookmarks.initialState,
 		_persist: { version: -1, rehydrated: true }
 	},
 	[sections.storeKey]: {
