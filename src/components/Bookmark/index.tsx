@@ -2,9 +2,8 @@ import { MouseEvent as ReactMouseEvent } from 'react'
 import cn from 'classnames'
 import Favicon from 'components/Favicon'
 import st from './styles.module.css'
-import type { Bookmark } from 'types/bookmarks'
 
-interface BookmarkProps extends Bookmark {
+interface BookmarkProps extends chrome.bookmarks.BookmarkTreeNode {
 	onEditClick: (event: ReactMouseEvent<HTMLButtonElement>) => void
 	onRemoveClick: (event: ReactMouseEvent<HTMLButtonElement>) => void
 }

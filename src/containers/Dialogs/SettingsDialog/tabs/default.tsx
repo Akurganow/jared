@@ -7,7 +7,6 @@ import { selectedSettings, selectedSettingsKeys, selectedSettingType } from 'sto
 import settingsTypes from 'src/containers/Dialogs/SettingsDialog/components'
 import st from 'containers/Dialogs/SettingsDialog/styles.module.css'
 import { setSettings } from 'store/actions/settings'
-import { updateHistory } from 'store/actions/history'
 import { RootState } from 'store/types'
 import type { SettingsState } from 'types/settings'
 import type { TabProps, TabRef } from 'containers/Dialogs/SettingsDialog/types'
@@ -15,7 +14,7 @@ import type { TabProps, TabRef } from 'containers/Dialogs/SettingsDialog/types'
 const SettingsField = (key: keyof SettingsState) => {
 	const type = useSelector(selectedSettingType(key))
 
-	if (type && type !== 'custom') {
+	if (type) {
 		const Field = settingsTypes[type]
 
 		return <Field key={key} setting={key} />
@@ -32,13 +31,13 @@ export default forwardRef<TabRef, TabProps<HTMLFormElement>>(({ setCanSave, ...p
 	const currentSettings = useSelector(selectedSettings)
 	const [updatedSettings, setUpdatedSettings] = useState({ ...currentSettings } as SettingsState)
 
-	const createUpdatedSettings = useCallback((name: keyof SettingsState, value: SettingsState[keyof SettingsState]['value'], type: string) => {
-		const parsedValue = type === 'number' ? parseInt(value as string) : value
+	const createUpdatedSettings = useCallback((name: keyof SettingsState, value: SettingsState[keyof SettingsState]['value'], type: SettingsState[keyof SettingsState]['type']) => {
 		return {
 			...updatedSettings,
 			[name]: {
 				...updatedSettings[name],
-				value: parsedValue,
+				type,
+				value,
 			}
 		}
 	}, [updatedSettings])
@@ -60,7 +59,6 @@ export default forwardRef<TabRef, TabProps<HTMLFormElement>>(({ setCanSave, ...p
 	useImperativeHandle(ref, () => ({
 		save() {
 			dispatch(setSettings(updatedSettings))
-			dispatch(updateHistory())
 			setCanSave(false)
 		},
 	}))

@@ -62,26 +62,3 @@ export const selectedSettingValue = memoize((key: string) =>
 export const selectedSettingType = memoize((key: string) =>
 	(state: SettingsState) => createSettingTypeSelector(state, key)
 )
-export const selectedProcessingSettings = createSelector(
-	selectedSettings,
-	settings => settings.processing,
-)
-export const selectedLayoutSettings = createSelector(
-	selectedSettings,
-	settings => settings.layout,
-)
-export const selectedDisabledTypes = createSelector(
-	selectedProcessingSettings,
-	processing => {
-		const disabledProcessors = {} as Record<keyof typeof processing.providers, string[]>
-
-		Object.keys(processing.providers).forEach((provider) => {
-			const prov = provider as keyof typeof processing.providers
-			const { disabled } = processing.providers[prov]
-
-			disabledProcessors[prov] = disabled
-		})
-
-		return disabledProcessors
-	},
-)

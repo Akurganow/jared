@@ -3,7 +3,6 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { rootReducer } from 'store/reducers'
 import * as dialogs from 'store/constants/dialogs'
-import * as history from 'store/constants/history'
 import * as settings from 'store/constants/settings'
 import * as sections from 'store/constants/sections'
 import type { JSX } from 'react'
@@ -16,10 +15,6 @@ function mergeInitialState(initialState: object, newState: object) {
 
 export const defaultInitialState: ReturnType<typeof rootReducer> = {
 	[dialogs.storeKey]: dialogs.initialState,
-	[history.storeKey]: {
-		...history.initialState,
-		_persist: { version: -1, rehydrated: true }
-	},
 	[settings.storeKey]: {
 		...settings.initialState,
 		_persist: { version: -1, rehydrated: true }

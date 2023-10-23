@@ -1,8 +1,3 @@
-import type { ITSProviderType, ProcessorConfigType, VCSProviderType } from 'types/history'
-
-export type LayoutType = 'full' | 'compact'
-export type LayoutSection = 'vcs' | 'its' | 'user'
-
 export type SettingsTypeCommon = {
 	name: string
 	hint: string
@@ -30,28 +25,5 @@ export type SettingTypeOption = {
 } & SettingsTypeCommon
 
 export interface SettingsState {
-	maxResults: SettingTypeNumber
-	numDays: SettingTypeNumber
-	userQuery: SettingTypeString
-	vcsQuery: SettingTypeString
-	itsQuery: SettingTypeString
 	theme: SettingTypeOption
-	layout: {
-		type: 'custom'
-		name: 'Layout'
-		value: {
-			name: LayoutType
-			config: LayoutSection[]
-		}
-	}
-	processing: {
-		type: 'custom',
-		name: 'Processing',
-		value: '',
-		providers: {
-			[key in VCSProviderType | ITSProviderType]: {
-				disabled: ProcessorConfigType['name'][]
-			}
-		},
-	}
 }

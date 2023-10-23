@@ -53,14 +53,3 @@ export type ProcessConfigItem<T, R> = [
 	ProcessorConfigType
 ]
 export type ProcessConfig<T, R> = ProcessConfigItem<T, R>[]
-
-export interface HistoryState {
-	main: HistoryItem[];
-	vcs: VCSHistoryItem[];
-	its: ITSHistoryItem[];
-	pinned: {
-		main: HistoryItem[];
-		vcs: VCSHistoryItem[];
-		its: ITSHistoryItem[];
-	}
-}

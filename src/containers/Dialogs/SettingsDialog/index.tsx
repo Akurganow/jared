@@ -8,8 +8,6 @@ import Tabs from 'components/Tabs'
 import { closeDialog } from 'store/actions/dialogs'
 
 import DefaultTab from 'containers/Dialogs/SettingsDialog/tabs/default'
-import ProcessingTab from 'containers/Dialogs/SettingsDialog/tabs/processing'
-import LayoutTab from 'containers/Dialogs/SettingsDialog/tabs/layout'
 
 import { TabRef } from 'containers/Dialogs/SettingsDialog/types'
 import type { AnyAction } from 'redux'
@@ -73,23 +71,6 @@ export default function () {
 			/>,
 			disabled: false,
 		},
-		{
-			id: 'processing',
-			title: 'Processing',
-			children: <ProcessingTab
-				ref={processingTabRef}
-				setCanSave={handleCanSave('processing')}
-			/>,
-			disabled: false,
-		},
-		{
-			id: 'layout',
-			title: 'Layout',
-			children: <LayoutTab
-				ref={layoutTabRef}
-				setCanSave={handleCanSave('layout')}
-			/>,
-		}
 	]
 
 	return <Dialog name="settings">
