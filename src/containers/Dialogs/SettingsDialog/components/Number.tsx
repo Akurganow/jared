@@ -13,7 +13,7 @@ export default function ({ setting }: SettingsFieldProps) {
 		min,
 		step,
 	} =
-			useSelector(selectedSetting(setting)) as SettingTypeNumber
+		useSelector(selectedSetting(setting)) as unknown as SettingTypeNumber
 
 	return (
 		<>

@@ -13,6 +13,6 @@ export default function ({ href, size, ...props }: FaviconProps) {
 		return url.toString()
 	}, [href, size])
 
-	return <img src={faviconUrl} {...props}/>
+	return <img src={faviconUrl} width={size} height={size} {...props}/>
 
 }

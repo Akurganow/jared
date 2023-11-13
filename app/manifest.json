@@ -6,8 +6,8 @@
   "manifest_version": 3,
   "default_locale": "en",
   "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
+    "16": "images/favicon-16x16.png",
+    "128": "images/icon-128x128.png"
   },
   "chrome_url_overrides": {
     "newtab": "pages/newtab.html"

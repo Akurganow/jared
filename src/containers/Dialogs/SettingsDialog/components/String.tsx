@@ -5,7 +5,7 @@ import type { SettingsFieldProps } from './types'
 import type { SettingTypeString } from 'types/settings'
 
 export default function ({ setting }: SettingsFieldProps) {
-	const { value, name } = useSelector(selectedSetting(setting)) as SettingTypeString
+	const { value, name } = useSelector(selectedSetting(setting)) as unknown as SettingTypeString
 
 	return (
 		<>
