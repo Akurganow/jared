@@ -1,5 +1,6 @@
 import cn from 'classnames'
 import { useDispatch } from 'react-redux'
+import { useCallback } from 'react'
 import Icon from 'components/SVGIcon'
 import { openDialog } from 'store/actions/dialogs'
 import { setEditingSection, splitSection } from 'store/actions/sections'
@@ -18,14 +19,14 @@ interface SectionItemProps extends HTMLAttributes<HTMLDivElement> {
 
 export default function SectionItem({ id, type, title, withTitle, children, className, sectionClassName, style, sectionStyle, isLoading }: SectionItemProps) {
 	const dispatch = useDispatch()
-	const openSettings = () => {
+	const openSettings = useCallback(() => {
 		dispatch(setEditingSection(id))
 		dispatch(openDialog('section'))
-	}
+	}, [dispatch, id])
 
-	const handleSplit = () => {
+	const handleSplit = useCallback(() => {
 		dispatch(splitSection(id))
-	}
+	}, [dispatch, id])
 
 	return <>
 		<section
