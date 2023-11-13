@@ -37,10 +37,10 @@ export default function SectionItem({ id, type, title, withTitle, children, clas
 				{title || ''}
 
 				<div className={st.actions}>
-					{type !== 'container' && <button className={st.item} onClick={handleSplit}>
-						<Icon name="divide" className={st.icon}/>
+					{type !== 'container' && <button className={st.item} onClick={handleSplit} title="Split container">
+						<Icon name="divide" className={st.icon} />
 					</button>}
-					<button className={st.item} onClick={openSettings}>
+					<button className={st.item} onClick={openSettings} title="Container settings">
 						<Icon name="settings" className={st.icon}/>
 					</button>
 				</div>
