@@ -17,7 +17,8 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version-file: '.nvmrc'
-    - name: Cache dependencies
+    - id: cache
+      name: Cache dependencies
       uses: actions/cache@v3
       with:
         path: ~/.npm
@@ -27,7 +28,7 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: npm ci --ignore-scripts
     - name: Run Jest tests
-      run: npx jest test
+      run: npx jest
     - uses: actions/upload-artifact@v3
       if: always()
       with:
