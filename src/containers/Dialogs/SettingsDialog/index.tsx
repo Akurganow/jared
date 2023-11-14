@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 
 import Dialog, { DialogBody, DialogFooter } from 'components/Dialog'
 import Button from 'components/Button'
@@ -21,8 +21,6 @@ export default function () {
 	const [activeTab, setActiveTab] = useState('default')
 
 	const defaultTabRef = useRef<TabRef>(null)
-	const processingTabRef = useRef<TabRef>(null)
-	const layoutTabRef = useRef<TabRef>(null)
 
 	const handleCanSave = useCallback((id: string) => (isCanSave: boolean) => {
 		setIsButtonsDisabled((prev) => ({
@@ -36,13 +34,8 @@ export default function () {
 		case 'default':
 			defaultTabRef.current?.save()
 			break
-		case 'processing':
-			processingTabRef.current?.save()
-			break
-		case 'layout':
-			layoutTabRef.current?.save()
 		}
-	}, [activeTab, defaultTabRef, processingTabRef])
+	}, [activeTab, defaultTabRef])
 
 	const handleApply = useCallback(() => {
 		handleRefSave()
@@ -61,7 +54,7 @@ export default function () {
 		setActiveTab(id)
 	}, [])
 
-	const tabs: Tab[] = [
+	const tabs = useMemo<Tab[]>(() => ([
 		{
 			id: 'default',
 			title: 'Settings',
@@ -71,11 +64,13 @@ export default function () {
 			/>,
 			disabled: false,
 		},
-	]
+	]), [handleCanSave])
+
+	console.log('render SettingsDialog', activeTab)
 
 	return <Dialog name="settings">
 		<DialogBody>
-			<Tabs items={tabs} onTabSwitched={handleTabSwitch}/>
+			<Tabs items={tabs} onTabSwitched={handleTabSwitch} />
 		</DialogBody>
 		<DialogFooter>
 			<Button disabled={isButtonsDisabled[activeTab] ?? true} onClick={handleApply} text="Apply" />
