@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import { jest } from '@storybook/jest'
-import { rootReducer, initialState } from 'store/reducers'
+import { preloadedState, reducer } from 'src/store'
 
 export const store = configureStore({
-	reducer: rootReducer,
-	preloadedState: initialState,
+	reducer,
+	preloadedState,
 })
 
 jest.spyOn(store, 'dispatch')
