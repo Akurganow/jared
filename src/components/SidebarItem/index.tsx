@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { useRef } from 'react'
+import cn from 'classnames'
 import SVGIcon, { SVGIconProps } from 'components/SVGIcon'
 import Tooltip, { TooltipProps } from 'components/Tooltip'
 import { openDialog } from 'store/actions/dialogs'
@@ -19,15 +20,30 @@ export default function SidebarItem({ name, tooltip, icon, className, ...props }
 		dispatch(openDialog(name))
 	}
 
-	return (
-		<Tooltip ref={buttonRef} body={tooltip} className={className} {...props}>
+	return tooltip
+		? (
+			<Tooltip
+				ref={buttonRef}
+				body={tooltip}
+				className={className}
+				{...props}
+			>
+				<button
+					ref={buttonRef}
+					className={st.button}
+					onClick={handleClick}
+				>
+					<SVGIcon name={icon} className={st.icon}/>
+				</button>
+			</Tooltip>
+		)
+		: (
 			<button
 				ref={buttonRef}
-				className={st.button}
+				className={cn(st.button, className)}
 				onClick={handleClick}
 			>
-				<SVGIcon name={icon} className={st.icon} />
+				<SVGIcon name={icon} className={st.icon}/>
 			</button>
-		</Tooltip>
-	)
+		)
 }

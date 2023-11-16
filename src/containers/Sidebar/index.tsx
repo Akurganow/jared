@@ -19,7 +19,7 @@ interface SidebarItemMap extends Omit<ComponentProps<typeof SidebarItem>, 'icon'
 const sidebarItems: SidebarItemMap[] = [
 	{
 		name: 'settings',
-		tooltip: 'Settings'
+		tooltip: null
 	},
 	{
 		name: 'download',
@@ -27,7 +27,7 @@ const sidebarItems: SidebarItemMap[] = [
 	},
 	{
 		name: 'code',
-		tooltip: 'Code'
+		tooltip: null
 	}
 ]
 

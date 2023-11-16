@@ -11,10 +11,11 @@ import {
 	useRef
 } from 'react'
 import { createPortal } from 'react-dom'
+import { isFunction } from '@plq/is'
 import st from './styles.module.css'
 
 export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
-	body: string | JSX.Element
+	body: null | string | JSX.Element | (() => JSX.Element | string | null)
 	direction?: 'left' | 'right' | 'top' | 'bottom'
 	visible?: boolean
 }
@@ -67,7 +68,7 @@ ref) => {
 	const element = useMemo(() => {
 		return (
 			<div ref={tooltipRef} style={tooltipStyle} className={cn(st.tooltip, st[storedDirection], { [st.visible]: isVisible })}>
-				{body}
+				{isFunction(body) ? body() : body}
 			</div>
 		)
 	}, [tooltipStyle, storedDirection, isVisible, body])
