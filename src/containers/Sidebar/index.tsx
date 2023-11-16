@@ -5,6 +5,8 @@ import Icon from 'components/SVGIcon'
 import { openDialog } from 'store/actions/dialogs'
 import { switchEditMode } from 'store/actions/sections'
 import { selectedEditMode } from 'store/selectors/sections'
+import SidebarItem from 'components/SidebarItem'
+import DownloadsTooltip from 'containers/DownloadsTooltip'
 import st from './styles.module.css'
 
 interface SidebarProps
@@ -34,6 +36,12 @@ export default function ({ className, ...props }: SidebarProps) {
 			<button className={st.item} onClick={handleEditMode}>
 				<Icon name="edit" className={cn(st.icon, { [st.active]: !currentEditMode })}/>
 			</button>
+
+			<SidebarItem
+				className={st.item}
+				name="downloads"
+				icon="download"
+				tooltip={<DownloadsTooltip />} />
 		</aside>
 	)
 }

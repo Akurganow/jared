@@ -29,7 +29,7 @@ export default forwardRef<TabRef, TabProps<HTMLFormElement>>(({ setCanSave, ...p
 	const settingKeys = useSelector(selectedSettingsKeys)
 	const currentSettings = useSelector(selectedSettings)
 	const [updatedSettings, setUpdatedSettings] = useState({ ...currentSettings } as SettingsState)
-	console.log('currentSettings', currentSettings, settingKeys)
+
 	const createUpdatedSettings = useCallback((name: keyof SettingsState, value: SettingsState[keyof SettingsState]['value'], type: SettingsState[keyof SettingsState]['type']) => {
 		return {
 			...updatedSettings,

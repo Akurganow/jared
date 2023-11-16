@@ -16,8 +16,12 @@
 }
 
 .item {
+	width: 2rem;
+	height: 2rem;
 	font-size: 1rem;
-	display: block;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	background-color: transparent;
 	border: none;
 	padding: 0;
@@ -35,6 +39,7 @@
 .item.active {
 	color: var(--color-iconHover);
 }
+
 .icon {
 	color: currentColor;
 }

@@ -1,27 +1,21 @@
 import { AnyAction, combineReducers, Store } from 'redux'
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, ThunkMiddleware } from '@reduxjs/toolkit'
 import { devToolsEnhancer } from '@redux-devtools/remote'
-import thunkMiddleware, { ThunkMiddleware } from 'redux-thunk'
+import thunk from 'redux-thunk'
 import { persistReducer, persistStore } from 'redux-persist'
-import { localStorage, syncStorage } from 'redux-persist-webextension-storage'
+import { syncStorage } from 'redux-persist-webextension-storage'
 import storage from 'redux-persist/lib/storage'
-import { RootState } from 'store/types'
 import { initialState as dialogsInitialState, storeKey as dialogsStoreKey } from 'store/constants/dialogs'
 import { initialState as settingsInitialState, storeKey as settingsStoreKey } from 'store/constants/settings'
 import { initialState as sectionsInitialState, storeKey as sectionsStoreKey } from 'store/constants/sections'
 import dialogsReducer from 'store/reducers/dialogs'
 import settingsReducer from 'store/reducers/settings'
 import sectionsReducer from 'store/reducers/sections'
+import { PersistState, RootState } from 'store/types'
 
-const thunk: ThunkMiddleware<RootState, AnyAction> = thunkMiddleware
+type StorageInterface = typeof storage
 
-interface PersistPartial {
-	_persist: { version: number; rehydrated: boolean };
-}
-
-type Storage = typeof localStorage | typeof syncStorage
-
-function createPersistConfig(key: string, storage: Storage) {
+function createPersistConfig(key: string, storage: StorageInterface) {
 	return {
 		key: `jared/${key}`,
 		storage,
@@ -42,14 +36,17 @@ export const reducer = combineReducers({
 
 export const preloadedState = {
 	[dialogsStoreKey]: dialogsInitialState,
-	[settingsStoreKey]: settingsInitialState as typeof settingsInitialState & PersistPartial,
-	[sectionsStoreKey]: sectionsInitialState as typeof sectionsInitialState & PersistPartial,
+	[settingsStoreKey]: settingsInitialState as PersistState<typeof settingsInitialState>,
+	[sectionsStoreKey]: sectionsInitialState as PersistState<typeof sectionsInitialState>,
 }
+
+const middleware = [thunk as ThunkMiddleware<RootState, AnyAction>]
 
 const store = configureStore({
 	reducer,
 	preloadedState,
-	middleware: [thunk],
+	middleware,
+
 	devTools: process.env.NODE_ENV !== 'production',
 	enhancers: [devToolsEnhancer({ realtime: true, hostname: 'localhost', port: 1024 })],
 })
