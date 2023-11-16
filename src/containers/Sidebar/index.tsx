@@ -1,8 +1,7 @@
-import { DetailedHTMLProps, HTMLAttributes } from 'react'
+import { ComponentProps, DetailedHTMLProps, HTMLAttributes, useCallback } from 'react'
 import cn from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'components/SVGIcon'
-import { openDialog } from 'store/actions/dialogs'
 import { switchEditMode } from 'store/actions/sections'
 import { selectedEditMode } from 'store/selectors/sections'
 import SidebarItem from 'components/SidebarItem'
@@ -13,35 +12,50 @@ interface SidebarProps
 	extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
 }
 
+interface SidebarItemMap extends Omit<ComponentProps<typeof SidebarItem>, 'icon' | 'name'> {
+	name: ComponentProps<typeof SidebarItem>['icon']
+}
+
+const sidebarItems: SidebarItemMap[] = [
+	{
+		name: 'settings',
+		tooltip: 'Settings'
+	},
+	{
+		name: 'download',
+		tooltip: <DownloadsTooltip />
+	},
+	{
+		name: 'code',
+		tooltip: 'Code'
+	}
+]
+
 export default function ({ className, ...props }: SidebarProps) {
 	const dispatch = useDispatch()
 	const currentEditMode = useSelector(selectedEditMode)
-	const handleDialogSwitch = (name: string) => () => {
-		dispatch(openDialog(name))
-	}
 
-	const handleEditMode = () => {
+	const handleEditMode = useCallback(() => {
 		dispatch(switchEditMode(!currentEditMode))
-	}
+	}, [currentEditMode, dispatch])
 
 	return (
 		<aside
 			className={cn(st.sidebar, className)}
 			{...props}
 		>
-			<button className={st.item} onClick={handleDialogSwitch('settings')}>
-				<Icon name="settings" className={st.icon}/>
-			</button>
-
 			<button className={st.item} onClick={handleEditMode}>
 				<Icon name="edit" className={cn(st.icon, { [st.active]: !currentEditMode })}/>
 			</button>
 
-			<SidebarItem
-				className={st.item}
-				name="downloads"
-				icon="download"
-				tooltip={<DownloadsTooltip />} />
+			{sidebarItems.map((item) => (
+				<SidebarItem
+					key={item.name}
+					className={st.item}
+					icon={item.name as ComponentProps<typeof SidebarItem>['icon']}
+					{...item}
+				/>
+			))}
 		</aside>
 	)
 }

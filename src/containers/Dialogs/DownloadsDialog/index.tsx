@@ -1,7 +1,7 @@
 import Dialog, { DialogBody, DialogFooter, DialogHeader } from 'components/Dialog'
 
 export default function DownloadsDialog() {
-	return <Dialog name="downloads">
+	return <Dialog name="download">
 		<DialogHeader>Bookmark</DialogHeader>
 		<DialogBody>
 			BODY

@@ -5,7 +5,7 @@ import Tooltip, { TooltipProps } from 'components/Tooltip'
 import { openDialog } from 'store/actions/dialogs'
 import st from './styles.module.css'
 
-interface SidebarItemProps extends Omit<TooltipProps, 'body' | 'visible'> {
+export interface SidebarItemProps extends Omit<TooltipProps, 'body' | 'visible'> {
 	name: string
 	icon: SVGIconProps['name']
 	tooltip: TooltipProps['body']
