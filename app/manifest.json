@@ -14,11 +14,9 @@
   },
   "permissions": [
     "bookmarks",
-    "browsingData",
     "history",
     "storage",
     "theme",
-    "topSites",
 		"favicon"
   ]
 }

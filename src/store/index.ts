@@ -1,6 +1,6 @@
 import { AnyAction, combineReducers, Store } from 'redux'
 import { configureStore, ThunkMiddleware } from '@reduxjs/toolkit'
-import { devToolsEnhancer } from '@redux-devtools/remote'
+// import { devToolsEnhancer } from '@redux-devtools/remote'
 import thunk from 'redux-thunk'
 import { persistReducer, persistStore } from 'redux-persist'
 import { syncStorage } from 'redux-persist-webextension-storage'
@@ -46,9 +46,8 @@ const store = configureStore({
 	reducer,
 	preloadedState,
 	middleware,
-
 	devTools: process.env.NODE_ENV !== 'production',
-	enhancers: [devToolsEnhancer({ realtime: true, hostname: 'localhost', port: 1024 })],
+	// enhancers: [devToolsEnhancer({ realtime: true, hostname: 'localhost', port: 1024 })],
 })
 
 const persistor = persistStore(store as unknown as Store)
