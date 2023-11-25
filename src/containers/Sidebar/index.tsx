@@ -14,6 +14,7 @@ interface SidebarProps
 
 interface SidebarItemMap extends Omit<ComponentProps<typeof SidebarItem>, 'icon' | 'name'> {
 	name: ComponentProps<typeof SidebarItem>['icon']
+	hiddenOnPro?: boolean
 }
 
 const sidebarItems: SidebarItemMap[] = [
@@ -23,11 +24,13 @@ const sidebarItems: SidebarItemMap[] = [
 	},
 	{
 		name: 'download',
-		tooltip: <DownloadsTooltip />
+		tooltip: <DownloadsTooltip />,
+		hiddenOnPro: true
 	},
 	{
 		name: 'code',
-		tooltip: null
+		tooltip: null,
+		hiddenOnPro: true
 	}
 ]
 
@@ -48,14 +51,18 @@ export default function ({ className, ...props }: SidebarProps) {
 				<Icon name="edit" className={cn(st.icon, { [st.active]: !currentEditMode })}/>
 			</button>
 
-			{sidebarItems.map((item) => (
-				<SidebarItem
+			{sidebarItems.map((item) => {
+				if (item.hiddenOnPro && process.env.NODE_ENV === 'production') {
+					return null
+				}
+
+				return <SidebarItem
 					key={item.name}
 					className={st.item}
 					icon={item.name as ComponentProps<typeof SidebarItem>['icon']}
 					{...item}
 				/>
-			))}
+			})}
 		</aside>
 	)
 }

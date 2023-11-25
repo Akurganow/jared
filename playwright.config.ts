@@ -1,10 +1,8 @@
 import { defineConfig, devices } from '@playwright/test'
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+import { config } from 'dotenv'
+
+config()
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -67,8 +65,12 @@ export default defineConfig({
 		//   use: { ...devices['Desktop Edge'], channel: 'msedge' },
 		// },
 		// {
-		//   name: 'Google Chrome',
-		//   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+		// 	name: 'Google Chrome',
+		// 	use: {
+		// 		...devices['Desktop Chrome'],
+		// 		channel: 'chrome',
+		// 		colorScheme: 'dark',
+		// 	},
 		// },
 	],
 
