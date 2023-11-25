@@ -28,6 +28,7 @@
     "gatsby-transformer-sharp": "^5.12.3",
     "modern-css-reset": "^1.4.0",
     "postcss": "^8.4.31",
+    "postcss-easings": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0"
