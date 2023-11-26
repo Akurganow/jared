@@ -2,6 +2,12 @@
   "name": "jared",
   "version": "0.0.1",
   "description": "Browser extension for better way to work with browser history.",
+	"author": "Alexander Kurganov <p2f2basb4@mozmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Akurganow/jared/issues"
+	},
+	"homepage": "https://jared-web-extension.netlify.app/",
   "scripts": {
     "dev": "webextension-toolbox dev chrome",
     "build": "webextension-toolbox build chrome",

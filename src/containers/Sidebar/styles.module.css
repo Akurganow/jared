@@ -43,3 +43,8 @@
 .icon {
 	color: currentColor;
 }
+
+.item.last {
+	align-self: flex-end;
+	margin-top: auto;
+}

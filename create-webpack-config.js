@@ -86,6 +86,7 @@ module.exports = (config, { dev }) => {
 			src: path.resolve(__dirname, './src'),
 			// i18n: path.resolve(__dirname, './src/i18n'),
 			// jest: path.resolve(__dirname, './.jest'),
+			package: path.resolve(__dirname, './package.json'),
 			storybook: path.resolve(__dirname, './.storybook'),
 		}),
 	})

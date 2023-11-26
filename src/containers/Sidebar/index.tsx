@@ -51,8 +51,8 @@ export default function ({ className, ...props }: SidebarProps) {
 				<Icon name="edit" className={cn(st.icon, { [st.active]: !currentEditMode })}/>
 			</button>
 
-			{sidebarItems.map((item) => {
-				if (item.hiddenOnPro && process.env.NODE_ENV === 'production') {
+			{sidebarItems.map(({ hiddenOnPro, ...item }) => {
+				if (hiddenOnPro && process.env.NODE_ENV === 'production') {
 					return null
 				}
 
@@ -63,6 +63,13 @@ export default function ({ className, ...props }: SidebarProps) {
 					{...item}
 				/>
 			})}
+
+			<SidebarItem
+				className={cn(st.item, st.last)}
+				icon="help"
+				name="help"
+				tooltip={null}
+			/>
 		</aside>
 	)
 }

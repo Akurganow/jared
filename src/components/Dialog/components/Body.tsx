@@ -6,10 +6,8 @@ interface DialogBodyProps extends DetailedHTMLProps<HTMLAttributes<HTMLDivElemen
 
 }
 
-export default function (props: DialogBodyProps) {
+export default function ({ className, ...props }: DialogBodyProps) {
 	return (
-		<div className={cn(st.body)}>
-			{props.children}
-		</div>
+		<div className={cn(className, st.body)} {...props} />
 	)
 }

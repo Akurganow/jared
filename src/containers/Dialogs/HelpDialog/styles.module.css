@@ -1,0 +1,17 @@
+.body {
+	max-width: 480px;
+	padding: 0.5rem 1rem;
+}
+
+.body a {
+	color: var(--color-secondaryForeground);
+	text-decoration: underline;
+}
+
+.body h2 + p {
+	margin-block-start: 0.825rem;
+}
+
+.body p + p {
+	margin-block-start: 1rem;
+}
