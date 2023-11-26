@@ -10,13 +10,15 @@ export default function HelpDialog() {
 		<DialogHeader>👋 Welcome to Jared! I&apos;m glad you&apos;re here.</DialogHeader>
 		<DialogBody className={st.body}>
 			<p>Jared version: {pack.version}</p>
+
 			<ul>
 				<li><a href="https://github.com/Akurganow/jared" rel="noreferrer">GitHub Repository</a></li>
 				<li><a href="https://github.com/Akurganow/jared/issues" rel="noreferrer">Report an Issue</a></li>
 				<li><a href="https://jared-web-extension.netlify.app/privacy-policy/" rel="noreferrer">Privacy Policy</a></li>
 			</ul>
 
-			<p>© {currentYear} Jared. All rights reserved.</p>
+			<p>Distributed under the MIT License.<br />See <a href="https://github.com/Akurganow/jared/blob/master/LICENSE">LICENSE</a> for more information.</p>
+			<p>© 2023-{currentYear} Jared. All rights reserved.</p>
 		</DialogBody>
 	</Dialog>
 }
