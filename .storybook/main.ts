@@ -1,6 +1,7 @@
-import type { StorybookConfig } from '@storybook/react-webpack5'
 // @ts-ignore
-import createWebpackConfig from '../create-webpack-config'
+import createWebpackConfig from '../create-webpack-config.js'
+import type { StorybookConfig } from '@storybook/react-webpack5'
+import type { Configuration, RuleSetRule } from 'webpack'
 import isEqual from 'lodash/isEqual'
 
 const config: StorybookConfig = {
@@ -12,6 +13,29 @@ const config: StorybookConfig = {
 		'@storybook/addon-coverage',
 		'@storybook/addon-a11y',
 		'@storybook/addon-actions',
+		{
+			name: '@storybook/addon-styling-webpack',
+			options: {
+				rules: [
+					{
+						test: /\.css$/,
+						use: [
+							'style-loader',
+							{
+								loader: 'css-loader',
+								options: {
+									modules: {
+										auto: true,
+										localIdentName: '[name]__[local]--[hash:base64:5]',
+									},
+								},
+							},
+							'postcss-loader',
+						],
+					}
+				]
+			}
+		}
 	],
 	framework: {
 		name: '@storybook/react-webpack5',
@@ -21,77 +45,44 @@ const config: StorybookConfig = {
 		autodocs: 'tag',
 	},
 	webpackFinal: async (config) => {
-		const webpackConfig = createWebpackConfig(config, { dev: true })
+		const customConfig = createWebpackConfig({ ...config }, { dev: false }) as Configuration
 
-		const cssModuleRule = webpackConfig.module?.rules
-			// @ts-ignore
-			?.find(rule => isEqual(rule?.include, /\.module\.css$/))
+		config.resolve = customConfig.resolve as typeof config.resolve
 
-		const rules = config.module?.rules
-			?.map(rule => {
-				// @ts-ignore
-				if (typeof rule === 'object' && rule?.test && isEqual(rule?.test, /\.css$/)) {
+		if (config.module && config.module.rules) {
+			config.module.rules = config.module.rules.map((rule) => {
+				if (rule && (rule as RuleSetRule).test && isEqual((rule as RuleSetRule).test, /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/)) {
 					return {
-						...rule,
-						exclude: /\.module\.css$/,
+						...rule as RuleSetRule,
+						test: /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/
 					}
 				}
 
-				if (typeof rule === 'object' && rule?.test && isEqual(rule?.test, /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/)) {
+				if (rule && (rule as RuleSetRule).test && isEqual((rule as RuleSetRule).test, /\.module\.css$/)) {
 					return {
-						...rule,
-						test: /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/,
+						...rule as RuleSetRule,
+						use: [((rule as RuleSetRule).use), 'postcss-loader'].flat()
 					}
 				}
 
 				return rule
-			})
-			.concat([
-				cssModuleRule,
-				{
-					test: /\.(tsx?)$/,
-					use: [
-						'babel-loader',
-						{
-							loader: require.resolve('ts-loader'),
-							options: {
-								reportFiles: [
-									'../**/src/**/*.{ts,tsx}'
-								]
-							}
-						},
-					]
-				},
-				{
-				test: /\.svg$/,
-				use: [
-					{
-						loader: 'svg-sprite-loader',
-						options: { symbolId: '[name]-[hash:8]' },
-					},
-					'svgo-loader',
-				],
-			},
-			])
+			}) as RuleSetRule[]
 
-		return {
-			...config,
-			module: {
-				...config.module,
-				rules,
-			},
-			resolve: {
-				...config.resolve,
-				alias: {
-					...config.resolve?.alias,
-					...webpackConfig.resolve.alias
+			config.module.rules.push(
+				{
+					test: /\.svg$/,
+					use: [
+						{
+							loader: 'svg-sprite-loader',
+							options: { symbolId: '[name]-[hash:8]' },
+						},
+						'svgo-loader',
+					],
 				},
-				extensions: [
-					...(config.resolve?.extensions || []),
-					...webpackConfig.resolve.extensions,
-				]
-			}
+			)
 		}
-	},
+
+		return config
+	}
 }
 export default config

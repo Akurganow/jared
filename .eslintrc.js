@@ -64,7 +64,7 @@ module.exports = {
 		]
 	},
 	'settings': {
-		'import/extensions': ['.json', '.js', '.jsx', '.ts', '.tsx', '.d.ts'],
+		'import/extensions': ['.json', '.js', '.jsx', '.ts', '.tsx', '.d.ts', '.css'],
 		'import/parsers': {
 			'@typescript-eslint/parser': ['.ts', '.tsx']
 		},

@@ -29,7 +29,7 @@ module.exports = (config, { dev }) => {
 				],
 			},
 			{
-				test: /\.css$/i,
+				test: /\.module\.css$/,
 				use: [
 					(dev ? 'style-loader' : {
 						loader: MiniCssExtractPlugin.loader,
@@ -48,7 +48,6 @@ module.exports = (config, { dev }) => {
 					},
 					'postcss-loader',
 				],
-				include: /\.module\.css$/,
 			},
 			{
 				test: /\.css$/,
@@ -60,17 +59,20 @@ module.exports = (config, { dev }) => {
 						loader: 'css-loader',
 						options: {
 							importLoaders: 1,
+							modules: {
+								auto: true,
+							}
 						},
 					},
 					'postcss-loader',
 				],
-				exclude: /\.module\.css$/,
+				exclude: [/\.module\.css$/],
 			},
 		]),
 	})
 
 	config.resolve = merge((get(config, 'config.resolve', {})), {
-		extensions: uniq(get(config, 'resolve.extensions', []).concat(['.tsx', '.ts', '.js', '.jsx', '.json'])),
+		extensions: uniq(get(config, 'resolve.extensions', []).concat(['.tsx', '.ts', '.js', '.jsx', '.json', '.css'])),
 		alias: merge(get(config, 'resolve.alias', {}), {
 			components: path.resolve(__dirname, './src/components'),
 			containers: path.resolve(__dirname, './src/containers'),
