@@ -23,11 +23,9 @@ jobs:
       with:
         path: |
           ~/.npm
-          ~/.cache/ms-playwright/
         key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
         restore-keys: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
     - name: Install dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
       run: npm ci --ignore-scripts
     - name: Run Jest tests
       run: npx jest
