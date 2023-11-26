@@ -29,7 +29,7 @@ export default function HistorySection({ id, withTitle, className, ...props }: S
 
 		const action = switchSectionItemPin({ id, itemId, pinned })
 		dispatch(action)
-	}, [dispatch])
+	}, [dispatch, id])
 
 	useAsyncEffect(async () => {
 		setIsLoading(true)

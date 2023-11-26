@@ -41,7 +41,7 @@ export default function Dialog({
 			dialog.current?.close()
 			onCloseComplete?.()
 		}
-	}, [isOpenCurrent])
+	}, [isOpenCurrent, onCloseComplete])
 
 	if (!container) return null
 

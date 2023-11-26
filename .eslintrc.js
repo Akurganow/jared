@@ -34,7 +34,7 @@ module.exports = {
 		'react/react-in-jsx-scope':[0],
 		'import/no-cycle': ['error', { 'maxDepth': 10, 'ignoreExternal': true }],
 		'import/no-unresolved': [2, { commonjs: true, amd: true }],
-		'import/extensions': [2, 'never', { ignorePackages: true, pattern: { 'json': 'always' } }],
+		'import/extensions': [2, 'never', { ignorePackages: true, pattern: { 'json': 'always', 'css': 'always' } }],
 		'import/no-extraneous-dependencies': [
 			2,
 			{
@@ -64,7 +64,7 @@ module.exports = {
 		]
 	},
 	'settings': {
-		'import/extensions': ['.json', '.js', '.jsx', '.ts', '.tsx', '.d.ts', '.css'],
+		'import/extensions': ['json', 'js', 'jsx', 'ts', 'tsx', 'd.ts', 'css'],
 		'import/parsers': {
 			'@typescript-eslint/parser': ['.ts', '.tsx']
 		},

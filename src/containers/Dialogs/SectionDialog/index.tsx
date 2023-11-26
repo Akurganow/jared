@@ -23,7 +23,7 @@ export default function SectionDialog() {
 
 	const handleClose = useCallback(() => {
 		dispatch(closeDialog('section'))
-	}, [dispatch, setUpdatedItem])
+	}, [dispatch])
 
 	const handleCloseComplete = useCallback(() => {
 		setUpdatedItem(null)

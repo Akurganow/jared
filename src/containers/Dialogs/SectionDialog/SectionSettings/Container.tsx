@@ -74,7 +74,7 @@ export default function ContainerSectionSettings({ item, onChange }: SectionSett
 			...item,
 			items: items.filter(item => item !== id)
 		})
-	}, [])
+	}, [item, items, onChange])
 
 	const handleAdd = useCallback((event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault()
