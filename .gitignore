@@ -11,7 +11,3 @@ packages/
 /storybook-static/
 /temp/
 .env.local
-/site/node_modules/
-/site/.cache/
-/site/public/
-/site/src/gatsby-types.d.ts
