@@ -1,6 +1,7 @@
 # Jared
 [![Eslint](https://github.com/Akurganow/jared/actions/workflows/eslint.yml/badge.svg)](https://github.com/Akurganow/jared/actions/workflows/eslint.yml)
-[![Jest Tests](https://github.com/Akurganow/jared/actions/workflows/jest.yml/badge.svg)](https://github.com/Akurganow/jared/actions/workflows/jest.yml)
+[![Tests](https://github.com/Akurganow/jared/actions/workflows/tests.yml/badge.svg)](https://github.com/Akurganow/jared/actions/workflows/tests.yml)
+[![Build](https://github.com/Akurganow/jared/actions/workflows/build.yml/badge.svg)](https://github.com/Akurganow/jared/actions/workflows/build.yml)
 
 Browser extension for better way to work with browser history
 
