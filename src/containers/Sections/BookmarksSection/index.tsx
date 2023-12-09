@@ -159,6 +159,8 @@ export default function BookmarksSection({ withTitle, id, className, sectionClas
 	}
 	const handleRemoveClick = (id: string) => (event: ReactMouseEvent<HTMLButtonElement>) => {
 		event.preventDefault()
+
+		API.bookmarks.remove(id)
 		dispatch(updateSectionItem({
 			...section,
 			items: bookmarks.filter(bookmark => bookmark.id !== id),

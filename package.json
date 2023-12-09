@@ -1,6 +1,6 @@
 {
   "name": "jared",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Browser extension for better way to work with browser history.",
 	"author": "Alexander Kurganov <p2f2basb4@mozmail.com>",
 	"license": "MIT",

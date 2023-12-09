@@ -6,7 +6,7 @@ const { uniq, get } = require('lodash')
 
 const Dotenv = require('dotenv-webpack')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = (config, { dev }) => {
 	config.devtool = dev ? 'inline-source-map' : 'source-map'
@@ -31,9 +31,7 @@ module.exports = (config, { dev }) => {
 			{
 				test: /\.module\.css$/,
 				use: [
-					(dev ? 'style-loader' : {
-						loader: MiniCssExtractPlugin.loader,
-					}),
+					(dev ? 'style-loader' : 'style-loader'),
 					{
 						loader: 'css-loader',
 						options: {
@@ -52,9 +50,7 @@ module.exports = (config, { dev }) => {
 			{
 				test: /\.css$/,
 				use: [
-					(dev ? 'style-loader' : {
-						loader: MiniCssExtractPlugin.loader,
-					}),
+					(dev ? 'style-loader' : 'style-loader'),
 					{
 						loader: 'css-loader',
 						options: {
@@ -96,10 +92,6 @@ module.exports = (config, { dev }) => {
 			typescript: {
 				configFile: path.resolve(__dirname, './tsconfig.json'),
 			},
-		}),
-		new MiniCssExtractPlugin({
-			filename: '[name].css',
-			chunkFilename: '[id].css',
 		}),
 		new Dotenv({
 			safe: true,

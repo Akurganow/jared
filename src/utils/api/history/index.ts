@@ -7,7 +7,35 @@ export default class History {
 	constructor() {}
 
 	public async search(query: chrome.history.HistoryQuery) {
-		return await this.browser.history.search(query)
+		return (await this.browser.history.search(query))
+		// Do not remove next code, it's need for screenshots in future
+		// .map(item => {
+		// 	return {
+		// 		...item,
+		// 		title: (item.title as string)
+		// 			.replace(new RegExp('rwc', 'ig'), 'JWE')
+		// 			.replace(new RegExp('rcv', 'ig'), 'AER')
+		// 			.replace(new RegExp('Ringcentral', 'ig'), 'Jared')
+		// 			.replace(new RegExp('rise', 'ig'), 'provider')
+		// 			.replace(new RegExp('partner', 'ig'), 'provider')
+		// 			.replace(new RegExp('biz', 'ig'), 'us-east-1')
+		// 			.replace(new RegExp('brand', 'ig'), 'provider')
+		// 			.replace(new RegExp('faviconVideo', 'ig'), 'favicon')
+		// 			.replace(/(\d{3,})/ig, (match) => (Math.floor(parseInt(match) / 2)).toString())
+		// 			.replace('BSS', 'ESS')
+		// 			.replace('RU', 'ES')
+		// 			.replace('RC', 'JW')
+		// 			.replace('Web 3', 'Web Ext'),
+		// 		url: (item.url as string)
+		// 			.replace(new RegExp('rwc', 'ig'), 'JWE')
+		// 			.replace(new RegExp('rcv', 'ig'), 'AER')
+		// 			.replace('BSS', 'ESS')
+		// 			.replace(new RegExp('Ringcentral', 'ig'), 'Jared')
+		// 			.replace(new RegExp('gitops', 'ig'), 'ops')
+		// 			.replace(/(\d{3,})/ig, (match) => (Math.floor(parseInt(match) / 2)).toString())
+		// 			.replace('RU', 'ES'),
+		// 	}
+		// })
 	}
 
 	public async getItems(queries: HistoryQuery) {

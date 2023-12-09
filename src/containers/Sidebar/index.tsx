@@ -34,6 +34,8 @@ const sidebarItems: SidebarItemMap[] = [
 	}
 ]
 
+const hideHidden = true
+
 export default function ({ className, ...props }: SidebarProps) {
 	const dispatch = useDispatch()
 	const currentEditMode = useSelector(selectedEditMode)
@@ -52,7 +54,7 @@ export default function ({ className, ...props }: SidebarProps) {
 			</button>
 
 			{sidebarItems.map(({ hiddenOnPro, ...item }) => {
-				if (hiddenOnPro && process.env.NODE_ENV === 'production') {
+				if (hiddenOnPro && (hideHidden || process.env.NODE_ENV === 'production')) {
 					return null
 				}
 

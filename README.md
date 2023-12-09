@@ -5,6 +5,8 @@
 
 Browser extension for better way to work with browser history
 
+![Jared](/promo/open-graph.png)
+
 Supported providers:
 - Issue tracker
   - Jira
