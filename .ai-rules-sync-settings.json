@@ -1,0 +1,22 @@
+{
+  "sourceDir": ".rules",
+  "logging": {
+    "level": "debug"
+  },
+  "cursor": {
+    "enabled": true
+  },
+  "junie": {
+    "enabled": true
+  },
+  "claude": {
+    "enabled": true
+  },
+  "copilot": {
+    "enabled": true,
+    "mode": "per-file",
+    "template": "cursor",
+    "output": ".github/instructions",
+    "filenameTemplate": "{{id}}.instructions.md"
+  }
+}

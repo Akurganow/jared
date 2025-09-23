@@ -2,7 +2,11 @@ node_modules/
 dist/
 packages/
 .idea/
+.junie/
+.cursor/
+**/CLAUDE.md
 .jest/
+.plan/
 /coverage/
 /test-results/
 /playwright-report/
