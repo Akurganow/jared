@@ -1,10 +1,10 @@
 import cn from 'classnames'
 import PinButton from 'components/PinButton'
-import st from './styles.module.css'
 import type { MouseEvent } from 'react'
-import type { HistoryItem, ITSProviderType, ITSType, VCSProviderType, VCSType } from 'types/history'
+import type { HistoryItem as HistoryItemData, ITSProviderType, ITSType, VCSProviderType, VCSType } from 'types/history'
+import st from './styles.module.css'
 
-interface HistoryItemProps extends HistoryItem {
+interface HistoryItemProps extends HistoryItemData {
 	type: VCSType | ITSType
 	provider: 'unknown' | VCSProviderType | ITSProviderType
 	switchPin: (id: string, pinned: boolean) => void
@@ -40,23 +40,19 @@ export default function HistoryItem({ id, title, name, url, type, pinned, switch
 	}
 	const currentType = typesMap[type]
 
-	return <a
-		key={id}
-		title={title}
-		href={url}
-		className={cn(st.item, st[currentType])}
-		data-testid="HistoryItem"
-	>
-		<div className={st.name} data-testid="HistoryItem:name">
-			{name}
-		</div>
-		{title}
-		<PinButton
-			data-testid="HistoryItem:PinButton"
-			title={pinned ? 'Unpin' : 'Pin'}
-			pinned={pinned}
-			className={st.pinButton}
-			onClick={handlePinClick}
-		/>
-	</a>
+	return (
+		<a key={id} title={title} href={url} className={cn(st.item, st[currentType])} data-testid="HistoryItem">
+			<div className={st.name} data-testid="HistoryItem:name">
+				{name}
+			</div>
+			{title}
+			<PinButton
+				data-testid="HistoryItem:PinButton"
+				title={pinned ? 'Unpin' : 'Pin'}
+				pinned={pinned}
+				className={st.pinButton}
+				onClick={handlePinClick}
+			/>
+		</a>
+	)
 }

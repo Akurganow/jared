@@ -21,7 +21,7 @@ interface ThemeData {
 }
 
 export interface Theme {
-	name: string;
+	name: string
 	type: 'dark' | 'light'
 	colors: {
 		[key: string]: string | { [key: string]: string }
@@ -29,15 +29,15 @@ export interface Theme {
 			[key: string]: string
 		}
 	}
-	tokens: ThemeData[];
+	tokens: ThemeData[]
 	areas: {
 		button: {
 			default: ThemeSettings
 			action: ThemeSettings
 			danger: ThemeSettings
 			warning: ThemeSettings
-		};
+		}
 	} & {
-		[key in ThemeAreas]: ThemeSettings;
+		[key in ThemeAreas]: ThemeSettings
 	}
 }

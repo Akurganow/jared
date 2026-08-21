@@ -1,10 +1,9 @@
-import { ComponentProps } from 'react'
-import { Meta, StoryObj } from '@storybook/react'
-import { expect } from '@storybook/jest'
-import { within } from '@storybook/testing-library'
+import type { Meta, StoryObj } from '@storybook/react-webpack5'
+import type { ComponentProps } from 'react'
+import { expect, within } from 'storybook/test'
+import Tabs from './index'
 import mocked from './mock'
 import st from './styles.module.css'
-import Tabs from './index'
 
 const meta: Meta<ComponentProps<typeof Tabs>> = {
 	title: 'UI/Tabs',
@@ -23,16 +22,15 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
-		items: mocked.items as ComponentProps<typeof Tabs>['items']
+		items: mocked.items as ComponentProps<typeof Tabs>['items'],
 	},
 	play: async ({ canvasElement, step }) => {
-		const canvas= within(canvasElement)
+		const canvas = within(canvasElement)
 
 		const getActiveIndex = (): number => {
-			return canvas.getAllByTestId<HTMLButtonElement>('Tabs:Item')
-				.findIndex(item =>
-					item.classList.contains(st.active)
-				)
+			return canvas
+				.getAllByTestId<HTMLButtonElement>('Tabs:Item')
+				.findIndex((item) => item.classList.contains(st.active))
 		}
 
 		await step('Tabs should be rendered', async () => {
@@ -53,8 +51,7 @@ export const Default: Story = {
 		})
 
 		await step('Click on disabled item should not change active item', async () => {
-			const disabledItem = canvas.getAllByTestId<HTMLButtonElement>('Tabs:Item')
-				.find(item => item.disabled)
+			const disabledItem = canvas.getAllByTestId<HTMLButtonElement>('Tabs:Item').find((item) => item.disabled)
 
 			if (!disabledItem) throw new Error('Disabled item not found')
 
@@ -65,9 +62,7 @@ export const Default: Story = {
 
 		await step('Click on enabled item should change active item', async () => {
 			const items = canvas.getAllByTestId<HTMLButtonElement>('Tabs:Item')
-			const enabledItemIndex = items.findIndex(item =>
-				!item.disabled && !item.classList.contains(st.active)
-			)
+			const enabledItemIndex = items.findIndex((item) => !item.disabled && !item.classList.contains(st.active))
 
 			if (enabledItemIndex < 0) throw new Error('Enabled item not found')
 
@@ -79,9 +74,7 @@ export const Default: Story = {
 
 		await step('Click on active item should not change active item', async () => {
 			const items = canvas.getAllByTestId<HTMLButtonElement>('Tabs:Item')
-			const activeItemIndex = items.findIndex(item =>
-				item.classList.contains(st.active)
-			)
+			const activeItemIndex = items.findIndex((item) => item.classList.contains(st.active))
 
 			if (activeItemIndex < 0) throw new Error('Active item not found')
 

@@ -1,9 +1,9 @@
 import memoize from 'lodash/memoize'
-import { gitlabProcessConfig as gitlab } from 'utils/history/vcs/gitlab'
-import { githubProcessConfig as github } from 'utils/history/vcs/github'
+import type { ProcessConfigItem, ProcessorConfigType } from 'types/history'
 import { jiraProcessConfig as jira } from 'utils/history/its/jira'
 import { youtrackProcessConfig as youtrack } from 'utils/history/its/youtrack'
-import type { ProcessConfigItem, ProcessorConfigType } from 'types/history'
+import { githubProcessConfig as github } from 'utils/history/vcs/github'
+import { gitlabProcessConfig as gitlab } from 'utils/history/vcs/gitlab'
 
 const processorTypes = {
 	jira,
@@ -13,7 +13,7 @@ const processorTypes = {
 }
 
 export type ProcessorType = keyof typeof processorTypes
-export type ProcessorItemTypes = typeof processorTypes[ProcessorType][number][1]
+export type ProcessorItemTypes = (typeof processorTypes)[ProcessorType][number][1]
 export type ProcessorReturnType = ReturnType<ProcessorItemTypes>
 export type ProcessorCreatorType = (item: chrome.history.HistoryItem) => ProcessorReturnType
 export type DisabledProcessors = ProcessorConfigType['name'][]
@@ -21,12 +21,14 @@ export type DisabledProcessors = ProcessorConfigType['name'][]
 export function createHistoryItemProcessor(type: ProcessorType): ProcessorCreatorType {
 	const processor = processorTypes[type]
 
-	return function (item: chrome.history.HistoryItem): ProcessorReturnType {
+	return (item: chrome.history.HistoryItem): ProcessorReturnType => {
 		const index = processor.findIndex(([condition]) => condition(item))
 
 		if (index === -1) {
-			const unknownProcessor = processor
-				.find(([, , type]) => type.type === 'unknown') as ProcessConfigItem<chrome.history.HistoryItem, ProcessorReturnType>
+			const unknownProcessor = processor.find(([, , type]) => type.type === 'unknown') as ProcessConfigItem<
+				chrome.history.HistoryItem,
+				ProcessorReturnType
+			>
 			return unknownProcessor[1](item)
 		}
 

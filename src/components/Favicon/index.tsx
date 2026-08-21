@@ -1,10 +1,10 @@
-import { ImgHTMLAttributes, useMemo } from 'react'
+import { type ImgHTMLAttributes, useMemo } from 'react'
 
-interface FaviconProps extends ImgHTMLAttributes<HTMLImageElement>{
-	href: string,
-	size: number,
+interface FaviconProps extends ImgHTMLAttributes<HTMLImageElement> {
+	href: string
+	size: number
 }
-export default function ({ href, size, ...props }: FaviconProps) {
+export default function Favicon({ href, size, ...props }: FaviconProps) {
 	const faviconUrl = useMemo((): string => {
 		const url = new URL(chrome.runtime.getURL('/_favicon/'))
 		url.searchParams.set('pageUrl', href)
@@ -13,6 +13,5 @@ export default function ({ href, size, ...props }: FaviconProps) {
 		return url.toString()
 	}, [href, size])
 
-	return <img src={faviconUrl} width={size} height={size} {...props}/>
-
+	return <img src={faviconUrl} alt="" width={size} height={size} {...props} />
 }

@@ -1,6 +1,5 @@
-
-import { getUrl } from 'utils/history/helpers'
 import type { ProcessConfigItem, VCSHistoryItem } from 'types/history'
+import { getUrl } from 'utils/history/helpers'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
@@ -13,7 +12,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 		const repoName = `${path[0]}/${path[1]}`
 		const splitTitle = item.title?.split(' at ')
 		const title = splitTitle
-			? splitTitle[0].split('/')[1] + ` at ${splitTitle[1].split(' · ')[0]}`
+			? `${splitTitle[0].split('/')[1]} at ${splitTitle[1].split(' · ')[0]}`
 			: item.title?.split(' · ')[0] || 'Blob'
 
 		return {
@@ -28,7 +27,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 	{
 		type: 'blob',
 		name: 'Blob',
-	}
+	},
 ]
 
 export default processor

@@ -24,8 +24,8 @@ Date: 2025‑09‑23
   - Provides a Chrome Extensions History API mock using `jest-webextension-mock` and `@plq/faker`.
   - `chrome.history.search` is async and spy-able. Extend the setup file if you need additional APIs.
 - ModuleNameMapper:
-  - CSS: `jest-css-modules` (stubs class names; avoid asserting on generated hashes).
-  - SVG: `jest-svg-transformer`.
+  - CSS: `identity-obj-proxy` (stubs class names; avoid asserting on generated hashes).
+  - SVG: локальный мок `src/__mocks__/svg.ts` (повторяет форму экспорта svg-sprite-loader).
   - TS path aliases mirrored (e.g., `^utils/(.*)$ -> <rootDir>/utils/$1`).
 - Coverage: collected to `src/.jest/coverage` (relative to rootDir).
 

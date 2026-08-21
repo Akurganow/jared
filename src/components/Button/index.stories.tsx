@@ -1,8 +1,7 @@
-import { ComponentProps } from 'react'
-import { expect } from '@storybook/jest'
-import { within } from '@storybook/testing-library'
+import type { Meta, StoryObj } from '@storybook/react-webpack5'
 import Button from 'components/Button'
-import type { Meta, StoryObj } from '@storybook/react'
+import type { ComponentProps } from 'react'
+import { expect, within } from 'storybook/test'
 
 type ButtonPropsAndCustom = ComponentProps<typeof Button> & { text?: string }
 const meta: Meta<ButtonPropsAndCustom> = {
@@ -15,9 +14,7 @@ const meta: Meta<ButtonPropsAndCustom> = {
 		disabled: { control: 'boolean' },
 	},
 	component: Button,
-	render: ({ text, ...args }) => (
-		<Button {...args}>{text}</Button>
-	)
+	render: ({ text, ...args }) => <Button {...args}>{text}</Button>,
 }
 
 export default meta
@@ -28,7 +25,7 @@ export const Default: Story = {
 		text: 'Default Button',
 	},
 	play: async ({ canvasElement }) => {
-		const canvas= within(canvasElement)
+		const canvas = within(canvasElement)
 		const button = canvas.getByTestId('Button')
 
 		await expect(button).toBeInTheDocument()
@@ -39,7 +36,7 @@ export const Default: Story = {
 export const Emojis: Story = {
 	args: {
 		text: '😀 😎 👍 💯',
-	}
+	},
 }
 
 export const Disabled: Story = {
@@ -48,7 +45,7 @@ export const Disabled: Story = {
 		disabled: true,
 	},
 	play: async ({ canvasElement }) => {
-		const canvas= within(canvasElement)
+		const canvas = within(canvasElement)
 		const button = canvas.getByTestId('Button')
 
 		await expect(button).toBeInTheDocument()

@@ -1,5 +1,5 @@
-import { getUrl, getSplitTitle } from 'utils/history/helpers'
 import type { ITSHistoryItem, ProcessConfigItem } from 'types/history'
+import { getSplitTitle, getUrl } from 'utils/history/helpers'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
@@ -21,8 +21,8 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 	},
 	{
 		type: 'board',
-		name: 'Dashboard'
-	}
+		name: 'Dashboard',
+	},
 ]
 
 export default processor

@@ -1,14 +1,14 @@
 {
-  "appName": {
-    "message": "Jared",
-    "description": "The name of the application"
-  },
-  "appShortName": {
-    "message": "Jared",
-    "description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
-  },
-  "appDescription": {
-    "message": "Browser extension for better way to work with browser history",
-    "description": "The description of the application"
-  }
+	"appName": {
+		"message": "Jared",
+		"description": "The name of the application"
+	},
+	"appShortName": {
+		"message": "Jared",
+		"description": "The short_name (maximum of 12 characters recommended) is a short version of the app's name."
+	},
+	"appDescription": {
+		"message": "Browser extension for better way to work with browser history",
+		"description": "The description of the application"
+	}
 }

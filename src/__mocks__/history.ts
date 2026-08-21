@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import type { HistoryItem } from 'types/history'
 
 const getVariables = () => ({
-	userName: faker.internet.userName(),
+	userName: faker.internet.username(),
 	repoName: faker.lorem.word(),
 	fakePath: `/${faker.lorem.word()}/${faker.lorem.word()}/${faker.lorem.word()}`,
 	project: faker.lorem.word(3).toUpperCase(),
@@ -25,14 +25,17 @@ const templates = {
 		['https://github.com/{{fakePath}}', '{{fakePath}}'],
 	],
 	'https://jira.atlassian.com/': [
-		['https://jira.atlassian.com/browse/{{project}}-{{issueId}}', '{{project}}-{{issueId}} - {{summary}} - Atlassian Jira'],
+		[
+			'https://jira.atlassian.com/browse/{{project}}-{{issueId}}',
+			'{{project}}-{{issueId}} - {{summary}} - Atlassian Jira',
+		],
 		['https://jira.atlassian.com/{{fakePath}}', '{{fakePath}} - Atlassian Jira'],
 	],
 	'https://youtrack.jetbrains.com/': [
 		['https://youtrack.jetbrains.com/issue/{{project}}-{{issueId}}', '{{summary}}: YouTrack'],
 		['https://youtrack.jetbrains.com/{{fakePath}}', '{{fakePath}}: YouTrack'],
 	],
-	'google': [
+	google: [
 		['https://www.google.com/search?q={{search}}', '{{search}} - Google Search'],
 		['https://www.google.com/search?q={{search}}', '{{search}} - Google Search'],
 	],

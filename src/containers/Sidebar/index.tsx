@@ -1,16 +1,14 @@
-import { ComponentProps, DetailedHTMLProps, HTMLAttributes, useCallback } from 'react'
 import cn from 'classnames'
-import { useDispatch, useSelector } from 'react-redux'
+import SidebarItem from 'components/SidebarItem'
 import Icon from 'components/SVGIcon'
+import DownloadsTooltip from 'containers/DownloadsTooltip'
+import { type ComponentProps, type DetailedHTMLProps, type HTMLAttributes, useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { switchEditMode } from 'store/actions/sections'
 import { selectedEditMode } from 'store/selectors/sections'
-import SidebarItem from 'components/SidebarItem'
-import DownloadsTooltip from 'containers/DownloadsTooltip'
 import st from './styles.module.css'
 
-interface SidebarProps
-	extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {
-}
+interface SidebarProps extends DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> {}
 
 interface SidebarItemMap extends Omit<ComponentProps<typeof SidebarItem>, 'icon' | 'name'> {
 	name: ComponentProps<typeof SidebarItem>['icon']
@@ -20,23 +18,23 @@ interface SidebarItemMap extends Omit<ComponentProps<typeof SidebarItem>, 'icon'
 const sidebarItems: SidebarItemMap[] = [
 	{
 		name: 'settings',
-		tooltip: null
+		tooltip: null,
 	},
 	{
 		name: 'download',
 		tooltip: <DownloadsTooltip />,
-		hiddenOnPro: true
+		hiddenOnPro: true,
 	},
 	{
 		name: 'code',
 		tooltip: null,
-		hiddenOnPro: true
-	}
+		hiddenOnPro: true,
+	},
 ]
 
 const hideHidden = true
 
-export default function ({ className, ...props }: SidebarProps) {
+export default function Sidebar({ className, ...props }: SidebarProps) {
 	const dispatch = useDispatch()
 	const currentEditMode = useSelector(selectedEditMode)
 
@@ -45,12 +43,9 @@ export default function ({ className, ...props }: SidebarProps) {
 	}, [currentEditMode, dispatch])
 
 	return (
-		<aside
-			className={cn(st.sidebar, className)}
-			{...props}
-		>
-			<button className={st.item} onClick={handleEditMode}>
-				<Icon name="edit" className={cn(st.icon, { [st.active]: !currentEditMode })}/>
+		<aside className={cn(st.sidebar, className)} {...props}>
+			<button type="button" className={st.item} onClick={handleEditMode}>
+				<Icon name="edit" className={cn(st.icon, { [st.active]: !currentEditMode })} />
 			</button>
 
 			{sidebarItems.map(({ hiddenOnPro, ...item }) => {
@@ -58,20 +53,17 @@ export default function ({ className, ...props }: SidebarProps) {
 					return null
 				}
 
-				return <SidebarItem
-					key={item.name}
-					className={st.item}
-					icon={item.name as ComponentProps<typeof SidebarItem>['icon']}
-					{...item}
-				/>
+				return (
+					<SidebarItem
+						key={item.name}
+						className={st.item}
+						icon={item.name as ComponentProps<typeof SidebarItem>['icon']}
+						{...item}
+					/>
+				)
 			})}
 
-			<SidebarItem
-				className={cn(st.item, st.last)}
-				icon="help"
-				name="help"
-				tooltip={null}
-			/>
+			<SidebarItem className={cn(st.item, st.last)} icon="help" name="help" tooltip={null} />
 		</aside>
 	)
 }

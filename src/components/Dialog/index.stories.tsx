@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Meta, StoryObj } from '@storybook/react'
-import { ComponentProps } from 'react'
-import Dialog, { DialogBody, DialogFooter, DialogHeader } from 'components/Dialog'
+import type { Meta, StoryObj } from '@storybook/react-webpack5'
 import Button from 'components/Button'
+import Dialog, { DialogBody, DialogFooter, DialogHeader } from 'components/Dialog'
+import type { ComponentProps } from 'react'
 
 const meta: Meta<ComponentProps<typeof Dialog>> = {
 	title: 'UI/Dialog',
@@ -17,7 +17,7 @@ const meta: Meta<ComponentProps<typeof Dialog>> = {
 	tags: ['autodocs', 'ui', 'dialog'],
 	component: Dialog,
 	decorators: [
-		(story) =>
+		(story) => (
 			<div id="dialog">
 				<style>{`
 				#dialog input,
@@ -33,21 +33,26 @@ const meta: Meta<ComponentProps<typeof Dialog>> = {
 				`}</style>
 				{story()}
 			</div>
+		),
 	],
-	render: () =>
+	render: () => (
 		<div style={{ width: '25rem' }}>
 			<DialogHeader>Dialog</DialogHeader>
 
 			<DialogBody>
-				<form id="test" name="test" style={{
-					display: 'grid',
-					gridTemplateColumns: 'minmax(max-content, 5rem) 1fr',
-					gridAutoRows: 'max-content',
-					gridGap: '0.25rem',
-					alignContent: 'center',
-					alignItems: 'center',
-					padding: '0.5rem',
-				}}>
+				<form
+					id="test"
+					name="test"
+					style={{
+						display: 'grid',
+						gridTemplateColumns: 'minmax(max-content, 5rem) 1fr',
+						gridAutoRows: 'max-content',
+						gridGap: '0.25rem',
+						alignContent: 'center',
+						alignItems: 'center',
+						padding: '0.5rem',
+					}}
+				>
 					<label htmlFor="name">Name</label>
 					<input id="name" type="text" placeholder="Enter name" required />
 
@@ -60,10 +65,15 @@ const meta: Meta<ComponentProps<typeof Dialog>> = {
 			</DialogBody>
 
 			<DialogFooter>
-				<Button disabled type="submit" form="test" name="save">Save</Button>
-				<Button type="reset" form="test" name="reset">Reset</Button>
+				<Button disabled type="submit" form="test" name="save">
+					Save
+				</Button>
+				<Button type="reset" form="test" name="reset">
+					Reset
+				</Button>
 			</DialogFooter>
 		</div>
+	),
 }
 export default meta
 type Story = StoryObj<typeof meta>

@@ -1,9 +1,9 @@
 import memoize from 'lodash/memoize'
-import { jiraProcessConfig } from 'utils/history/its/jira'
-import { gitlabProcessConfig } from 'utils/history/vcs/gitlab'
-import { githubProcessConfig } from 'utils/history/vcs/github'
-import { youtrackProcessConfig } from 'utils/history/its/youtrack'
 import type { HistoryQuery } from 'types/history'
+import { jiraProcessConfig } from 'utils/history/its/jira'
+import { youtrackProcessConfig } from 'utils/history/its/youtrack'
+import { githubProcessConfig } from 'utils/history/vcs/github'
+import { gitlabProcessConfig } from 'utils/history/vcs/gitlab'
 
 const configs = {
 	gitlab: gitlabProcessConfig,
@@ -27,7 +27,7 @@ export const getVCSQueries = memoize((query: string) =>
 				maxResults: parseInt(maxResults, 10) || undefined,
 				...(!config ? { error: new Error(`Unknown type: ${type}`) } : {}),
 			}
-		})
+		}),
 )
 export const getITSQueries = memoize((query: string) =>
 	query
@@ -43,5 +43,5 @@ export const getITSQueries = memoize((query: string) =>
 				maxResults: parseInt(maxResults, 10) || undefined,
 				...(!config ? { error: new Error(`Unknown type: ${type}`) } : {}),
 			}
-		})
+		}),
 )

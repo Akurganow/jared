@@ -1,6 +1,6 @@
 export type ITSType = 'unknown' | 'issue' | 'filter' | 'project' | 'profile' | 'board'
 export type VCSType =
-	'unknown'
+	| 'unknown'
 	| 'profile'
 	| 'issue'
 	| 'settings'
@@ -18,10 +18,10 @@ export type VCSProviderType = 'gitlab' | 'github'
 export type ITSProviderType = 'jira' | 'youtrack'
 
 export type HistoryQuery = {
-	type?: VCSProviderType | ITSProviderType;
-	text: string;
-	maxResults?: number;
-	error?: Error;
+	type?: VCSProviderType | ITSProviderType
+	text: string
+	maxResults?: number
+	error?: Error
 }
 
 export interface HistoryItem extends chrome.history.HistoryItem {
@@ -47,9 +47,5 @@ export interface ProcessorConfigType {
 	name: string
 }
 
-export type ProcessConfigItem<T, R> = [
-	(item: T) => boolean,
-	(item: T) => R,
-	ProcessorConfigType
-]
+export type ProcessConfigItem<T, R> = [(item: T) => boolean, (item: T) => R, ProcessorConfigType]
 export type ProcessConfig<T, R> = ProcessConfigItem<T, R>[]

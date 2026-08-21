@@ -1,5 +1,5 @@
-import { getThemesNames } from 'utils/themes'
 import type { SettingsState } from 'types/settings'
+import { getThemesNames } from 'utils/themes'
 
 export const storeKey = 'settings'
 export const initialState: SettingsState = {
@@ -11,4 +11,3 @@ export const initialState: SettingsState = {
 		hint: 'Select a theme',
 	},
 }
-

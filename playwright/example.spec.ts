@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures/install-extension'
+import { expect, test } from './fixtures/install-extension'
 
 test('has title', async ({ context }) => {
 	const page = await context.newPage()

@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux'
 import { selectedSetting } from 'store/selectors/settings'
+import type { SettingTypeBoolean } from 'types/settings'
 import st from '../styles.module.css'
 import type { SettingsFieldProps } from './types'
-import type { SettingTypeBoolean } from 'types/settings'
 
-export default function ({ setting }: SettingsFieldProps) {
+export default function BooleanOption({ setting }: SettingsFieldProps) {
 	const { value, name } = useSelector(selectedSetting(setting)) as unknown as SettingTypeBoolean
 
 	return (

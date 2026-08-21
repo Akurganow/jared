@@ -1,5 +1,5 @@
-import { DetailedHTMLProps, ButtonHTMLAttributes } from 'react'
 import cn from 'classnames'
+import type { ButtonHTMLAttributes, DetailedHTMLProps } from 'react'
 import st from './styles.module.css'
 
 interface HTMLButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
@@ -8,20 +8,13 @@ interface HTMLButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLBut
 }
 
 const Button = ({ children, className, variant = 'default', text, type = 'button', ...props }: HTMLButtonProps) => {
-	const classNames = cn(
-		st.button,
-		className,
-		st[variant],
-	)
+	const classNames = cn(st.button, className, st[variant])
 
-	return <button
-		type={type}
-		data-testid="Button"
-		className={classNames}
-		{...props}
-	>
-		{text || children}
-	</button>
+	return (
+		<button type={type} data-testid="Button" className={classNames} {...props}>
+			{text || children}
+		</button>
+	)
 }
 
 export default Button

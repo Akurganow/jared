@@ -1,11 +1,12 @@
-import { actionCreatorFactory } from 'typescript-fsa'
 import { storeKey } from 'store/constants/settings'
 import type { SettingsState } from 'types/settings'
+import { actionCreatorFactory } from 'typescript-fsa'
 
 const createAction = actionCreatorFactory(storeKey)
-export const setSetting =
-	createAction<{ key: keyof SettingsState, value: SettingsState[keyof SettingsState]['value'] }>('setSetting')
-export const setSettings =
-	createAction<Partial<SettingsState>>('setSettings')
+export const setSetting = createAction<{
+	key: keyof SettingsState
+	value: SettingsState[keyof SettingsState]['value']
+}>('setSetting')
+export const setSettings = createAction<Partial<SettingsState>>('setSettings')
 
 export const setThemeOptions = createAction<SettingsState['theme']['options']>('setThemeOptions')

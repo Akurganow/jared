@@ -1,11 +1,11 @@
 import cn from 'classnames'
-import { useDispatch } from 'react-redux'
-import { useCallback } from 'react'
 import Icon from 'components/SVGIcon'
+import type { CSSProperties, HTMLAttributes } from 'react'
+import { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
 import { openDialog } from 'store/actions/dialogs'
 import { setEditingSection, splitSection } from 'store/actions/sections'
 import st from './styles.module.css'
-import type { CSSProperties, HTMLAttributes } from 'react'
 
 interface SectionItemProps extends HTMLAttributes<HTMLDivElement> {
 	id: string
@@ -17,7 +17,18 @@ interface SectionItemProps extends HTMLAttributes<HTMLDivElement> {
 	sectionStyle?: CSSProperties
 }
 
-export default function SectionItem({ id, type, title, withTitle, children, className, sectionClassName, style, sectionStyle, isLoading }: SectionItemProps) {
+export default function SectionItem({
+	id,
+	type,
+	title,
+	withTitle,
+	children,
+	className,
+	sectionClassName,
+	style,
+	sectionStyle,
+	isLoading,
+}: SectionItemProps) {
 	const dispatch = useDispatch()
 	const openSettings = useCallback(() => {
 		dispatch(setEditingSection(id))
@@ -28,28 +39,29 @@ export default function SectionItem({ id, type, title, withTitle, children, clas
 		dispatch(splitSection(id))
 	}, [dispatch, id])
 
-	return <>
-		<section
-			className={cn(st.section, sectionClassName, { [st.withTitle]: withTitle })}
-			style={sectionStyle}
-		>
+	return (
+		<section className={cn(st.section, sectionClassName, { [st.withTitle]: withTitle })} style={sectionStyle}>
 			{isLoading && <div className={st.loader} />}
-			{withTitle && <h2 className={st.title}>
-				{title || ''}
+			{withTitle && (
+				<h2 className={st.title}>
+					{title || ''}
 
-				<div className={st.actions}>
-					{type !== 'container' && <button className={st.item} onClick={handleSplit} title="Split container">
-						<Icon name="divide" className={st.icon} />
-					</button>}
-					<button className={st.item} onClick={openSettings} title="Container settings">
-						<Icon name="settings" className={st.icon}/>
-					</button>
-				</div>
-			</h2>}
+					<div className={st.actions}>
+						{type !== 'container' && (
+							<button type="button" className={st.item} onClick={handleSplit} title="Split container">
+								<Icon name="divide" className={st.icon} />
+							</button>
+						)}
+						<button type="button" className={st.item} onClick={openSettings} title="Container settings">
+							<Icon name="settings" className={st.icon} />
+						</button>
+					</div>
+				</h2>
+			)}
 
 			<div className={cn(st.content, className)} style={style}>
 				{children}
 			</div>
 		</section>
-	</>
+	)
 }

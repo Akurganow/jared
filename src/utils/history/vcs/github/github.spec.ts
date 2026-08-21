@@ -1,20 +1,20 @@
 import { faker } from '@faker-js/faker'
-import { createRepositoryTemplate, checkProcessor } from 'utils/history/history.mock'
-import unknown from 'utils/history/vcs/github/unknown'
-import tree from 'utils/history/vcs/github/tree'
-import topics from 'utils/history/vcs/github/topics'
-import settings from 'utils/history/vcs/github/settings'
-import repository from 'utils/history/vcs/github/repository'
-import pullRequest from 'utils/history/vcs/github/pullRequest'
-import profile from 'utils/history/vcs/github/profile'
-import issue from 'utils/history/vcs/github/issue'
-import filterSearch from 'utils/history/vcs/github/filter-search'
-import filterPullRequests from 'utils/history/vcs/github/filter-pullRequests'
-import filterIssues from 'utils/history/vcs/github/filter-issues'
-import blobSearch from 'utils/history/vcs/github/blob-search'
-import blob from 'utils/history/vcs/github/blob'
 import type { VCSHistoryItem } from 'types/history'
 import type { TemplateConfig } from 'utils/history/history.mock'
+import { checkProcessor, createRepositoryTemplate } from 'utils/history/history.mock'
+import blob from 'utils/history/vcs/github/blob'
+import blobSearch from 'utils/history/vcs/github/blob-search'
+import filterIssues from 'utils/history/vcs/github/filter-issues'
+import filterPullRequests from 'utils/history/vcs/github/filter-pullRequests'
+import filterSearch from 'utils/history/vcs/github/filter-search'
+import issue from 'utils/history/vcs/github/issue'
+import profile from 'utils/history/vcs/github/profile'
+import pullRequest from 'utils/history/vcs/github/pullRequest'
+import repository from 'utils/history/vcs/github/repository'
+import settings from 'utils/history/vcs/github/settings'
+import topics from 'utils/history/vcs/github/topics'
+import tree from 'utils/history/vcs/github/tree'
+import unknown from 'utils/history/vcs/github/unknown'
 
 const configs: TemplateConfig<VCSHistoryItem> = {
 	unknown: {
@@ -32,7 +32,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'unknown',
 			typeName: 'Unknown',
 			provider: 'github',
-		}
+		},
 	},
 	tree: {
 		variables: {
@@ -49,7 +49,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'tree',
 			typeName: 'Tree',
 			provider: 'github',
-		}
+		},
 	},
 	topics: {
 		variables: {
@@ -65,7 +65,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'topics',
 			typeName: 'Topics',
 			provider: 'github',
-		}
+		},
 	},
 	settings: {
 		variables: {
@@ -81,7 +81,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'settings',
 			typeName: 'Settings',
 			provider: 'github',
-		}
+		},
 	},
 	repository: {
 		variables: {
@@ -97,7 +97,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'repository',
 			typeName: 'Repository',
 			provider: 'github',
-		}
+		},
 	},
 	pullRequest: {
 		variables: {
@@ -116,11 +116,11 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'pullRequest',
 			typeName: 'Pull request',
 			provider: 'github',
-		}
+		},
 	},
 	profile: {
 		variables: {
-			userName: () => faker.internet.userName(),
+			userName: () => faker.internet.username(),
 			fullName: () => faker.person.fullName(),
 		},
 		create: {
@@ -133,7 +133,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'profile',
 			typeName: 'Profile',
 			provider: 'github',
-		}
+		},
 	},
 	issue: {
 		variables: {
@@ -150,7 +150,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'issue',
 			typeName: 'Issue',
 			provider: 'github',
-		}
+		},
 	},
 	filterSearch: {
 		variables: {
@@ -166,7 +166,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'filter',
 			typeName: 'Search',
 			provider: 'github',
-		}
+		},
 	},
 	filterPullRequests: {
 		variables: {
@@ -182,7 +182,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'filter',
 			typeName: 'Pull requests',
 			provider: 'github',
-		}
+		},
 	},
 	filterIssues: {
 		variables: {
@@ -198,7 +198,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'filter',
 			typeName: 'Issues',
 			provider: 'github',
-		}
+		},
 	},
 	blobSearch: {
 		variables: {
@@ -215,7 +215,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'blob',
 			typeName: 'Blob search',
 			provider: 'github',
-		}
+		},
 	},
 	blob: {
 		variables: {
@@ -234,8 +234,8 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'blob',
 			typeName: 'Blob',
 			provider: 'github',
-		}
-	}
+		},
+	},
 }
 
 describe('utils/history/vcs/github', () => {

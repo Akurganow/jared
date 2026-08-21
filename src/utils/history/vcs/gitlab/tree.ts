@@ -1,5 +1,5 @@
-import { getUrl } from 'utils/history/helpers'
 import type { ProcessConfigItem, VCSHistoryItem } from 'types/history'
+import { getUrl } from 'utils/history/helpers'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
@@ -18,13 +18,13 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			type: 'tree',
 			typeName: 'Tree',
 			name: repoName,
-			title: `${splitTitle[0]} at ${splitTitle[1]}`
+			title: `${splitTitle[0]} at ${splitTitle[1]}`,
 		}
 	},
 	{
 		type: 'tree',
 		name: 'Tree',
-	}
+	},
 ]
 
 export default processor

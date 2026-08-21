@@ -1,14 +1,11 @@
-import issue from './issue'
 import type { ITSHistoryItem, ProcessConfigItem } from 'types/history'
+import issue from './issue'
 
-const knownProcessors = [
-	issue[0],
-]
+const knownProcessors = [issue[0]]
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
-		return Boolean(item)
-		&& knownProcessors.every(processor => !processor(item))
+		return Boolean(item) && knownProcessors.every((processor) => !processor(item))
 	},
 	(item: chrome.history.HistoryItem) => ({
 		...item,

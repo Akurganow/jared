@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment, import/default,import/no-extraneous-dependencies */
-// @ts-ignore
-import chrome from 'jest-webextension-mock'
 import { History as MockHistory } from '@plq/faker'
+import mockedChrome from 'jest-webextension-mock'
 
 const createEvent = () => ({
 	addListener: jest.fn(),
@@ -12,7 +10,7 @@ const createEvent = () => ({
 
 // https://developer.chrome.com/docs/extensions/reference/history/
 const history = {
-	// @ts-ignore
+	// @ts-expect-error
 	search: async (query: chrome.history.HistoryQuery) => new MockHistory(query).getHistory(),
 	getVisits: jest.fn(),
 	addUrl: jest.fn(),
@@ -25,6 +23,6 @@ const history = {
 
 jest.spyOn(history, 'search')
 
-global.chrome.history = history
+global.chrome.history = history as unknown as typeof chrome.history
 
-export default chrome
+export default mockedChrome

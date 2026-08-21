@@ -1,7 +1,7 @@
-import NumberField from './Number'
-import StringField from './String'
 import BooleanField from './Boolean'
+import NumberField from './Number'
 import OptionField from './Option'
+import StringField from './String'
 
 export default {
 	number: NumberField,

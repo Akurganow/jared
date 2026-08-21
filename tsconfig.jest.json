@@ -7,8 +7,11 @@
 			"rootDir": "."
 		}
 	},
-	"include": [
-		"./**/*",
-		"./node_modules/jest-dom"
-	]
+	"compilerOptions": {
+		"rootDir": ".",
+		"module": "commonjs",
+		"moduleResolution": "node10",
+		"ignoreDeprecations": "6.0"
+	},
+	"include": ["./**/*"]
 }

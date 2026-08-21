@@ -1,6 +1,5 @@
-import { SectionSettingsFieldPropsOption } from 'types/sections'
+import type { SectionSettingsFieldPropsOption } from 'types/sections'
 import st from '../styles.module.css'
-
 
 export default function OptionField({ name, setting }: SectionSettingsFieldPropsOption) {
 	const { value, options } = setting
@@ -10,11 +9,11 @@ export default function OptionField({ name, setting }: SectionSettingsFieldProps
 			<div className={st.name}>{name}:</div>
 			<div className={st.value}>
 				<select name={name} defaultValue={value}>
-					{options.map(option =>
+					{options.map((option) => (
 						<option key={option} value={option}>
 							{option}
-						</option>)
-					}
+						</option>
+					))}
 				</select>
 			</div>
 			<div />

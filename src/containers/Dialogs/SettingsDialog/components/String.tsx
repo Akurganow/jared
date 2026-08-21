@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux'
 import { selectedSetting } from 'store/selectors/settings'
+import type { SettingTypeString } from 'types/settings'
 import st from '../styles.module.css'
 import type { SettingsFieldProps } from './types'
-import type { SettingTypeString } from 'types/settings'
 
-export default function ({ setting }: SettingsFieldProps) {
+export default function StringOption({ setting }: SettingsFieldProps) {
 	const { value, name } = useSelector(selectedSetting(setting)) as unknown as SettingTypeString
 
 	return (

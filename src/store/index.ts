@@ -1,17 +1,16 @@
-import { AnyAction, combineReducers, Store } from 'redux'
-import { configureStore, ThunkMiddleware } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 // import { devToolsEnhancer } from '@redux-devtools/remote'
-import thunk from 'redux-thunk'
-import { persistReducer, persistStore } from 'redux-persist'
-import { syncStorage } from 'redux-persist-webextension-storage'
+import type { Store } from 'redux'
+import { FLUSH, PAUSE, PERSIST, PURGE, persistReducer, persistStore, REGISTER, REHYDRATE } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import { syncStorage } from 'redux-persist-webextension-storage'
 import { initialState as dialogsInitialState, storeKey as dialogsStoreKey } from 'store/constants/dialogs'
-import { initialState as settingsInitialState, storeKey as settingsStoreKey } from 'store/constants/settings'
 import { initialState as sectionsInitialState, storeKey as sectionsStoreKey } from 'store/constants/sections'
+import { initialState as settingsInitialState, storeKey as settingsStoreKey } from 'store/constants/settings'
 import dialogsReducer from 'store/reducers/dialogs'
-import settingsReducer from 'store/reducers/settings'
 import sectionsReducer from 'store/reducers/sections'
-import { PersistState, RootState } from 'store/types'
+import settingsReducer from 'store/reducers/settings'
+import type { PersistState, RootState } from 'store/types'
 
 type StorageInterface = typeof storage
 
@@ -40,12 +39,17 @@ export const preloadedState = {
 	[sectionsStoreKey]: sectionsInitialState as PersistState<typeof sectionsInitialState>,
 }
 
-const middleware = [thunk as ThunkMiddleware<RootState, AnyAction>]
-
 const store = configureStore({
 	reducer,
 	preloadedState,
-	middleware,
+	// redux-persist диспатчит несериализуемые action — исключаем их из проверки,
+	// как рекомендует официальная документация Redux Toolkit
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+			},
+		}),
 	devTools: process.env.NODE_ENV !== 'production',
 	// enhancers: [devToolsEnhancer({ realtime: true, hostname: 'localhost', port: 1024 })],
 })
@@ -53,7 +57,7 @@ const store = configureStore({
 const persistor = persistStore(store as unknown as Store)
 
 // persistor.subscribe(async () => {
-// 	const dispatch: ThunkDispatch<RootState, never, AnyAction> = store.dispatch
+// 	const dispatch: ThunkDispatch<RootState, never, UnknownAction> = store.dispatch
 // 	const { settings } = store.getState()
 //
 // 	if (settings._persist.rehydrated) {
@@ -61,4 +65,5 @@ const persistor = persistStore(store as unknown as Store)
 // 	}
 // })
 
-export { store, persistor }
+export type { RootState }
+export { persistor, store }

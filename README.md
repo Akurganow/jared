@@ -1,5 +1,5 @@
 # Jared
-[![Eslint](https://github.com/Akurganow/jared/actions/workflows/eslint.yml/badge.svg)](https://github.com/Akurganow/jared/actions/workflows/eslint.yml)
+[![Lint](https://github.com/Akurganow/jared/actions/workflows/lint.yml/badge.svg)](https://github.com/Akurganow/jared/actions/workflows/lint.yml)
 [![Tests](https://github.com/Akurganow/jared/actions/workflows/tests.yml/badge.svg)](https://github.com/Akurganow/jared/actions/workflows/tests.yml)
 [![Build](https://github.com/Akurganow/jared/actions/workflows/build.yml/badge.svg)](https://github.com/Akurganow/jared/actions/workflows/build.yml)
 

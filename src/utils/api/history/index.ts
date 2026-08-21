@@ -1,13 +1,11 @@
-import { ITSHistoryItem, ProcessConfig, VCSHistoryItem } from 'types/history'
-import { Browser, HistoryItem, HistoryQuery } from '../types'
+import type { ITSHistoryItem, ProcessConfig, VCSHistoryItem } from 'types/history'
+import type { Browser, HistoryItem, HistoryQuery } from '../types'
 
 export default class History {
-	private readonly browser: Browser = window.browser ? window.browser : window.chrome
-
-	constructor() {}
+	private readonly browser: Browser = (window.browser ?? window.chrome) as unknown as Browser
 
 	public async search(query: chrome.history.HistoryQuery) {
-		return (await this.browser.history.search(query))
+		return await this.browser.history.search(query)
 		// Do not remove next code, it's need for screenshots in future
 		// .map(item => {
 		// 	return {
@@ -42,7 +40,7 @@ export default class History {
 		let results: HistoryItem[]
 
 		if (Array.isArray(queries)) {
-			results = (await Promise.all(queries.map(query => this.search(query)))).flat()
+			results = (await Promise.all(queries.map((query) => this.search(query)))).flat()
 		} else {
 			results = await this.search(queries)
 		}
@@ -50,11 +48,14 @@ export default class History {
 		return results
 	}
 
-	public async getProcessedItems<T extends VCSHistoryItem | ITSHistoryItem>(queries: HistoryQuery, config: ProcessConfig<HistoryItem, T>) {
+	public async getProcessedItems<T extends VCSHistoryItem | ITSHistoryItem>(
+		queries: HistoryQuery,
+		config: ProcessConfig<HistoryItem, T>,
+	) {
 		let results: HistoryItem[]
 
 		if (Array.isArray(queries)) {
-			results = (await Promise.all(queries.map(query => this.search(query)))).flat()
+			results = (await Promise.all(queries.map((query) => this.search(query)))).flat()
 		} else {
 			results = await this.search(queries)
 		}
@@ -62,12 +63,17 @@ export default class History {
 		return this.processItems(results, config)
 	}
 
-	private processItems<T extends VCSHistoryItem | ITSHistoryItem>(items: HistoryItem[], config: ProcessConfig<HistoryItem, T>) {
-		return items.map(item => {
-			const processor = config.find(([test]) => test(item)) as typeof config[number]
+	private processItems<T extends VCSHistoryItem | ITSHistoryItem>(
+		items: HistoryItem[],
+		config: ProcessConfig<HistoryItem, T>,
+	) {
+		return items
+			.map((item) => {
+				const processor = config.find(([test]) => test(item)) as (typeof config)[number]
 
-			return processor?.[1](item)
-		}).filter(Boolean) as T[]
+				return processor?.[1](item)
+			})
+			.filter(Boolean) as T[]
 	}
 
 	// public async getProcessedItems(queries: Queries, config?: ProcessConfig<HistoryItem, VCSHistoryItem | ITSHistoryItem | HistoryItem>): Promise<Results[]> {

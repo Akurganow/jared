@@ -1,13 +1,11 @@
-import { getUrl } from 'utils/history/helpers'
 import type { ProcessConfigItem, VCSHistoryItem } from 'types/history'
+import { getUrl } from 'utils/history/helpers'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')
 
-		return path.length === 1
-		&& !path[0].includes('search')
-		&& !path[0].includes('issues')
+		return path.length === 1 && !path[0].includes('search') && !path[0].includes('issues')
 	},
 	(item: chrome.history.HistoryItem) => ({
 		...item,
@@ -20,7 +18,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 	{
 		type: 'profile',
 		name: 'Profile',
-	}
+	},
 ]
 
 export default processor

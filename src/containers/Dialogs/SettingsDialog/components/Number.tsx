@@ -1,19 +1,11 @@
 import { useSelector } from 'react-redux'
 import { selectedSetting } from 'store/selectors/settings'
+import type { SettingTypeNumber } from 'types/settings'
 import st from '../styles.module.css'
 import type { SettingsFieldProps } from './types'
-import type { SettingTypeNumber } from 'types/settings'
 
-
-export default function ({ setting }: SettingsFieldProps) {
-	const {
-		value,
-		name,
-		max,
-		min,
-		step,
-	} =
-		useSelector(selectedSetting(setting)) as unknown as SettingTypeNumber
+export default function NumberOption({ setting }: SettingsFieldProps) {
+	const { value, name, max, min, step } = useSelector(selectedSetting(setting)) as unknown as SettingTypeNumber
 
 	return (
 		<>

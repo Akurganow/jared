@@ -2,7 +2,9 @@
 	background-color: transparent;
 	border: none;
 	color: currentColor;
-	transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+	transition:
+		transform 0.2s ease-in-out,
+		filter 0.2s ease-in-out;
 	cursor: pointer;
 	filter: brightness(0.8);
 	transform: scale(0.8);

@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker'
+import type { ITSProviderType, ProcessConfigItem, VCSProviderType } from 'types/history'
 import {
 	filterDisabledItems,
 	filterItems,
@@ -7,23 +8,23 @@ import {
 	getUrl,
 	movePinnedItemBetweenArrays,
 } from 'utils/history/helpers'
-import { ITSProviderType, ProcessConfigItem, VCSProviderType } from 'types/history'
 
 const providers: (ITSProviderType | VCSProviderType)[] = ['github', 'gitlab', 'jira', 'youtrack']
-const getFakeHistory = (count: number = 100) => faker.helpers.multiple(
-	() => ({
-		id: faker.string.nanoid(),
-		visitCount: faker.number.int({ min: 0, max: 100 }),
-		typedCount: faker.number.int({ min: 0, max: 100 }),
-		lastVisitTime: faker.date.past().getTime(),
-		title: faker.lorem.sentence(),
-		url: faker.internet.url(),
-		type: faker.helpers.arrayElement(['vcs', 'its']),
-		typeName: faker.helpers.arrayElement(['Issue', 'Unknown']),
-		provider: faker.helpers.arrayElement(providers),
-	}),
-	{ count },
-)
+const getFakeHistory = (count: number = 100) =>
+	faker.helpers.multiple(
+		() => ({
+			id: faker.string.nanoid(),
+			visitCount: faker.number.int({ min: 0, max: 100 }),
+			typedCount: faker.number.int({ min: 0, max: 100 }),
+			lastVisitTime: faker.date.past().getTime(),
+			title: faker.lorem.sentence(),
+			url: faker.internet.url(),
+			type: faker.helpers.arrayElement(['vcs', 'its']),
+			typeName: faker.helpers.arrayElement(['Issue', 'Unknown']),
+			provider: faker.helpers.arrayElement(providers),
+		}),
+		{ count },
+	)
 
 describe('utils/history/helpers', () => {
 	test('getUrl', () => {
@@ -74,7 +75,7 @@ describe('utils/history/helpers', () => {
 		const filtered = items.filter(filterDisabledItems(disabled))
 
 		expect(filtered).not.toHaveLength(100)
-		expect(filtered).not.toContain(items.find(({ typeName }) => typeName === 'unknown'))
+		expect(filtered).not.toContain(items.find(({ typeName }) => typeName === 'Unknown'))
 	})
 
 	test('movePinnedItemBetweenArrays', () => {
@@ -82,29 +83,29 @@ describe('utils/history/helpers', () => {
 		const pinned = items.slice(0, 10)
 		const filtered = items.filter(filterItems(pinned))
 		const movedId = filtered[0].id
-		const [arrFrom, arrTo ] = movePinnedItemBetweenArrays(filtered, pinned, movedId)
+		const [arrFrom, arrTo] = movePinnedItemBetweenArrays(filtered, pinned, movedId)
 
 		expect(arrFrom).toHaveLength(filtered.length - 1)
 		expect(arrTo).toHaveLength(pinned.length + 1)
-		expect(arrFrom.find(item => item.id === movedId)).toBeUndefined()
-		expect(arrTo.find(item => item.id === movedId)).toBeDefined()
+		expect(arrFrom.find((item) => item.id === movedId)).toBeUndefined()
+		expect(arrTo.find((item) => item.id === movedId)).toBeDefined()
 	})
 
 	test('getConfigTypes', () => {
 		const typesArray = ['one', 'two']
 		const config = faker.helpers.multiple(
-			() => [
-				(value: string) => Boolean(value),
-				(value: string) => value,
-				{
-					type: faker.helpers.arrayElement(typesArray),
-					name: faker.lorem.word(),
-				}
-			] as ProcessConfigItem<string, string>,
+			() =>
+				[
+					(value: string) => Boolean(value),
+					(value: string) => value,
+					{
+						type: faker.helpers.arrayElement(typesArray),
+						name: faker.lorem.word(),
+					},
+				] as ProcessConfigItem<string, string>,
 			{ count: 10 },
 		)
-		const types = getConfigTypes(config)
-			.map(({ type }) => type)
+		const types = getConfigTypes(config).map(({ type }) => type)
 
 		expect(types).toHaveLength(10)
 		expect(types).toContain(typesArray[0])

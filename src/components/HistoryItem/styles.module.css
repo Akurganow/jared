@@ -16,7 +16,7 @@
 }
 
 .item:after {
-	content: ' ';
+	content: " ";
 	position: absolute;
 	top: 0.25rem;
 	left: 0;
@@ -32,7 +32,7 @@
 	text-overflow: ellipsis;
 }
 
-.icon	{
+.icon {
 	position: absolute;
 	top: 50%;
 	left: 1rem;

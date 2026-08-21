@@ -1,6 +1,6 @@
 import memoize from 'lodash/memoize'
-import { createSelector } from 'reselect'
 import set from 'lodash/set'
+import { createSelector } from 'reselect'
 import { storeKey } from 'store/constants/settings'
 import type { RootState } from 'store/types'
 import type { SettingsState } from 'types/settings'
@@ -8,57 +8,36 @@ import type { SettingsState } from 'types/settings'
 const rawSelectedSettings = (state: RootState) => state[storeKey]
 export const selectedSettingsKeys = createSelector(
 	rawSelectedSettings,
-	(settings) =>
-		Object.keys(settings).filter(key =>
-			!key.startsWith('_')
-		) as (keyof SettingsState)[]
+	(settings) => Object.keys(settings).filter((key) => !key.startsWith('_')) as (keyof SettingsState)[],
 )
-export const selectedSettings = createSelector(
-	rawSelectedSettings,
-	selectedSettingsKeys,
-	(settings, keys) => {
-		const filteredSettings = {} as Partial<SettingsState>
+export const selectedSettings = createSelector(rawSelectedSettings, selectedSettingsKeys, (settings, keys) => {
+	const filteredSettings = {} as Partial<SettingsState>
 
-		keys.forEach(key => {
-			if (keys.includes(key)) {
-				const setting = settings[key]
-				set(filteredSettings, key, setting)
-			}
-		})
+	keys.forEach((key) => {
+		if (keys.includes(key)) {
+			const setting = settings[key]
+			set(filteredSettings, key, setting)
+		}
+	})
 
-		return filteredSettings as SettingsState
-	}
-)
+	return filteredSettings as SettingsState
+})
 export const createSettingSelector = createSelector(
-	[
-		selectedSettings,
-		(_state, key) => key,
-	],
-	(settings, key) =>
-		settings[key as keyof typeof settings]
+	[selectedSettings, (_state, key) => key],
+	(settings, key) => settings[key as keyof typeof settings],
 )
 export const createSettingValueSelector = createSelector(
-	[
-		selectedSettings,
-		(_state, key) => key,
-	],
-	(settings, key) =>
-		settings[key as keyof typeof settings]?.value
+	[selectedSettings, (_state, key) => key],
+	(settings, key) => settings[key as keyof typeof settings]?.value,
 )
 export const createSettingTypeSelector = createSelector(
-	[
-		selectedSettings,
-		(_state, key) => key,
-	],
-	(settings, key) =>
-		settings[key as keyof typeof settings]?.type
+	[selectedSettings, (_state, key) => key],
+	(settings, key) => settings[key as keyof typeof settings]?.type,
 )
-export const selectedSetting = memoize((key: string) =>
-	(state: SettingsState) => createSettingSelector(state, key)
+export const selectedSetting = memoize((key: string) => (state: SettingsState) => createSettingSelector(state, key))
+export const selectedSettingValue = memoize(
+	(key: string) => (state: SettingsState) => createSettingValueSelector(state, key),
 )
-export const selectedSettingValue = memoize((key: string) =>
-	(state: SettingsState) => createSettingValueSelector(state, key)
-)
-export const selectedSettingType = memoize((key: string) =>
-	(state: SettingsState) => createSettingTypeSelector(state, key)
+export const selectedSettingType = memoize(
+	(key: string) => (state: SettingsState) => createSettingTypeSelector(state, key),
 )
