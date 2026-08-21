@@ -1,7 +1,7 @@
-import { actionCreatorFactory } from 'typescript-fsa'
 import { storeKey } from 'store/constants/sections'
-import { ITSHistoryItem, VCSHistoryItem } from 'types/history'
+import type { ITSHistoryItem, VCSHistoryItem } from 'types/history'
 import type { SectionItem } from 'types/sections'
+import { actionCreatorFactory } from 'typescript-fsa'
 
 const createAction = actionCreatorFactory(storeKey)
 
@@ -38,7 +38,7 @@ export const switchSectionItemPin = createAction<{
 
 export const updatePinnedItems = createAction<{
 	id: SectionItem['id']
-	items:  VCSHistoryItem[] | ITSHistoryItem[] | chrome.history.HistoryItem[]
+	items: VCSHistoryItem[] | ITSHistoryItem[] | chrome.history.HistoryItem[]
 }>('updatePinnedItems')
 
 export const setEditingItem = createAction<chrome.bookmarks.BookmarkTreeNode | null>('setEditingBookmark')

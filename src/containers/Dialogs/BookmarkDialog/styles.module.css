@@ -7,13 +7,13 @@
 }
 
 .name {
-    display: flex;
-    align-items: flex-start;
+	display: flex;
+	align-items: flex-start;
 }
 
 .value {
-    display: flex;
-    align-items: flex-start;
+	display: flex;
+	align-items: flex-start;
 }
 
 .name input,
@@ -22,10 +22,10 @@
 .value input,
 .value select,
 .value textarea {
-    width: 100%;
-    border: 1px solid var(--area-form-border); /* border color from Darcula Solid */
-    background-color: var(--area-form-background); /* background color from Darcula Solid */
-    padding: 5px;
-    font-size: var(--basic-fontSize);
-    color: var(--area-form-foreground);
+	width: 100%;
+	border: 1px solid var(--area-form-border); /* border color from Darcula Solid */
+	background-color: var(--area-form-background); /* background color from Darcula Solid */
+	padding: 5px;
+	font-size: var(--basic-fontSize);
+	color: var(--area-form-foreground);
 }

@@ -4,11 +4,13 @@
 	text-align: center;
 }
 
+.body {
+	/* класс-хук: используется из компонента и селектора .header ~ .body */
+}
+
 .header ~ .body {
 	border-top: 1px solid var(--area-modal-secondaryBackground);
 }
-
-.body {}
 
 .footer {
 	display: flex;

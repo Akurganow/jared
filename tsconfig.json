@@ -1,34 +1,30 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"paths": {
-			"store/*": ["src/store/*"],
-			"components/*": ["src/components/*"],
-			"containers/*": ["src/containers/*"],
-			"pages/*": ["src/pages/*"],
-			"utils/*": ["src/utils/*"],
-			"styles/*": ["src/styles/*"],
-			"types/*": ["src/types/*"],
-			"i18n": ["src/i18n"],
-			"react-dom": ["@hot-loader/react-dom"],
-			"jest/*": [".jest/*"],
-			"storybook/*": [".storybook/*"],
-			"src/*": ["src/*"],
-			"package": ["package.json"],
-			"*": ["*"]
+			"store/*": ["./src/store/*"],
+			"components/*": ["./src/components/*"],
+			"containers/*": ["./src/containers/*"],
+			"pages/*": ["./src/pages/*"],
+			"utils/*": ["./src/utils/*"],
+			"types/*": ["./src/types/*"],
+			"src/*": ["./src/*"],
+			"package": ["./package.json"],
+			"storybook-fixtures/*": ["./.storybook/fixtures/*"]
 		},
+		"types": ["chrome", "node", "jest", "firefox-webext-browser"],
 		"jsx": "react-jsx",
-		"module": "commonjs",
+		"module": "esnext",
 		"isolatedModules": true,
 		"esModuleInterop": true,
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"resolveJsonModule": true,
 		"preserveConstEnums": true,
 		"removeComments": true,
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"target": "es6",
+		"target": "es2022",
+		"rootDir": ".",
 		"outDir": "dist",
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitReturns": true,
@@ -41,12 +37,6 @@
 			}
 		]
 	},
-	"include": [
-		"./**/*"
-	],
-	"exclude": [
-		"./node_modules",
-		"./dist",
-		"./.idea"
-	]
+	"include": ["./**/*"],
+	"exclude": ["./node_modules", "./dist", "./.idea", "./packages", "./storybook-static"]
 }

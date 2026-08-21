@@ -1,4 +1,6 @@
 import { faker } from '@faker-js/faker'
+import type { ITSHistoryItem } from 'types/history'
+import type { TemplateConfig } from 'utils/history/history.mock'
 import { checkProcessor } from 'utils/history/history.mock'
 import dashboard from 'utils/history/its/jira/dashboard'
 import filter from 'utils/history/its/jira/filter'
@@ -7,8 +9,6 @@ import profile from 'utils/history/its/jira/profile'
 import project from 'utils/history/its/jira/project'
 import rapidBoard from 'utils/history/its/jira/rapidBoard'
 import unknown from 'utils/history/its/jira/unknown'
-import type { ITSHistoryItem } from 'types/history'
-import type { TemplateConfig } from 'utils/history/history.mock'
 
 const configs: TemplateConfig<ITSHistoryItem> = {
 	unknown: {
@@ -25,7 +25,7 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'unknown',
 			typeName: 'Unknown',
 			provider: 'jira',
-		}
+		},
 	},
 	rapidBoard: {
 		variables: {
@@ -42,7 +42,7 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'board',
 			typeName: 'Board',
 			provider: 'jira',
-		}
+		},
 	},
 	project: {
 		variables: {
@@ -59,7 +59,7 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'project',
 			typeName: 'Project',
 			provider: 'jira',
-		}
+		},
 	},
 	profile: {
 		variables: {
@@ -76,7 +76,7 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'profile',
 			typeName: 'Profile',
 			provider: 'jira',
-		}
+		},
 	},
 	issue: {
 		variables: {
@@ -93,7 +93,7 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'issue',
 			typeName: 'Issue',
 			provider: 'jira',
-		}
+		},
 	},
 	filter: {
 		variables: {
@@ -110,7 +110,7 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'filter',
 			typeName: 'Filter',
 			provider: 'jira',
-		}
+		},
 	},
 	dashboard: {
 		variables: {
@@ -127,8 +127,8 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'board',
 			typeName: 'Dashboard',
 			provider: 'jira',
-		}
-	}
+		},
+	},
 }
 
 describe('utils/history/its/jira', () => {

@@ -10,8 +10,8 @@ type Config<I> = {
 }
 
 export type TemplateCreate = {
-	url: chrome.history.HistoryItem['url'],
-	title: chrome.history.HistoryItem['title'],
+	url: chrome.history.HistoryItem['url']
+	title: chrome.history.HistoryItem['title']
 }
 export type TemplateConfig<I> = Record<string, Config<I>>
 
@@ -19,11 +19,7 @@ export function createUrlTemplate(path: string) {
 	return faker.helpers.fake(`{{internet.protocol}}://{{internet.domainName}}${path}`)
 }
 
-export function checkParsedTemplates<I>(
-	item: I,
-	expectConfig: Config<I>['check'],
-	variables: Config<I>['variables'],
-) {
+export function checkParsedTemplates<I>(item: I, expectConfig: Config<I>['check'], variables: Config<I>['variables']) {
 	const expectEntries: [string, string][] = Object.entries(expectConfig)
 
 	expectEntries.forEach(([key, template]) => {
@@ -31,7 +27,7 @@ export function checkParsedTemplates<I>(
 
 		test(`check ${key} to be ${value}`, () => {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
+			// @ts-expect-error
 			expect(item[key]).toBe(value)
 		})
 	})
@@ -39,8 +35,8 @@ export function checkParsedTemplates<I>(
 
 export function checkHistoryItem<I>(
 	trueHistoryItem: chrome.history.HistoryItem,
-	falseHistoryItems: { key: string, item: chrome.history.HistoryItem }[],
-	processor:  ProcessConfigItem<chrome.history.HistoryItem, I>,
+	falseHistoryItems: { key: string; item: chrome.history.HistoryItem }[],
+	processor: ProcessConfigItem<chrome.history.HistoryItem, I>,
 	expectConfig: Config<I>,
 ): void {
 	const [check, parse] = processor
@@ -49,20 +45,19 @@ export function checkHistoryItem<I>(
 		expect(check(trueHistoryItem)).toBeTruthy()
 	})
 
-	falseHistoryItems.forEach(item => {
+	falseHistoryItems.forEach((item) => {
 		test(`check false item for ${item.key}`, () => {
 			expect(check(item.item)).toBeFalsy()
 		})
 	})
 
-	checkParsedTemplates<I>(
-		parse(trueHistoryItem),
-		expectConfig.check,
-		expectConfig.variables
-	)
+	checkParsedTemplates<I>(parse(trueHistoryItem), expectConfig.check, expectConfig.variables)
 }
 
-export function createFakeHistoryItem<I>(template: Template<chrome.history.HistoryItem>, variables: Config<I>['variables'] ) {
+export function createFakeHistoryItem<I>(
+	template: Template<chrome.history.HistoryItem>,
+	variables: Config<I>['variables'],
+) {
 	const templateEntries = Object.entries(template)
 	const historyItem = {
 		id: faker.string.nanoid(),
@@ -73,7 +68,7 @@ export function createFakeHistoryItem<I>(template: Template<chrome.history.Histo
 
 	templateEntries.forEach(([key, value]) => {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-		// @ts-ignore
+		// @ts-expect-error
 		historyItem[key] = faker.helpers.mustache(value, variables ?? {})
 	})
 
@@ -81,7 +76,7 @@ export function createFakeHistoryItem<I>(template: Template<chrome.history.Histo
 }
 
 export function createRepositoryTemplate() {
-	const userName = faker.internet.userName()
+	const userName = faker.internet.username()
 	const repoName = faker.lorem.word({ length: { min: 2, max: 5 } })
 
 	return [`${userName}/${repoName}`, userName, repoName]
@@ -103,18 +98,20 @@ export function checkProcessor<I>(
 				}
 				return {
 					key: k,
-					item: createFakeHistoryItem<I>(processedCreate, variables)
+					item: createFakeHistoryItem<I>(processedCreate, variables),
 				}
 			})
 
 		const { variables, create, check } = configs[key]
-		const processedVariables = Object.entries(variables)
-			.reduce((acc, [key, value]) => {
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
+		const processedVariables = Object.entries(variables).reduce(
+			(acc, [key, value]) => {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-expect-error
 				acc[key] = value()
 				return acc
-			}, {} as typeof variables)
+			},
+			{} as typeof variables,
+		)
 		const processedCreate = {
 			url: createUrlTemplate(faker.helpers.mustache(create.url, processedVariables)),
 			title: faker.helpers.mustache(create.title, processedVariables),
@@ -122,15 +119,10 @@ export function checkProcessor<I>(
 
 		const historyItem = createFakeHistoryItem<I>(processedCreate, processedVariables)
 
-		checkHistoryItem<I>(
-			historyItem,
-			falseConfigs,
-			processors,
-			{
-				variables: processedVariables,
-				create: processedCreate,
-				check,
-			},
-		)
+		checkHistoryItem<I>(historyItem, falseConfigs, processors, {
+			variables: processedVariables,
+			create: processedCreate,
+			check,
+		})
 	})
 }

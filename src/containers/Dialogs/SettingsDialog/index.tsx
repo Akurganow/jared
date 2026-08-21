@@ -1,41 +1,41 @@
-import { useDispatch } from 'react-redux'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import type { ThunkDispatch } from '@reduxjs/toolkit'
+import Button from 'components/Button'
 
 import Dialog, { DialogBody, DialogFooter } from 'components/Dialog'
-import Button from 'components/Button'
-import Tabs from 'components/Tabs'
-
-import { closeDialog } from 'store/actions/dialogs'
-
-import DefaultTab from 'containers/Dialogs/SettingsDialog/tabs/default'
-
-import { TabRef } from 'containers/Dialogs/SettingsDialog/types'
-import type { AnyAction } from 'redux'
-import type { ThunkDispatch } from '@reduxjs/toolkit'
 import type { Tab } from 'components/Tabs'
+import Tabs from 'components/Tabs'
+import DefaultTab from 'containers/Dialogs/SettingsDialog/tabs/default'
+import type { TabRef } from 'containers/Dialogs/SettingsDialog/types'
+import { useCallback, useMemo, useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import type { UnknownAction } from 'redux'
+import { closeDialog } from 'store/actions/dialogs'
 import type { RootState } from 'store/types'
 
-export default function () {
-	const dispatch: ThunkDispatch<RootState, never, AnyAction> = useDispatch()
+export default function SettingsDialog() {
+	const dispatch: ThunkDispatch<RootState, never, UnknownAction> = useDispatch()
 	const [isButtonsDisabled, setIsButtonsDisabled] = useState<{ [k in string]: boolean }>({})
 	const [activeTab, setActiveTab] = useState('default')
 
 	const defaultTabRef = useRef<TabRef>(null)
 
-	const handleCanSave = useCallback((id: string) => (isCanSave: boolean) => {
-		setIsButtonsDisabled((prev) => ({
-			...prev,
-			[id]: !isCanSave,
-		}))
-	}, [])
+	const handleCanSave = useCallback(
+		(id: string) => (isCanSave: boolean) => {
+			setIsButtonsDisabled((prev) => ({
+				...prev,
+				[id]: !isCanSave,
+			}))
+		},
+		[],
+	)
 
 	const handleRefSave = useCallback(() => {
 		switch (activeTab) {
-		case 'default':
-			defaultTabRef.current?.save()
-			break
+			case 'default':
+				defaultTabRef.current?.save()
+				break
 		}
-	}, [activeTab, defaultTabRef])
+	}, [activeTab])
 
 	const handleApply = useCallback(() => {
 		handleRefSave()
@@ -54,28 +54,30 @@ export default function () {
 		setActiveTab(id)
 	}, [])
 
-	const tabs = useMemo<Tab[]>(() => ([
-		{
-			id: 'default',
-			title: 'Settings',
-			children: <DefaultTab
-				ref={defaultTabRef}
-				setCanSave={handleCanSave('default')}
-			/>,
-			disabled: false,
-		},
-	]), [handleCanSave])
+	const tabs = useMemo<Tab[]>(
+		() => [
+			{
+				id: 'default',
+				title: 'Settings',
+				children: <DefaultTab ref={defaultTabRef} setCanSave={handleCanSave('default')} />,
+				disabled: false,
+			},
+		],
+		[handleCanSave],
+	)
 
 	console.log('render SettingsDialog', activeTab)
 
-	return <Dialog name="settings">
-		<DialogBody>
-			<Tabs items={tabs} onTabSwitched={handleTabSwitch} />
-		</DialogBody>
-		<DialogFooter>
-			<Button disabled={isButtonsDisabled[activeTab] ?? true} onClick={handleApply} text="Apply" />
-			<Button disabled={isButtonsDisabled[activeTab] ?? true} onClick={handleSave} text="Save" variant="action"  />
-			<Button onClick={handleClose} text="Close" />
-		</DialogFooter>
-	</Dialog>
+	return (
+		<Dialog name="settings">
+			<DialogBody>
+				<Tabs items={tabs} onTabSwitched={handleTabSwitch} />
+			</DialogBody>
+			<DialogFooter>
+				<Button disabled={isButtonsDisabled[activeTab] ?? true} onClick={handleApply} text="Apply" />
+				<Button disabled={isButtonsDisabled[activeTab] ?? true} onClick={handleSave} text="Save" variant="action" />
+				<Button onClick={handleClose} text="Close" />
+			</DialogFooter>
+		</Dialog>
+	)
 }

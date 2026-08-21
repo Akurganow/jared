@@ -1,3 +1,3 @@
 export interface DialogsState {
-	[key: string]: boolean;
+	[key: string]: boolean
 }

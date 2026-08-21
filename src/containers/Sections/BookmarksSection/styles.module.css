@@ -36,6 +36,7 @@
 	margin-left: 0.25rem;
 }
 
-.action:hover, .action:focus {
+.action:hover,
+.action:focus {
 	color: var(--color-iconHover);
 }

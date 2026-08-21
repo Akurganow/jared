@@ -1,14 +1,19 @@
-import { MouseEvent as ReactMouseEvent, DetailedHTMLProps, HTMLAttributes, useEffect, useRef } from 'react'
 import cn from 'classnames'
+import {
+	type DetailedHTMLProps,
+	type HTMLAttributes,
+	type MouseEvent as ReactMouseEvent,
+	useEffect,
+	useRef,
+} from 'react'
 import { createPortal } from 'react-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectedDialog } from 'store/selectors/dialogs'
 import { closeDialog } from 'store/actions/dialogs'
-import st from './styles.module.css'
-
-import DialogHeader from './components/Header'
+import { selectedDialog } from 'store/selectors/dialogs'
 import DialogBody from './components/Body'
 import DialogFooter from './components/Footer'
+import DialogHeader from './components/Header'
+import st from './styles.module.css'
 
 interface DialogProps extends DetailedHTMLProps<HTMLAttributes<HTMLDialogElement>, HTMLDialogElement> {
 	name: string
@@ -57,12 +62,7 @@ export default function Dialog({
 	}
 
 	const element = (
-		<dialog
-			ref={dialog}
-			className={cn(st.dialog, className)}
-			onMouseDown={handleMouseDownDialog}
-			{...props}
-		>
+		<dialog ref={dialog} className={cn(st.dialog, className)} onMouseDown={handleMouseDownDialog} {...props}>
 			{children}
 		</dialog>
 	)
@@ -70,4 +70,4 @@ export default function Dialog({
 	return isOpenCurrent ? createPortal(element, container) : null
 }
 
-export { DialogHeader, DialogBody, DialogFooter }
+export { DialogBody, DialogFooter, DialogHeader }

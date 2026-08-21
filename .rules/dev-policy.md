@@ -16,8 +16,9 @@ Date: 2025‑09‑23
 
 ## Code style and linting
 
-- ESLint: Airbnb config with TypeScript, jsx-a11y, react, react-hooks.
-  - Run `npm run lint` and `npm run lint:fix` locally before committing.
+- Biome (линтер + форматтер): рекомендованные правила + react/test-домены, a11y, циклы импортов, hooks-правила.
+  - Конфиг: `biome.json`. Запуск: `npm run lint`, автофикс: `npm run lint:fix`.
+  - Форматирование: табы, одинарные кавычки, без точек с запятой (semicolons: asNeeded).
 - TypeScript is strict: strictNullChecks, noImplicitAny/This/Returns, etc. Prefer explicit types and avoid `any`.
 - Keep functions small and pure where possible. Prefer data-first utilities and avoid side effects in selectors and reducers.
 

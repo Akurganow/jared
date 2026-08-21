@@ -1,5 +1,5 @@
-import { getUrl } from 'utils/history/helpers'
 import type { ProcessConfigItem, VCSHistoryItem } from 'types/history'
+import { getUrl } from 'utils/history/helpers'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
@@ -17,13 +17,13 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			type: 'pullRequest',
 			typeName: 'Pull request',
 			name: repoName,
-			title: item.title?.split(' · ')[0] || `Pull request #${path[path.length - 1]}`
+			title: item.title?.split(' · ')[0] || `Pull request #${path[path.length - 1]}`,
 		}
 	},
 	{
 		type: 'pullRequest',
-		name: 'Pull request'
-	}
+		name: 'Pull request',
+	},
 ]
 
 export default processor

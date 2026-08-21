@@ -1,17 +1,17 @@
 import { faker } from '@faker-js/faker'
 import capitalize from 'lodash/capitalize'
-import { createRepositoryTemplate, checkProcessor } from 'utils/history/history.mock'
-import unknown from 'utils/history/vcs/gitlab/unknown'
-import tree from 'utils/history/vcs/gitlab/tree'
-import repository from 'utils/history/vcs/gitlab/repository'
-import profile from 'utils/history/vcs/gitlab/profile'
-import pipelines from 'utils/history/vcs/gitlab/pipelines'
-import mergeRequest from 'utils/history/vcs/gitlab/mergeRequest'
-import jobs from 'utils/history/vcs/gitlab/jobs'
-import filterMergeRequests from 'utils/history/vcs/gitlab/filter-mergeRequests'
-import commit from 'utils/history/vcs/gitlab/commit'
-import { VCSHistoryItem } from 'types/history'
+import type { VCSHistoryItem } from 'types/history'
 import type { TemplateConfig } from 'utils/history/history.mock'
+import { checkProcessor, createRepositoryTemplate } from 'utils/history/history.mock'
+import commit from 'utils/history/vcs/gitlab/commit'
+import filterMergeRequests from 'utils/history/vcs/gitlab/filter-mergeRequests'
+import jobs from 'utils/history/vcs/gitlab/jobs'
+import mergeRequest from 'utils/history/vcs/gitlab/mergeRequest'
+import pipelines from 'utils/history/vcs/gitlab/pipelines'
+import profile from 'utils/history/vcs/gitlab/profile'
+import repository from 'utils/history/vcs/gitlab/repository'
+import tree from 'utils/history/vcs/gitlab/tree'
+import unknown from 'utils/history/vcs/gitlab/unknown'
 
 const configs: TemplateConfig<VCSHistoryItem> = {
 	unknown: {
@@ -29,7 +29,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'unknown',
 			typeName: 'Unknown',
 			provider: 'gitlab',
-		}
+		},
 	},
 	tree: {
 		variables: {
@@ -38,15 +38,17 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 		},
 		create: {
 			url: '/{{repositoryName}}/tree/{{branch}}',
+			// biome-ignore lint/suspicious/noTemplateCurlyInString: ${} — плейсхолдеры шаблона мок-генератора
 			title: 'Files · ${branch} · ${repositoryName}',
 		},
 		check: {
 			name: '{{repositoryName}}',
+			// biome-ignore lint/suspicious/noTemplateCurlyInString: ${} — плейсхолдер шаблона мок-генератора
 			title: 'Files at ${branch}',
 			type: 'tree',
 			typeName: 'Tree',
 			provider: 'gitlab',
-		}
+		},
 	},
 	repository: {
 		variables: {
@@ -62,11 +64,11 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'repository',
 			typeName: 'Repository',
 			provider: 'gitlab',
-		}
+		},
 	},
 	profile: {
 		variables: {
-			userName: () => faker.internet.userName(),
+			userName: () => faker.internet.username(),
 		},
 		create: {
 			url: '/{{userName}}',
@@ -78,7 +80,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'profile',
 			typeName: 'Profile',
 			provider: 'gitlab',
-		}
+		},
 	},
 	pipelines: {
 		variables: {
@@ -95,7 +97,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'pipeline',
 			typeName: 'Pipelines',
 			provider: 'gitlab',
-		}
+		},
 	},
 	mergeRequest: {
 		variables: {
@@ -113,7 +115,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'mergeRequest',
 			typeName: 'Merge Request',
 			provider: 'gitlab',
-		}
+		},
 	},
 	jobs: {
 		variables: {
@@ -131,7 +133,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'job',
 			typeName: 'Jobs',
 			provider: 'gitlab',
-		}
+		},
 	},
 	filterMergeRequests: {
 		variables: {
@@ -147,7 +149,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'filter',
 			typeName: 'Merge requests',
 			provider: 'gitlab',
-		}
+		},
 	},
 	commit: {
 		variables: {
@@ -165,7 +167,7 @@ const configs: TemplateConfig<VCSHistoryItem> = {
 			type: 'commit',
 			typeName: 'Commit',
 			provider: 'gitlab',
-		}
+		},
 	},
 }
 

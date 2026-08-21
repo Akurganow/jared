@@ -1,20 +1,16 @@
-import 'modern-css-reset'
+import 'modern-css-reset/dist/reset.min.css'
+import Loader from 'components/Loader'
+import NewTab from 'containers/NewTab'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 
-import NewTab from 'containers/NewTab'
-import Loader from 'components/Loader'
-
-import { store, persistor } from 'src/store'
+import { persistor, store } from 'src/store'
 
 function Root() {
 	return (
 		<Provider store={store}>
-			<PersistGate
-				loading={<Loader />}
-				persistor={persistor}
-			>
+			<PersistGate loading={<Loader />} persistor={persistor}>
 				<NewTab />
 			</PersistGate>
 		</Provider>

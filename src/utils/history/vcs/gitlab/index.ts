@@ -1,13 +1,13 @@
-import mergeRequest from 'utils/history/vcs/gitlab/mergeRequest'
+import type { ProcessConfig, VCSHistoryItem } from 'types/history'
+import commit from 'utils/history/vcs/gitlab/commit'
 import filterMergeRequests from 'utils/history/vcs/gitlab/filter-mergeRequests'
 import jobs from 'utils/history/vcs/gitlab/jobs'
+import mergeRequest from 'utils/history/vcs/gitlab/mergeRequest'
 import pipelines from 'utils/history/vcs/gitlab/pipelines'
-import commit from 'utils/history/vcs/gitlab/commit'
-import unknown from 'utils/history/vcs/gitlab/unknown'
 import profile from 'utils/history/vcs/gitlab/profile'
-import tree from 'utils/history/vcs/gitlab/tree'
 import repository from 'utils/history/vcs/gitlab/repository'
-import type { ProcessConfig, VCSHistoryItem } from 'types/history'
+import tree from 'utils/history/vcs/gitlab/tree'
+import unknown from 'utils/history/vcs/gitlab/unknown'
 
 /*
 TODO: add missing handlers

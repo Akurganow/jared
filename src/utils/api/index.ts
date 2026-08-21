@@ -1,5 +1,5 @@
-import History from './history'
 import Bookmarks from './bookmarks'
+import History from './history'
 
 export default class API {
 	public history = new History()

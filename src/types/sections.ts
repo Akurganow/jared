@@ -1,4 +1,10 @@
-import { ITSHistoryItem, ITSProviderType, ProcessorConfigType, VCSHistoryItem, VCSProviderType } from 'types/history'
+import type {
+	ITSHistoryItem,
+	ITSProviderType,
+	ProcessorConfigType,
+	VCSHistoryItem,
+	VCSProviderType,
+} from 'types/history'
 
 interface SectionSettingsTypeBase {
 	hint?: string
@@ -49,8 +55,8 @@ export type SectionSettingsType<T> = T extends string[]
 				? SectionSettingsTypeBoolean
 				: never
 
-interface SectionSettingsBase {}
-export interface ContainerSectionSettings extends SectionSettingsBase{
+type SectionSettingsBase = object
+export interface ContainerSectionSettings extends SectionSettingsBase {
 	direction: SectionSettingsType<('row' | 'column')[]>
 }
 export interface HistorySectionSettingsBase extends SectionSettingsBase {
@@ -106,7 +112,12 @@ export interface SectionItemBookmarks extends SectionItemBase {
 	editingItem?: chrome.bookmarks.BookmarkTreeNode | null
 }
 
-export type SectionItem = SectionItemContainer | SectionItemVCS | SectionItemITS | SectionItemHistory | SectionItemBookmarks
+export type SectionItem =
+	| SectionItemContainer
+	| SectionItemVCS
+	| SectionItemITS
+	| SectionItemHistory
+	| SectionItemBookmarks
 
 export interface SectionsState {
 	editingItem: SectionItem | null
@@ -128,7 +139,7 @@ export interface SectionSettingsFieldPropsNumber extends SectionSettingsFieldPro
 export interface SectionSettingsFieldPropsString extends SectionSettingsFieldPropsBase<string> {}
 
 export type SettingsFieldProps =
-	SectionSettingsFieldPropsBoolean
+	| SectionSettingsFieldPropsBoolean
 	| SectionSettingsFieldPropsOption
 	| SectionSettingsFieldPropsNumber
 	| SectionSettingsFieldPropsString

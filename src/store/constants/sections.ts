@@ -1,11 +1,13 @@
-import {
+import type { ProcessorConfigType } from 'types/history'
+import type {
 	BookmarksSectionSettings,
+	ContainerSectionSettings,
 	HistorySectionSettings,
-	ITSSectionSettings, SectionItem,
-	VCSSectionSettings
+	ITSSectionSettings,
+	SectionItem,
+	SectionsState,
+	VCSSectionSettings,
 } from 'types/sections'
-import { ProcessorConfigType } from 'types/history'
-import type { SectionsState, ContainerSectionSettings } from 'types/sections'
 
 export const storeKey = 'sections'
 
@@ -15,7 +17,7 @@ export const DEFAULT_CONTAINER_SECTION_SETTINGS: ContainerSectionSettings = {
 		value: 'row',
 		options: ['row', 'column'],
 		hint: 'Direction of the container',
-	}
+	},
 }
 const defaultHistorySectionSettings = {
 	maxResults: {
@@ -40,7 +42,7 @@ export const DEFAULT_HISTORY_SECTION_SETTINGS: HistorySectionSettings = {
 		type: 'text',
 		value: 'gitlab, github, jira, youtrack',
 		hint: 'Comma separated history search queries',
-	}
+	},
 }
 export const DEFAULT_VCS_SECTION_SETTINGS: VCSSectionSettings = {
 	...defaultHistorySectionSettings,
@@ -59,7 +61,7 @@ export const DEFAULT_VCS_SECTION_SETTINGS: VCSSectionSettings = {
 	exclude: {
 		type: 'text',
 		value: '',
-	}
+	},
 }
 export const DEFAULT_ITS_SECTION_SETTINGS: ITSSectionSettings = {
 	...defaultHistorySectionSettings,
@@ -78,7 +80,7 @@ export const DEFAULT_ITS_SECTION_SETTINGS: ITSSectionSettings = {
 	exclude: {
 		type: 'text',
 		value: '',
-	}
+	},
 }
 export const DEFAULT_BOOKMARKS_SECTION_SETTINGS: BookmarksSectionSettings = {
 	saveToBrowser: {
@@ -92,7 +94,7 @@ export const DEFAULT_BOOKMARKS_SECTION_SETTINGS: BookmarksSectionSettings = {
 	browserId: {
 		type: 'string',
 		value: '',
-	}
+	},
 }
 
 export const defaultSectionSettings = {
@@ -122,7 +124,7 @@ export const initialState: SectionsState = {
 		{
 			id: '2',
 			type: 'its',
-			settings: { ...DEFAULT_ITS_SECTION_SETTINGS, },
+			settings: { ...DEFAULT_ITS_SECTION_SETTINGS },
 			items: [],
 			pinned: [],
 		},
@@ -134,7 +136,7 @@ export const initialState: SectionsState = {
 				direction: {
 					...DEFAULT_CONTAINER_SECTION_SETTINGS.direction,
 					value: 'column',
-				}
+				},
 			},
 			items: ['5', '6'],
 		},
@@ -158,5 +160,5 @@ export const initialState: SectionsState = {
 			settings: { ...DEFAULT_BOOKMARKS_SECTION_SETTINGS },
 			items: [],
 		},
-	]
+	],
 }

@@ -28,7 +28,7 @@ const theme: Theme = {
 			notify: '#ffc66d',
 			warning: '#cc8242',
 			personal: '#da70d6',
-		}
+		},
 	},
 	areas: {
 		page: {
@@ -45,7 +45,7 @@ const theme: Theme = {
 		sidebar: {
 			background: 'tertiaryBackground',
 			foreground: 'tertiaryForeground',
-			border: 'primaryBorder'
+			border: 'primaryBorder',
 		},
 		form: {
 			background: 'primaryBackground',
@@ -61,7 +61,7 @@ const theme: Theme = {
 					background: 'tertiaryBackground',
 					foreground: 'primaryBorder',
 					border: 'primaryBorder',
-				}
+				},
 			},
 			action: {
 				background: 'info',
@@ -71,7 +71,7 @@ const theme: Theme = {
 					background: 'tertiaryBackground',
 					foreground: 'disabled-info',
 					border: 'disabled-info',
-				}
+				},
 			},
 			danger: {
 				background: 'danger',
@@ -81,7 +81,7 @@ const theme: Theme = {
 					background: 'tertiaryBackground',
 					foreground: 'disabled-danger',
 					border: 'disabled-danger',
-				}
+				},
 			},
 			warning: {
 				background: 'warning',
@@ -91,54 +91,54 @@ const theme: Theme = {
 					background: 'tertiaryBackground',
 					foreground: 'disabled-warning',
 					border: 'disabled-warning',
-				}
+				},
 			},
-		}
+		},
 	},
 	tokens: [
 		{
 			name: 'item',
 			settings: {
-				foreground: 'warning'
-			}
+				foreground: 'warning',
+			},
 		},
 		{
 			name: 'filter',
 			settings: {
-				foreground: 'list'
-			}
+				foreground: 'list',
+			},
 		},
 		{
 			name: 'preferences',
 			settings: {
-				foreground: 'info'
-			}
+				foreground: 'info',
+			},
 		},
 		{
 			name: 'person',
 			settings: {
-				foreground: 'personal'
-			}
+				foreground: 'personal',
+			},
 		},
 		{
 			name: 'file',
 			settings: {
-				foreground: 'success'
-			}
+				foreground: 'success',
+			},
 		},
 		{
 			name: 'changes',
 			settings: {
-				foreground: 'notify'
-			}
+				foreground: 'notify',
+			},
 		},
 		{
 			name: 'unknown',
 			settings: {
-				foreground: 'danger'
-			}
-		}
-	]
+				foreground: 'danger',
+			},
+		},
+	],
 }
 
 export default theme

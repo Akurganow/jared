@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker'
+import type { ITSHistoryItem } from 'types/history'
+import type { TemplateConfig } from 'utils/history/history.mock'
 import { checkProcessor } from 'utils/history/history.mock'
 import issue from 'utils/history/its/youtrack/issue'
 import unknown from 'utils/history/its/youtrack/unknown'
-import type { ITSHistoryItem } from 'types/history'
-import type { TemplateConfig } from 'utils/history/history.mock'
 
 const configs: TemplateConfig<ITSHistoryItem> = {
 	unknown: {
@@ -21,7 +21,7 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'unknown',
 			typeName: 'Unknown',
 			provider: 'youtrack',
-		}
+		},
 	},
 	issue: {
 		variables: {
@@ -38,7 +38,7 @@ const configs: TemplateConfig<ITSHistoryItem> = {
 			type: 'issue',
 			typeName: 'Issue',
 			provider: 'youtrack',
-		}
+		},
 	},
 }
 

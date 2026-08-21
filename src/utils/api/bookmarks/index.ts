@@ -1,9 +1,7 @@
-import { Browser, BookmarkSearchQuery, BookmarkCreateArg } from '../types'
+import type { BookmarkCreateArg, BookmarkSearchQuery, Browser } from '../types'
 
 export default class Bookmarks {
-	private readonly browser: Browser = window.browser ? window.browser : window.chrome
-
-	constructor() {}
+	private readonly browser: Browser = (window.browser ?? window.chrome) as unknown as Browser
 
 	public async getTree() {
 		return await this.browser.bookmarks.getTree()
@@ -25,7 +23,7 @@ export default class Bookmarks {
 		return await this.browser.bookmarks.create(bookmark)
 	}
 
-	public async update(id: string, changes: { title?: string, url?: string }) {
+	public async update(id: string, changes: { title?: string; url?: string }) {
 		return await this.browser.bookmarks.update(id, changes)
 	}
 
@@ -37,7 +35,7 @@ export default class Bookmarks {
 		return await this.browser.bookmarks.removeTree(id)
 	}
 
-	public async move(id: string, destination: { parentId?: string, index?: number }) {
+	public async move(id: string, destination: { parentId?: string; index?: number }) {
 		return await this.browser.bookmarks.move(id, destination)
 	}
 }

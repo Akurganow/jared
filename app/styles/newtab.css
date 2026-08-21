@@ -1,5 +1,5 @@
-@import './default-light-theme.css';
-@import './default-dark-theme.css';
+@import "./default-light-theme.css";
+@import "./default-dark-theme.css";
 
 :root {
 	--basic-fontSize: 13px;
@@ -8,7 +8,7 @@
 
 body {
 	min-height: 100%;
-	font-family: 'JetBrains Mono', monospace;
+	font-family: "JetBrains Mono", monospace;
 	font-size: var(--basic-fontSize);
 	line-height: 1.4;
 	background-color: var(--area-page-background);
@@ -29,10 +29,19 @@ a:hover {
 	color: var(--area-page-hoverForeground);
 }
 
-p, figure, blockquote, dl, dd {
+p,
+figure,
+blockquote,
+dl,
+dd {
 	margin-block: 1em;
 }
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	margin-block-end: 1em;
 }
 

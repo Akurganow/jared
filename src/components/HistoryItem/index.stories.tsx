@@ -1,8 +1,7 @@
-import { expect } from '@storybook/jest'
-import { within } from '@storybook/testing-library'
+import type { Meta, StoryObj } from '@storybook/react-webpack5'
 import HistoryItem from 'components/HistoryItem'
 import type { ComponentProps } from 'react'
-import type { Meta, StoryObj } from '@storybook/react'
+import { expect, within } from 'storybook/test'
 
 const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 	title: 'UI/HistoryItem',
@@ -20,13 +19,8 @@ const meta: Meta<ComponentProps<typeof HistoryItem>> = {
 	},
 	tags: ['autodocs', 'ui', 'history'],
 	component: HistoryItem,
-	decorators: [
-		(story) =>
-			<div style={{ width: '15rem' }}>
-				{story()}
-			</div>,
-	],
-	play: async ({ canvasElement , args }) => {
+	decorators: [(story) => <div style={{ width: '15rem' }}>{story()}</div>],
+	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement)
 		const item = canvas.getByTestId('HistoryItem')
 		const pinButton = canvas.getByTestId('HistoryItem:PinButton')
@@ -54,7 +48,7 @@ export const Github: Story = {
 		type: 'repository',
 		provider: 'github',
 		pinned: false,
-	}
+	},
 }
 
 export const PinnedGithub: Story = {
@@ -66,7 +60,7 @@ export const PinnedGithub: Story = {
 		type: 'repository',
 		provider: 'github',
 		pinned: true,
-	}
+	},
 }
 
 export const Gitlab: Story = {
@@ -78,7 +72,7 @@ export const Gitlab: Story = {
 		type: 'repository',
 		provider: 'gitlab',
 		pinned: false,
-	}
+	},
 }
 
 export const Jira: Story = {
@@ -90,7 +84,7 @@ export const Jira: Story = {
 		type: 'issue',
 		provider: 'jira',
 		pinned: false,
-	}
+	},
 }
 
 export const LargeText: Story = {
@@ -102,7 +96,7 @@ export const LargeText: Story = {
 		type: 'repository',
 		provider: 'github',
 		pinned: false,
-	}
+	},
 }
 
 export const Unknown: Story = {

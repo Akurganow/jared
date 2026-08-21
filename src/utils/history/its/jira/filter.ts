@@ -1,5 +1,5 @@
-import { getUrl, getSplitTitle } from 'utils/history/helpers'
 import type { ITSHistoryItem, ProcessConfigItem } from 'types/history'
+import { getSplitTitle, getUrl } from 'utils/history/helpers'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
@@ -12,9 +12,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 		const title = getSplitTitle(item.title || '')
 		const filterId = url?.searchParams.get('filter') || ''
 
-		const filterName = title
-			? title[0].replace(/^\[(.+)].+/ig, '$1')
-			: ''
+		const filterName = title ? title[0].replace(/^\[(.+)].+/gi, '$1') : ''
 
 		return {
 			...item,
@@ -27,8 +25,8 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, ITSHistoryItem> =
 	},
 	{
 		type: 'filter',
-		name: 'Issues'
-	}
+		name: 'Issues',
+	},
 ]
 
 export default processor

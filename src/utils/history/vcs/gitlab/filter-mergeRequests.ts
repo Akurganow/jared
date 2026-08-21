@@ -1,5 +1,5 @@
-import { getUrl } from 'utils/history/helpers'
 import type { ProcessConfigItem, VCSHistoryItem } from 'types/history'
+import { getUrl } from 'utils/history/helpers'
 
 const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> = [
 	(item: chrome.history.HistoryItem) => {
@@ -22,8 +22,8 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 	},
 	{
 		type: 'pipeline',
-		name: 'Merge requests'
-	}
+		name: 'Merge requests',
+	},
 ]
 
 export default processor

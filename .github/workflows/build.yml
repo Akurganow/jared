@@ -6,34 +6,22 @@ on:
     branches: [ master ]
 jobs:
   build:
-    timeout-minutes: 60
+    timeout-minutes: 30
     runs-on: ubuntu-latest
+    env:
+      TARGET_BROWSER: chrome
     steps:
-      - uses: actions/checkout@v3
-      - id: dotenv
-        uses: xom9ikk/dotenv@v2
-        with:
-          mode: test
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
-
-      - name: Cache dependencies
-        id: npm-cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: ${{ runner.os }}-npm-
-
+          cache: npm
       - name: Install dependencies
         run: npm ci --ignore-scripts
-
       - name: Build
         run: npm run build
-
       - name: Upload packages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
           name: packages
           path: packages

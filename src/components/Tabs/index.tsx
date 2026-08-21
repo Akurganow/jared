@@ -1,7 +1,7 @@
 import cn from 'classnames'
+import type { HTMLAttributes, ReactNode } from 'react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import st from './styles.module.css'
-import type { HTMLAttributes, ReactNode } from 'react'
 
 export interface Tab {
 	id: string
@@ -18,29 +18,38 @@ interface TabsProps extends HTMLAttributes<HTMLDivElement> {
 
 export default function Tabs({ items, onTabSwitched, withoutPreflight, ...props }: TabsProps) {
 	const contentRef = useRef<HTMLDivElement>(null)
-	const [
-		contentSize,
-		setContentSize,
-	] = useState<{ width: number, height: number }>()
+	const [contentSize, setContentSize] = useState<{ width: number; height: number }>()
 	const [activeTab, setActiveTab] = useState(0)
-	const isTabActive = useCallback((index: number) => {
-		return index === activeTab
-	}, [activeTab])
+	const isTabActive = useCallback(
+		(index: number) => {
+			return index === activeTab
+		},
+		[activeTab],
+	)
 
-	const handleTabSwitch = useCallback((index: number) => () => {
-		setActiveTab(index)
-		onTabSwitched?.(items[index].id)
-	}, [items, onTabSwitched])
+	const handleTabSwitch = useCallback(
+		(index: number) => () => {
+			setActiveTab(index)
+			onTabSwitched?.(items[index].id)
+		},
+		[items, onTabSwitched],
+	)
 
 	const getContentSize = useCallback(() => {
 		const content = contentRef.current
 
 		if (!content) return { width: 0, height: 0 }
 
-		const children = Array.from(content.children).map(child => child as HTMLElement)
-		const childrenRects = children.map(child => child.getBoundingClientRect())
-		const childrenMaxHeight = Math.max.apply(null, childrenRects.map(rect => rect.height))
-		const childrenMaxWidth = Math.max.apply(null, childrenRects.map(rect => rect.width))
+		const children = Array.from(content.children).map((child) => child as HTMLElement)
+		const childrenRects = children.map((child) => child.getBoundingClientRect())
+		const childrenMaxHeight = Math.max.apply(
+			null,
+			childrenRects.map((rect) => rect.height),
+		)
+		const childrenMaxWidth = Math.max.apply(
+			null,
+			childrenRects.map((rect) => rect.width),
+		)
 		const height = Math.ceil(childrenMaxHeight)
 		const width = Math.ceil(childrenMaxWidth)
 
@@ -55,19 +64,19 @@ export default function Tabs({ items, onTabSwitched, withoutPreflight, ...props 
 
 			setContentSize({ width, height })
 		}, 0)
-	}, [getContentSize, contentRef])
+	}, [getContentSize])
 
 	return (
 		<>
-			<style>{
-				contentSize
+			<style>
+				{contentSize
 					? `
 					.${st.content} {
 					--tab-content-height: min(${contentSize.height}px, 50vh);
 					--tab-content-width: min(${contentSize.width}px, 75vw);
 					}`
-					: ''
-			}</style>
+					: ''}
+			</style>
 			<div {...props} className={st.container} data-testid="Tabs">
 				<div className={st.header}>
 					{items.map((item, index) => {
@@ -77,7 +86,8 @@ export default function Tabs({ items, onTabSwitched, withoutPreflight, ...props 
 						})
 						return (
 							<button
-								key={index}
+								type="button"
+								key={item.id}
 								className={classNames}
 								onClick={disabled ? undefined : handleTabSwitch(index)}
 								disabled={disabled}
@@ -91,11 +101,7 @@ export default function Tabs({ items, onTabSwitched, withoutPreflight, ...props 
 					})}
 				</div>
 
-				<div
-					className={st.content}
-					data-testid="Tabs:Content"
-					ref={contentRef}
-				>
+				<div className={st.content} data-testid="Tabs:Content" ref={contentRef}>
 					{items.map((item, index) => {
 						const { children } = item
 						const isActive = isTabActive(index)
@@ -106,7 +112,7 @@ export default function Tabs({ items, onTabSwitched, withoutPreflight, ...props 
 
 						return (
 							<div
-								key={index}
+								key={item.id}
 								className={classNames}
 								data-testid={isActive ? 'Tabs:ContentItem' : undefined}
 								data-index={index}

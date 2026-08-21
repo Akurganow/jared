@@ -1,17 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
+import type { ReactNode } from 'react'
 import { Provider } from 'react-redux'
-import { jest } from '@storybook/jest'
 import { preloadedState, reducer } from 'src/store'
+import { spyOn } from 'storybook/test'
 
 export const store = configureStore({
 	reducer,
 	preloadedState,
 })
 
-jest.spyOn(store, 'dispatch')
+spyOn(store, 'dispatch')
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line react/prop-types
-export const Mockstore = ({ children }) => <Provider store={store}>{children}</Provider>
-
+export const Mockstore = ({ children }: { children: ReactNode }) => <Provider store={store}>{children}</Provider>

@@ -12,8 +12,7 @@
 
 .button:disabled,
 .button:disabled:hover,
-.button:disabled:focus
-{
+.button:disabled:focus {
 	cursor: not-allowed;
 	filter: none;
 }

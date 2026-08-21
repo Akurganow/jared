@@ -1,5 +1,5 @@
-import { getUrl } from 'utils/history/helpers'
 import type { ProcessConfigItem, VCSHistoryItem } from 'types/history'
+import { getUrl } from 'utils/history/helpers'
 
 function getIssueName(path: string[]) {
 	const repoName = `${path[0]}/${path[1]}`
@@ -18,8 +18,7 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')
 
-		return path.includes('issues')
-		&& path[path.length - 1] !== 'issues'
+		return path.includes('issues') && path[path.length - 1] !== 'issues'
 	},
 	(item: chrome.history.HistoryItem) => {
 		const [, path] = getUrl(item.url || '')
@@ -31,7 +30,8 @@ const processor: ProcessConfigItem<chrome.history.HistoryItem, VCSHistoryItem> =
 			typeName: 'Issue',
 			name: getIssueName(path),
 			title: item.title?.split(' · ')[0] || 'Issue',
-		} },
+		}
+	},
 	{
 		type: 'issue',
 		name: 'Issue',
