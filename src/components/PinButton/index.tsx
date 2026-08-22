@@ -6,9 +6,9 @@ import st from './styles.module.css'
 export interface PinButtonProps extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
 	pinned?: boolean
 }
-export default function PiButton({ pinned, className, ...props }: PinButtonProps) {
+export default function PinButton({ pinned, className, ...props }: PinButtonProps) {
 	return (
-		<button {...props} className={cn(className, st.button)}>
+		<button type="button" aria-label={pinned ? 'Unpin' : 'Pin'} {...props} className={cn(className, st.button)}>
 			<SVGIcon name={pinned ? 'unpin' : 'pin'} />
 		</button>
 	)

@@ -1,4 +1,6 @@
-import { createPersistedState } from '@plq/use-persisted-state'
+// импорт CJS-сборки напрямую: ESM-обёртка пакета несовместима с webpack-interop
+// (см. https://github.com/Akurganow/use-persisted-state — кандидат на фикс апстрима)
+import createPersistedState from '@plq/use-persisted-state/lib'
 import storage from '@plq/use-persisted-state/lib/storages/local-storage'
 import Button from 'components/Button'
 import Dialog, { DialogBody, DialogFooter } from 'components/Dialog'

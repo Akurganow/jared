@@ -2,7 +2,11 @@ import type { ITSHistoryItem, ProcessConfig, VCSHistoryItem } from 'types/histor
 import type { Browser, HistoryItem, HistoryQuery } from '../types'
 
 export default class History {
-	private readonly browser: Browser = (window.browser ?? window.chrome) as unknown as Browser
+	// ленивое разрешение: даёт окружениям без реального Chrome (Storybook, jsdom)
+	// установить мок window.chrome до первого обращения к API
+	private get browser(): Browser {
+		return (window.browser ?? window.chrome) as unknown as Browser
+	}
 
 	public async search(query: chrome.history.HistoryQuery) {
 		return await this.browser.history.search(query)

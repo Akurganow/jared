@@ -48,3 +48,10 @@ jobs:
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,green" \
           "npx http-server storybook-static --port 6006 --silent" \
           "npx wait-on tcp:127.0.0.1:6006 -l && npm run test-storybook -- --url http://127.0.0.1:6006"
+      - name: Upload Storybook
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: storybook-static
+          path: storybook-static
+          retention-days: 30

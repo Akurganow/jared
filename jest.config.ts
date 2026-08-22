@@ -9,6 +9,7 @@ const config: Config = {
 	},
 
 	setupFiles: ['./__setups__/chrome.ts'],
+	setupFilesAfterEnv: ['./__setups__/testing-library.ts'],
 
 	clearMocks: true,
 
@@ -19,6 +20,7 @@ const config: Config = {
 	moduleFileExtensions: ['js', 'mjs', 'cjs', 'jsx', 'ts', 'tsx', 'json'],
 
 	moduleNameMapper: {
+		'^nanoid$': '<rootDir>/__mocks__/nanoid.ts',
 		'\\.svg$': '<rootDir>/__mocks__/svg.ts',
 		'\\.css$': 'identity-obj-proxy',
 		'^store/(.*)$': '<rootDir>/store/$1',

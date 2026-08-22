@@ -8,11 +8,15 @@ interface BookmarkProps extends chrome.bookmarks.BookmarkTreeNode {
 	onRemoveClick: (event: ReactMouseEvent<HTMLButtonElement>) => void
 }
 
-export default function Bookmark({ id, title, url, onRemoveClick, onEditClick }: BookmarkProps) {
+// кнопки действий — сиблинги ссылки, а не её дети:
+// вложенные интерактивные элементы ломают доступность (nested-interactive)
+export default function Bookmark({ title, url, onRemoveClick, onEditClick }: BookmarkProps) {
 	return (
-		<a key={id} className={cn(st.bookmark)} href={url}>
-			{url && <Favicon href={url} size={16} className={cn(st.favicon)} />}
-			{title}
+		<div className={cn(st.bookmark)} data-testid="Bookmark">
+			<a className={cn(st.link)} href={url}>
+				{url && <Favicon href={url} size={16} className={cn(st.favicon)} />}
+				{title}
+			</a>
 			<div className={cn(st.actions)}>
 				<button type="button" onClick={onRemoveClick} className={cn(st.action)} title="Remove bookmark">
 					×
@@ -21,6 +25,6 @@ export default function Bookmark({ id, title, url, onRemoveClick, onEditClick }:
 					✎
 				</button>
 			</div>
-		</a>
+		</div>
 	)
 }

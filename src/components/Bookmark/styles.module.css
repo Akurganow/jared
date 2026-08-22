@@ -17,6 +17,14 @@
 	filter: brightness(1.1);
 }
 
+.link {
+	color: currentColor;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	flex: 1;
+}
+
 .favicon {
 	margin-right: 0.5rem;
 }

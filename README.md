@@ -19,24 +19,64 @@ Supported browsers:
 - Chrome
 
 ## Install
-	$ npm install
+
+```sh
+npm ci
+```
+
+Node-версия — в `.nvmrc` (`nvm use`).
 
 ## Development
-    npm run dev chrome
-[//]: # (npm run dev firefox)
-[//]: # (npm run dev opera)
-[//]: # (npm run dev edge)
+
+Основная среда разработки UI — **Storybook** (реальный Chrome не нужен,
+`chrome.*` замокан):
+
+```sh
+npm run storybook   # http://localhost:6006, с HMR
+```
+
+Разработка в реальном Chrome:
+
+```sh
+npm run dev
+```
+
+Watch-сборка кладёт распакованное расширение в `dist/chrome` — загрузите его один раз
+через `chrome://extensions` → «Load unpacked», дальше расширение перезагружается
+автоматически при каждом изменении кода (webpack-webextension-plugin).
+
+## Tests
+
+```sh
+npm run lint        # Biome (линт + формат)
+npx tsc --noEmit    # типизация
+npx jest            # unit + интеграционные + компонентные тесты
+```
+
+Композиционные interaction-тесты (Storybook + headless Chromium):
+
+```sh
+npx playwright install chromium   # один раз
+npm run build-storybook
+npx concurrently -k -s first "npx http-server storybook-static --port 6006 --silent" \
+  "npx wait-on tcp:127.0.0.1:6006 && npm run test-storybook -- --url http://127.0.0.1:6006"
+```
+
+E2E с реальным расширением: `npm run build && npm run test:playwright`.
 
 ## Build
-    npm run build chrome
-[//]: # (npm run build firefox)
-[//]: # (npm run build opera)
-[//]: # (npm run build edge)
 
-## Environment
+```sh
+npm run build
+```
 
-The build tool also defines a variable named `process.env.NODE_ENV` in your scripts. 
+Готовый zip — в `packages/`, распакованная сборка — в `dist/chrome`.
+Каждый CI-прогон workflow **Build** также публикует установочный артефакт
+`packages` (Actions → Build → Artifacts): скачайте, распакуйте zip и установите
+через «Load unpacked».
 
 ## Docs
 
-* [webextension-toolbox](https://github.com/HaNdTriX/webextension-toolbox)
+* [CLAUDE.md](CLAUDE.md) — карта проекта и правила для AI-агентов (и людей)
+* [.rules/](.rules) — обзор проекта, тестирование, конвенции
+* [webextension-toolbox](https://github.com/webextension-toolbox/webextension-toolbox)
