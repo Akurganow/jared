@@ -1,7 +1,11 @@
 import type { BookmarkCreateArg, BookmarkSearchQuery, Browser } from '../types'
 
 export default class Bookmarks {
-	private readonly browser: Browser = (window.browser ?? window.chrome) as unknown as Browser
+	// ленивое разрешение: даёт окружениям без реального Chrome (Storybook, jsdom)
+	// установить мок window.chrome до первого обращения к API
+	private get browser(): Browser {
+		return (window.browser ?? window.chrome) as unknown as Browser
+	}
 
 	public async getTree() {
 		return await this.browser.bookmarks.getTree()

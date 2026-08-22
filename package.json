@@ -40,10 +40,15 @@
 		"@storybook/addon-coverage": "^3.0.2",
 		"@storybook/addon-docs": "^10.5.10",
 		"@storybook/addon-links": "^10.5.10",
+		"@storybook/addon-mcp": "^0.7.0",
 		"@storybook/addon-styling-webpack": "^3.0.2",
 		"@storybook/addon-webpack5-compiler-babel": "^4.0.1",
 		"@storybook/react-webpack5": "^10.5.10",
 		"@storybook/test-runner": "^0.24.4",
+		"@testing-library/dom": "^10.4.1",
+		"@testing-library/jest-dom": "^7.0.1",
+		"@testing-library/react": "^16.3.2",
+		"@testing-library/user-event": "^14.6.5",
 		"@types/chrome": "^0.2.7",
 		"@types/firefox-webext-browser": "^143.0.0",
 		"@types/jest": "^30.0.0",
@@ -85,8 +90,7 @@
 		"typescript": "^6.0.3",
 		"typescript-plugin-css-modules": "^5.2.0",
 		"wait-on": "^9.1.0",
-		"webpack-merge": "^6.0.1",
-		"@storybook/addon-mcp": "^0.7.0"
+		"webpack-merge": "^6.0.1"
 	},
 	"dependencies": {
 		"@plq/array-functions": "^1.5.1",

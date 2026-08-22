@@ -51,6 +51,26 @@ Add a new test (validated example):
 4. Remove temporary smoke tests when done.
 
 
+## Component tests (Testing Library, jsdom)
+
+- `*.spec.tsx` рядом с компонентом; рендер через `@testing-library/react`,
+  события — `@testing-library/user-event`, матчеры jest-dom подключены глобально
+  (`src/__setups__/testing-library.ts`).
+- Примеры: `src/components/Button/index.spec.tsx`, `src/components/Tabs/index.spec.tsx`.
+- Интеграционные тесты стора: `src/store/__tests__/store.spec.tsx`
+  (боевые редьюсеры + экшены + селекторы через `configureMockStore`).
+
+## Composition tests (Storybook play-функции)
+
+- Каждая стори с `play` — это композиционный тест; test-runner гоняет их
+  в headless Chromium вместе с a11y-проверками.
+- Контейнеры и целые экраны тестируются на моке chrome
+  (`.storybook/fixtures/chrome-mock.ts`) и реальном сторе
+  (`storybook-fixtures/mock-store`): см. `src/containers/NewTab/index.stories.tsx`.
+- Запуск: `npm run build-storybook`, поднять статику на :6006 и
+  `npm run test-storybook -- --url http://127.0.0.1:6006`
+  (нужен `npx playwright install chromium`).
+
 ## Browser/E2E tests (Playwright)
 
 - Config file: `playwright.config.ts`

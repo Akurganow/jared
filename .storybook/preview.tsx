@@ -1,3 +1,4 @@
+import './fixtures/install-chrome-mock'
 import type { Preview } from '@storybook/react-webpack5'
 import { themes } from 'storybook/theming'
 import 'modern-css-reset/dist/reset.min.css'

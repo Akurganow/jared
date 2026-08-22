@@ -59,4 +59,6 @@ Date: 2025‑09‑23
 
 - Redux Toolkit is used; remote Redux DevTools supported via `npm run redux-devtools` (connect to localhost:1024). State persistence via redux-persist-webextension-storage.
 - React 18 with CSS Modules and modern CSS reset. Themes live in `utils/themes`.
-- Storybook is available (webpack 5): `npm run storybook`; includes CSS Modules, a11y, and interactions addons.
+- Storybook (webpack 5) — основная среда разработки UI без реального Chrome: `npm run storybook`.
+  chrome.* замокан в `.storybook/fixtures/chrome-mock.ts` (история/закладки/storage/favicon),
+  стор — `storybook-fixtures/mock-store`. Включены аддоны a11y, docs, coverage, mcp.
